@@ -1,10 +1,14 @@
 export default {
   isFecthing: false,
-  system: '',
   soar: {
     name: ''
   },
-  warning: {
+  message: {
+    message: '',
+    open: false,
+    style: ''
+  },
+  error: {
     message: '',
     open: false
   },

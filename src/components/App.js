@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {MetaMask} from './MetaMask/MetaMask';
 import Contract from './Contract';
-import {Warning} from './Warning/Warning';
 import {Top} from './Top/Top';
 import './App.css';
+import { Message } from './Message/Message';
 
 class App extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class App extends Component {
     return (
       <div className="App">
         <Top/>
-        <Warning {...this.props}/>
+        <Message {...this.props}/>
         <MetaMask {...this.props} {...this.state} setWeb3={this.setWeb3}/>
         <Contract {...this.props} {...this.state} />
       </div>

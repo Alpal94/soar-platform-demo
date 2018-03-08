@@ -1,15 +1,13 @@
 import { combineReducers } from 'redux';
-import system from './systemReducer';
 import isFetching from './fetchingReducer';
 import soar from './soarReducer';
-import warning from './warningReducer';
+import message from './messageReducer';
 import metaMask from './metaMaskReducer';
 
 const appReducer = combineReducers({
-  system,
   isFetching,
   soar,
-  warning,
+  message,
   metaMask
 });
 

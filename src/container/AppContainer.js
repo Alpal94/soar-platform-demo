@@ -4,9 +4,10 @@ import {
   soarNameAction
 } from '../actions/soarActions';
 import { 
-  warningOpenAction,
-  warningCloseAction
-} from '../actions/warningActions';
+  messageInfoAction,
+  messageWarningAction,
+  messageCloseAction
+} from '../actions/messageActions';
 import {
   metaMaskAccountAction,
   metaMaskNetworkAction
@@ -17,8 +18,8 @@ const  mapStateToProps = (state) => ({
   count: state.count,
   error: state.error,
   soar: state.soar,
-  warning: state.warning,
-  metaMask: state.metaMask
+  metaMask: state.metaMask,
+  message: state.message
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -27,10 +28,10 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(soarNameAction(web3));
     },
     handleWarningOpen: (message) => {
-      dispatch(warningOpenAction(message));
+      dispatch(messageWarningAction(message));
     },
-    handleWarningClose: () => {
-      dispatch(warningCloseAction());
+    handleMessageClose: () => {
+      dispatch(messageCloseAction());
     },
     handleMetaMaskAccount: (account) => {
       dispatch(metaMaskAccountAction(account));

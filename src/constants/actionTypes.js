@@ -12,6 +12,8 @@ export const SOAR_NAME_SUCCESS = 'SOAR_NAME_SUCCESS';
 export const FETCHING = 'FETCHING';
 export const FETCH_COMPLETE = 'FETCH_COMPLETE';
 
-// for showing warning message
-export const WARNING_OPEN = 'WARNING_OPEN';
-export const WARNING_CLOSE = 'WARNING_CLOSE';
+// for showing system message
+export const MESSAGE_INFO = 'MESSAGE_INFO';
+export const MESSAGE_ERROR = 'MESSAGE_ERROR';
+export const MESSAGE_WARNING = 'MESSAGE_WARNING';
+export const MESSAGE_CLOSE = 'MESSAGE_CLOSE';
