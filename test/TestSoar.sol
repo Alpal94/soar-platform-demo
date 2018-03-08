@@ -6,12 +6,12 @@ import "../contracts/Soar.sol";
 
 contract TestSoar {
 
-  function testNumber() {
+  function testFilesCountAfterDeployed() {
     Soar soar = Soar(DeployedAddresses.Soar());
 
-    uint expected = 12;
+    uint expected = 0;
 
-    Assert.equal(soar.number(), expected, "Number should be 12");
+    Assert.equal(soar.filesCount(), expected, "Files count should 0");
   }
 
 }
