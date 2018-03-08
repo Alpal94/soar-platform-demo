@@ -10,10 +10,9 @@ function Soar(web3, address) {
   this.soarPromise = Promise.resolve(Promise.promisifyAll(soarContract.at(address)));
 }
 
-
-Soar.prototype.name = function(callback) {
+Soar.prototype.filesCount = function(callback) {
   return this.soarPromise.then(function(soar) {
-    var res = soar.nameAsync();
+    var res = soar.filesCountAsync();
     return res;
   });
 }

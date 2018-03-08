@@ -1,9 +1,9 @@
 import { takeLatest } from 'redux-saga/effects';
 import * as types from '../constants/actionTypes';
 import {
-  getSoarNameResultSaga
+  getSoarFileCountsSaga
 } from './soarSaga';
 
-export function* watchSoarName() {
-  yield takeLatest(types.SOAR_NAME, getSoarNameResultSaga);
+export function* watchSoarFileCounts() {
+  yield takeLatest(types.SOAR_FILE_COUNTS, getSoarFileCountsSaga);
 }

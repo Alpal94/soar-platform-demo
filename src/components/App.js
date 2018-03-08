@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {MetaMask} from './MetaMask/MetaMask';
-import Contract from './Contract';
 import {Top} from './Top/Top';
 import './App.css';
 import { Message } from './Message/Message';
+import Overview from './Overview/Overview';
 
 class App extends Component {
   constructor(props) {
@@ -16,15 +16,16 @@ class App extends Component {
 
   setWeb3(web3) {
     this.setState({web3});
+    this.props.handleSoarFilesCount(web3);
   }
 
   render() {
     return (
       <div className="App">
-        <Top/>
+        <Top {...this.props}/>
         <Message {...this.props}/>
         <MetaMask {...this.props} {...this.state} setWeb3={this.setWeb3}/>
-        <Contract {...this.props} {...this.state} />
+        <Overview {...this.props} {...this.state}/>
       </div>
     );
   }

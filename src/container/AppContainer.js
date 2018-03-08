@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import App from '../components/App';
 import { 
-  soarNameAction
+  soarFilesCountAction
 } from '../actions/soarActions';
 import { 
   messageInfoAction,
@@ -24,8 +24,11 @@ const  mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleSoarName: (web3) => {
-      dispatch(soarNameAction(web3));
+    handleSoarFilesCount: (web3) => {
+      dispatch(soarFilesCountAction(web3));
+    },
+    handleInfoOpen: (message) => {
+      dispatch(messageInfoAction(message));
     },
     handleWarningOpen: (message) => {
       dispatch(messageWarningAction(message));

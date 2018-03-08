@@ -1,10 +1,10 @@
 import { fork, all } from 'redux-saga/effects';
 import { 
-  watchSoarName
+  watchSoarFileCounts
 } from './watcher';
 
 export default function* startForman() {
   yield all([
-    fork(watchSoarName)
+    fork(watchSoarFileCounts)
   ]);
 };

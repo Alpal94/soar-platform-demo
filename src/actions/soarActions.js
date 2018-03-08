@@ -1,6 +1,6 @@
 import * as types from '../constants/actionTypes';
 
-export const soarNameAction = (web3) => ({
-  type: types.SOAR_NAME,
+export const soarFilesCountAction = (web3) => ({
+  type: types.SOAR_FILE_COUNTS,
   web3
 });
