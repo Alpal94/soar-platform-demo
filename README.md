@@ -62,7 +62,7 @@ In order to run the Soar platform, you will need [Node.js](https://nodejs.org) (
     Copy-Item .\build\contracts .\src\lib -force -recurse
 
     ## MacOS
-    cp -r ./build/contracts ./src/lib
+    cp -r ./build/contracts ./src/lib/contracts
     ```
 
 8. Run the webpack server for front-end hot reloading. For now, smart contract changes must be manually recompiled and migrated.
