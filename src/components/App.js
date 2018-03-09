@@ -4,6 +4,7 @@ import {Top} from './Top/Top';
 import './App.css';
 import { Message } from './Message/Message';
 import Overview from './Overview/Overview';
+import Upload from './Upload/Upload';
 
 class App extends Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class App extends Component {
         <Message {...this.props}/>
         <MetaMask {...this.props} {...this.state} setWeb3={this.setWeb3}/>
         <Overview {...this.props} {...this.state}/>
+        <Upload {...this.props} {...this.state}/>
       </div>
     );
   }

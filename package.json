@@ -10,8 +10,8 @@
   "dependencies": {
     "bluebird": "^3.4.7",
     "classnames": "^2.2.5",
-    "material-ui": "^1.0.0-beta.6",
-    "material-ui-icons": "^1.0.0-beta.5",
+    "material-ui": "^1.0.0-beta.36",
+    "material-ui-icons": "^1.0.0-beta.36",
     "normalize.css": "^7.0.0",
     "query-string": "^5.0.1",
     "react": "^16.1.1",
@@ -24,7 +24,9 @@
     "truffle-contract": "^1.1.8",
     "truffle-hdwallet-provider": "0.0.3",
     "web3": "^0.20.2",
-    "zeppelin-solidity": "^1.6.0"
+    "zeppelin-solidity": "^1.6.0",
+    "spark-md5": "3.0.0",
+    "react-redux-form": "1.16.6"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src -o src",

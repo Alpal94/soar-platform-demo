@@ -7,6 +7,8 @@ export const METAMASK_NETWORK = 'METAMASK_NETWORK';
 // for Soar contract
 export const SOAR_FILE_COUNTS = 'SOAR_FILE_COUNTS';
 export const SOAR_FILE_COUNTS_SUCCESS = 'SOAR_FILE_COUNTS_SUCCESS';
+export const SOAR_FILE_UPLOAD = 'SOAR_FILE_UPLOAD';
+export const SOAR_FILE_UPLOAD_SUCCESS = 'SOAR_FILE_UPLOAD_SUCCESS';
 
 // for showing progress/onloading
 export const FETCHING = 'FETCHING';
