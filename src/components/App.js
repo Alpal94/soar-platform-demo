@@ -7,6 +7,7 @@ import {
   watchUploadEvents
 } from '../lib/soarService';
 import { LinearProgress } from 'material-ui/Progress';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 class App extends Component {
   constructor(props) {
@@ -41,17 +42,24 @@ class App extends Component {
   render() {
     return (
       <div>
-        <nav class="navbar navbar-dark bg-dark">
-          <a class="navbar-brand" href="#">
-            <img src="/assets/soar_logo.png" height="30" class="d-inline-block align-top" alt=""/>
+        <nav className="navbar navbar-dark bg-dark">
+          <a className="navbar-brand" href="/">
+            <img src="/assets/soar_logo.png" height="30" className="d-inline-block align-top" alt=""/>
           </a>
+          <a className="navbar-text" href="/upload">Upload file</a>
         </nav>
-        {this.props.isFetching && <LinearProgress />}
+        <div className="progress-container">
+          {this.props.isFetching && <LinearProgress />}
+        </div>
         <Message {...this.props}/>
         <MetaMask {...this.props} {...this.state} setWeb3={this.setWeb3}/>
         <div className="container">
-          <Overview {...this.props} {...this.state}/>
-          <Upload {...this.props} {...this.state}/>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/" render={() => (<Overview {...this.props} {...this.state}/>)}/>
+            <Route exact path="/upload" render={() => (<Upload {...this.props} {...this.state}/>)}/>
+          </Switch>
+        </BrowserRouter>
         </div>
       </div>
     );
