@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import {MetaMask} from './MetaMask/MetaMask';
-import {Top} from './Top/Top';
-import './App.css';
 import { Message } from './Message/Message';
 import Overview from './Overview/Overview';
 import Upload from './Upload/Upload';
 import { 
   watchUploadEvents
 } from '../lib/soarService';
+import { LinearProgress } from 'material-ui/Progress';
 
 class App extends Component {
   constructor(props) {
@@ -41,11 +40,16 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Top {...this.props}/>
+      <div>
+        <nav class="navbar navbar-dark bg-dark">
+          <a class="navbar-brand" href="#">
+            <img src="/assets/soar_logo.png" height="30" class="d-inline-block align-top" alt=""/>
+          </a>
+        </nav>
+        {this.props.isFetching && <LinearProgress />}
         <Message {...this.props}/>
         <MetaMask {...this.props} {...this.state} setWeb3={this.setWeb3}/>
-        <div className="Main">
+        <div className="container">
           <Overview {...this.props} {...this.state}/>
           <Upload {...this.props} {...this.state}/>
         </div>
