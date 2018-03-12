@@ -10,3 +10,8 @@ export const soarUploadFileAction = (web3, file) => ({
   web3,
   file
 });
+
+export const eventSoarUploadAction = (value) =>  ({
+  type: types.SOAR_EVENT_UPLOAD,
+  value: value
+});

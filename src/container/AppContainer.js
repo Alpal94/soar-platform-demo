@@ -1,7 +1,9 @@
 import { connect } from 'react-redux';
 import App from '../components/App';
 import { 
-  soarFilesCountAction, soarUploadFileAction
+  soarFilesCountAction, 
+  soarUploadFileAction,
+  eventSoarUploadAction
 } from '../actions/soarActions';
 import { 
   messageInfoAction,
@@ -29,6 +31,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     handleSoarFileUpload: (web3, file) => {
       dispatch(soarUploadFileAction(web3, file));
+    },
+    eventSoarFileUpload: (upload) => {
+      dispatch(eventSoarUploadAction(upload));
     },
     handleInfoOpen: (message) => {
       dispatch(messageInfoAction(message));

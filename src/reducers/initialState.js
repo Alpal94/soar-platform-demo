@@ -1,7 +1,8 @@
 export default {
   isFecthing: false,
   soar: {
-    fileCounts: null
+    filesCount: null,
+    uploads: {}
   },
   message: {
     message: '',

@@ -22,9 +22,17 @@ Soar.prototype.filesCount = function(callback) {
 Soar.prototype.uploadFile = function(file, address) {
   return this.soarPromise
     .then((soar) => {
-      return soar.fileUploadAsync(file.previewUrl, file.url, file.pointWKT, file.metadata, file.fileHash, file.price, { from: address })
+      return soar.fileUploadAsync(file.previewUrl, file.url, file.pointWKT, file.metadata, file.fileHash, this.web3.toWei(file.price), { from: address })
     }).then(res => {
       return res;
+    });
+}
+
+Soar.prototype.watchUploadEvents = function(emitter) {
+  return this.soarPromise
+    .then((soar) => {
+      var uploadEvent = soar.Upload({}, {fromBlock: 0, blockTo: 'latest'});
+      uploadEvent.watch(emitter);
     });
 }
 
