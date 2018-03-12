@@ -1,6 +1,10 @@
 // Bootstrap library
 @import './bootstrap/bootstrap.scss';
 
+body {
+  min-width: 360px;
+}
+
 // New color
 $new-color: #ad9a5b;
 

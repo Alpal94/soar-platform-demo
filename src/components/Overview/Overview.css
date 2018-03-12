@@ -1,0 +1,12 @@
+.leaflet-container {
+    height: 600px;
+    width: 100%;
+}
+
+.overview-popup img{
+    width: 300px;
+}
+
+.overview-popup{
+    width: 300px;
+}
