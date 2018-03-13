@@ -2,7 +2,8 @@ export default {
   isFecthing: false,
   soar: {
     filesCount: null,
-    uploads: {}
+    uploads: {},
+    myPurchases: {}
   },
   message: {
     message: '',

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import UploadDetails from './UploadDetails';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
 import '../../styles/leaflet.css'
 import './Overview.css'
 
@@ -13,9 +12,6 @@ class Overview extends Component {
 
         return (
         <div>
-            <h1>Overivew</h1>
-            <p>Total uploaded files: {this.props.soar.filesCount}</p>
-            <hr/>
             <div className="map-container">
                 <Map center={position} zoom={zoom}>
                     <TileLayer
@@ -24,11 +20,12 @@ class Overview extends Component {
                     />
 
                     {Object.keys(this.props.soar.uploads).map(key => 
-                        <Marker position={position} >
+                        <Marker key={key} position={position} >
                             <Popup>
                                 <div className="overview-popup">
-                                    <img src={this.props.soar.uploads[key].previewUrl} />
+                                    <img src={this.props.soar.uploads[key].previewUrl} alt={this.props.soar.uploads[key].previewUrl} />
                                     <p>{this.props.soar.uploads[key].metadata}</p>
+                                    {/* <button onClick={() => this.props.buy}>Buy</button> */}
                                 </div>
                             </Popup>
                         </Marker>
@@ -37,6 +34,7 @@ class Overview extends Component {
                 </Map>
 
             </div>
+            <p>Total uploaded files: {this.props.soar.filesCount}</p>
             <hr/>
             {Object.keys(this.props.soar.uploads).map(key => 
                 <UploadDetails key={key} {...this.props.soar.uploads[key]}/>

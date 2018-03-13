@@ -6,9 +6,12 @@ const fetchFilesCount = (state, action) => {
 }
 
 const eventUpload = (state, action) => {
-  console.log('EventUpload before: ', state.uploads)
   var res = { ...state, uploads: {...state.uploads, [action.value.transactionHash] : action.value}  }
-  console.log('EventUpload after: ', res.uploads)
+  return res;
+}
+
+const eventMyPurchase = (state, action) => {
+  var res = { ...state, myPurchases: {...state.myPurchases, [action.value.fileHash] : action.value}  }
   return res;
 }
 
@@ -18,6 +21,8 @@ export default function (soar = initialState.soar, action) {
       return fetchFilesCount(soar, action);
     case types.SOAR_EVENT_UPLOAD:
       return eventUpload(soar, action);    
+    case types.SOAR_EVENT_MY_SALE:
+      return eventMyPurchase(soar, action);    
     default:
       return soar;
   }

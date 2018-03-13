@@ -3,7 +3,8 @@ import App from '../components/App';
 import { 
   soarFilesCountAction, 
   soarUploadFileAction,
-  eventSoarUploadAction
+  eventSoarUploadAction,
+  eventSoarMyPurchaseAction
 } from '../actions/soarActions';
 import { 
   messageInfoAction,
@@ -34,6 +35,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     eventSoarFileUpload: (upload) => {
       dispatch(eventSoarUploadAction(upload));
+    },
+    eventSoarMyPurchase: (myPurchase) => {
+      dispatch(eventSoarMyPurchaseAction(myPurchase));
     },
     handleInfoOpen: (message) => {
       dispatch(messageInfoAction(message));

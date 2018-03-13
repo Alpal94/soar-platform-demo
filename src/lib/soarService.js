@@ -35,9 +35,20 @@ export const uploadFile = (web3, file) => {
 export const watchUploadEvents = (web3, emitter) => {
   try {
     setContractAddress(web3);
-    let currentAddress = getCurrentAddress(web3);
     const soar = new Soar(web3, soarAddress);
     soar.watchUploadEvents(emitter);
+  } catch (err) {
+    console.log('uploadFile: ', err)
+  }
+}
+
+
+export const watchMyPurchaseEvents = (web3, emitter) => {
+  try {
+    setContractAddress(web3);
+    let currentAddress = getCurrentAddress(web3);
+    const soar = new Soar(web3, soarAddress);
+    soar.watchMyPurchaseEvents(currentAddress, emitter);
   } catch (err) {
     console.log('uploadFile: ', err)
   }

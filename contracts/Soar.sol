@@ -23,7 +23,7 @@ contract Soar is Ownable, Pausable {
     mapping (string => mapping (address => uint)) internal sales;
 
     event Upload(address owner, string previewUrl, string url, string pointWKT, string metadata, string fileHash, uint price);
-    event Sale(string fileHash, address buyer, uint price);
+    event Sale(string indexed fileHash, address indexed buyer, uint price);
 
     function Soar() public {
     }

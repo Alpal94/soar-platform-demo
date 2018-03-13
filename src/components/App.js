@@ -4,7 +4,8 @@ import { Message } from './Message/Message';
 import Overview from './Overview/Overview';
 import Upload from './Upload/Upload';
 import { 
-  watchUploadEvents
+  watchUploadEvents,
+  watchMyPurchaseEvents
 } from '../lib/soarService';
 import { LinearProgress } from 'material-ui/Progress';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
@@ -35,6 +36,17 @@ class App extends Component {
         url: res.args.url
       };
       this.props.eventSoarFileUpload(upload);
+    })
+    watchMyPurchaseEvents(web3, (err, res) => {
+      console.log('Sale: ', res)
+      let myPurchase = {
+        transactionHash: res.transactionHash,
+        blockNumber: res.blockNumber,
+        buyer: res.args.buyer,
+        fileHash: res.args.fileHash,
+        price: web3.fromWei(res.args.price).toNumber()
+      };
+      this.props.eventSoarMyPurchase(myPurchase);
     })
 
   }

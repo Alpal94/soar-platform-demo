@@ -36,4 +36,12 @@ Soar.prototype.watchUploadEvents = function(emitter) {
     });
 }
 
+Soar.prototype.watchMyPurchaseEvents = function(address, emitter) {
+  return this.soarPromise
+    .then((soar) => {
+      var myPurchaseEvent = soar.Sale({buyer: address}, {fromBlock: 0, blockTo: 'latest'});
+      myPurchaseEvent.watch(emitter);
+    });
+}
+
 module.exports = Soar;

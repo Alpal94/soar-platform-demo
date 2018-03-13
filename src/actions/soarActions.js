@@ -15,3 +15,8 @@ export const eventSoarUploadAction = (value) =>  ({
   type: types.SOAR_EVENT_UPLOAD,
   value: value
 });
+
+export const eventSoarMyPurchaseAction = (value) =>  ({
+  type: types.SOAR_EVENT_MY_SALE,
+  value: value
+});

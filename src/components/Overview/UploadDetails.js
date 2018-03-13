@@ -1,7 +1,6 @@
 import React from 'react';
 
 const UploadDetails = function(props) {
-    console.log(props)
     return (
         <div>
             File hash: {props.fileHash} <br/>
