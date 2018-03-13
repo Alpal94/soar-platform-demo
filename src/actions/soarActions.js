@@ -11,6 +11,14 @@ export const soarUploadFileAction = (web3, file) => ({
   file
 });
 
+export const soarFilePurchaseAction = (web3, fileHash, price) => ({
+  type: types.SOAR_FILE_PURCHASE,
+  web3,
+  fileHash,
+  price
+});
+
+
 export const eventSoarUploadAction = (value) =>  ({
   type: types.SOAR_EVENT_UPLOAD,
   value: value

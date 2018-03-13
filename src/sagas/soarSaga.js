@@ -3,6 +3,7 @@ import * as types from '../constants/actionTypes';
 import { 
   getFilesCount, 
   uploadFile,
+  purchaseFile
 } from '../lib/soarService';
 
 export function* getSoarFileCountsSaga({web3}) {
@@ -24,6 +25,18 @@ export function* soarUploadFileSaga({web3, file}) {
     const result = yield call(uploadFile, web3, file);
     yield put({ type: types.FETCH_COMPLETE});
     yield put({ type: types.SOAR_FILE_UPLOAD_SUCCESS, result: result });
+  } catch (err) {
+    yield put({ type: types.FETCH_COMPLETE});
+    yield put({ type: types.MESSAGE_ERROR, value: err.toString() });
+  }
+};
+
+export function* soarPurchaseFileSaga({web3, fileHash, price}) {
+  try {
+    yield put({ type: types.FETCHING}); 
+    const result = yield call(purchaseFile, web3, fileHash, price);
+    yield put({ type: types.FETCH_COMPLETE});
+    yield put({ type: types.SOAR_FILE_PURCHASE_SUCCESS, result: result });
   } catch (err) {
     yield put({ type: types.FETCH_COMPLETE});
     yield put({ type: types.MESSAGE_ERROR, value: err.toString() });

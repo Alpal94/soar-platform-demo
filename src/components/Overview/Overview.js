@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import UploadDetails from './UploadDetails';
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Map, TileLayer } from 'react-leaflet';
 import '../../styles/leaflet.css'
 import './Overview.css'
+import MapMarker from './MapMarker';
 
 class Overview extends Component {
 
@@ -20,15 +21,12 @@ class Overview extends Component {
                     />
 
                     {Object.keys(this.props.soar.uploads).map(key => 
-                        <Marker key={key} position={position} >
-                            <Popup>
-                                <div className="overview-popup">
-                                    <img src={this.props.soar.uploads[key].previewUrl} alt={this.props.soar.uploads[key].previewUrl} />
-                                    <p>{this.props.soar.uploads[key].metadata}</p>
-                                    {/* <button onClick={() => this.props.buy}>Buy</button> */}
-                                </div>
-                            </Popup>
-                        </Marker>
+                        <MapMarker 
+                            key={this.props.soar.uploads[key].transactionHash} 
+                            upload={this.props.soar.uploads[key]} 
+                            purchase={this.props.soar.myPurchases[this.props.soar.uploads[key].fileHash]}
+                            onBuyButtonClicked={() => this.props.handleSoarFilePurchase(this.props.web3, this.props.soar.uploads[key].fileHash, this.props.soar.uploads[key].price)}
+                        />
                     )}
                     
                 </Map>

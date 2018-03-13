@@ -28,10 +28,19 @@ Soar.prototype.uploadFile = function(file, address) {
     });
 }
 
+Soar.prototype.buyFile = function(fileHash, price, address) {
+  return this.soarPromise
+    .then((soar) => {
+      return soar.buyFileAsync(fileHash, { from: address, value: this.web3.toWei(price) })
+    }).then(res => {
+      return res;
+    });
+}
+
 Soar.prototype.watchUploadEvents = function(emitter) {
   return this.soarPromise
     .then((soar) => {
-      var uploadEvent = soar.Upload({}, {fromBlock: 0, blockTo: 'latest'});
+      var uploadEvent = soar.Upload({}, {fromBlock: 0, toBlock: 'latest'});
       uploadEvent.watch(emitter);
     });
 }
@@ -39,8 +48,10 @@ Soar.prototype.watchUploadEvents = function(emitter) {
 Soar.prototype.watchMyPurchaseEvents = function(address, emitter) {
   return this.soarPromise
     .then((soar) => {
-      var myPurchaseEvent = soar.Sale({buyer: address}, {fromBlock: 0, blockTo: 'latest'});
+      var myPurchaseEvent = soar.Sale({},{fromBlock: 0, toBlock: 'latest'});
+      console.log(myPurchaseEvent)
       myPurchaseEvent.watch(emitter);
+
     });
 }
 

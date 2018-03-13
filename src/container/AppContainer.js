@@ -3,6 +3,7 @@ import App from '../components/App';
 import { 
   soarFilesCountAction, 
   soarUploadFileAction,
+  soarFilePurchaseAction,
   eventSoarUploadAction,
   eventSoarMyPurchaseAction
 } from '../actions/soarActions';
@@ -33,12 +34,17 @@ const mapDispatchToProps = (dispatch) => {
     handleSoarFileUpload: (web3, file) => {
       dispatch(soarUploadFileAction(web3, file));
     },
+    handleSoarFilePurchase: (web3, fileHash, price) => {
+      dispatch(soarFilePurchaseAction(web3, fileHash, price));
+    },
+    //events from blochain
     eventSoarFileUpload: (upload) => {
       dispatch(eventSoarUploadAction(upload));
     },
     eventSoarMyPurchase: (myPurchase) => {
       dispatch(eventSoarMyPurchaseAction(myPurchase));
     },
+    //system and message actions
     handleInfoOpen: (message) => {
       dispatch(messageInfoAction(message));
     },

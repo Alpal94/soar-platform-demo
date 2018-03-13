@@ -38,7 +38,6 @@ class App extends Component {
       this.props.eventSoarFileUpload(upload);
     })
     watchMyPurchaseEvents(web3, (err, res) => {
-      console.log('Sale: ', res)
       let myPurchase = {
         transactionHash: res.transactionHash,
         blockNumber: res.blockNumber,

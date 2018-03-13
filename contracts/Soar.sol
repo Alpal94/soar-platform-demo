@@ -23,7 +23,7 @@ contract Soar is Ownable, Pausable {
     mapping (string => mapping (address => uint)) internal sales;
 
     event Upload(address owner, string previewUrl, string url, string pointWKT, string metadata, string fileHash, uint price);
-    event Sale(string indexed fileHash, address indexed buyer, uint price);
+    event Sale(address indexed buyer, string fileHash, uint price);
 
     function Soar() public {
     }
@@ -55,7 +55,7 @@ contract Soar is Ownable, Pausable {
         require(sales[_fileHash][msg.sender] == 0);
         sales[_fileHash][msg.sender] = weiAmount;
         owners[files[_fileHash].owner][_fileHash]++;
-        Sale(_fileHash, msg.sender, price);
+        Sale(msg.sender, _fileHash, price);
     }
 
     function verifySale(string _fileHash) whenNotPaused public view returns (
