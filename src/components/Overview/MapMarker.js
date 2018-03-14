@@ -1,11 +1,13 @@
 import React from 'react';
+import parse from 'wellknown';
+import L from 'leaflet';
 import { Marker, Popup } from 'react-leaflet';
-
-const position = [-31.9550404, 115.9303017]
 
 const MapMarker = function(props) {
     const buttonBuy = !props.purchase && (<button onClick={props.onBuyButtonClicked}>Buy</button>);
     const buttonDownload = props.purchase && (<button>Download</button>);
+    let p = parse(props.upload.pointWKT);
+    let position = [p.coordinates[1], p.coordinates[0]];
     return (
         <Marker position={position} >
             <Popup>

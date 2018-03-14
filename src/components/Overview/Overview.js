@@ -9,7 +9,7 @@ class Overview extends Component {
 
     render() {
         const position = [-31.9550404, 115.9303017]
-        const zoom = 13
+        const zoom = 10
 
         return (
         <div>
