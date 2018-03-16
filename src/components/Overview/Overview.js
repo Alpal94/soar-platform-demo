@@ -26,6 +26,7 @@ class Overview extends Component {
                             upload={this.props.soar.uploads[key]} 
                             purchase={this.props.soar.myPurchases[this.props.soar.uploads[key].fileHash]}
                             onBuyButtonClicked={() => this.props.handleSoarFilePurchase(this.props.web3, this.props.soar.uploads[key].fileHash, this.props.soar.uploads[key].price)}
+                            onDownloadButtonClicked={() => this.props.handleSoarFileDownload(this.props.web3, this.props.soar.uploads[key].fileHash)}
                         />
                     )}
                     

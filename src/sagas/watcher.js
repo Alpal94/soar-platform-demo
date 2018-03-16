@@ -3,7 +3,8 @@ import * as types from '../constants/actionTypes';
 import {
   getSoarFileCountsSaga,
   soarUploadFileSaga,
-  soarPurchaseFileSaga
+  soarPurchaseFileSaga,
+  soarVerifyFileSaga
 } from './soarSaga';
 
 export function* watchSoarFileCounts() {
@@ -16,4 +17,8 @@ export function* watchSoarFileUpload() {
 
 export function* watchSoarFilePurchase() {
   yield takeLatest(types.SOAR_FILE_PURCHASE, soarPurchaseFileSaga);
+}
+
+export function* watchSoarFileVerify() {
+  yield takeLatest(types.SOAR_FILE_VERIFY, soarVerifyFileSaga);
 }

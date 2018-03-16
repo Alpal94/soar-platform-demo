@@ -4,6 +4,7 @@ import {
   soarFilesCountAction, 
   soarUploadFileAction,
   soarFilePurchaseAction,
+  soarFileVerifyAction,
   eventSoarUploadAction,
   eventSoarMyPurchaseAction
 } from '../actions/soarActions';
@@ -36,6 +37,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     handleSoarFilePurchase: (web3, fileHash, price) => {
       dispatch(soarFilePurchaseAction(web3, fileHash, price));
+    },
+    handleSoarFileDownload: (web3, fileHash) => {
+      dispatch(soarFileVerifyAction(web3, fileHash));
     },
     //events from blochain
     eventSoarFileUpload: (upload) => {

@@ -37,6 +37,15 @@ Soar.prototype.buyFile = function(fileHash, price, address) {
     });
 }
 
+Soar.prototype.verifyFile = function(fileHash, address) {
+  return this.soarPromise
+    .then((soar) => {
+      return soar.verifySaleAsync(fileHash, {from: address})
+    }).then(res => {
+      return res;
+    });
+}
+
 Soar.prototype.watchUploadEvents = function(emitter) {
   return this.soarPromise
     .then((soar) => {
@@ -48,7 +57,9 @@ Soar.prototype.watchUploadEvents = function(emitter) {
 Soar.prototype.watchMyPurchaseEvents = function(address, emitter) {
   return this.soarPromise
     .then((soar) => {
-      var myPurchaseEvent = soar.Sale({},{fromBlock: 0, toBlock: 'latest'});
+      console.log(address)
+      //todo add filtering by buyr address
+      var myPurchaseEvent = soar.Sale({fromBlock: 0, toBlock: 'latest'});
       console.log(myPurchaseEvent)
       myPurchaseEvent.watch(emitter);
 

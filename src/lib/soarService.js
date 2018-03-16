@@ -45,6 +45,19 @@ export const purchaseFile = (web3, fileHash, price) => {
   }
 }
 
+export const verifyFile = (web3, fileHash) => {
+  try {
+    setContractAddress(web3);
+    let currentAddress = getCurrentAddress(web3);
+    const soar = new Soar(web3, soarAddress);
+    const result = soar.verifyFile(fileHash, currentAddress);
+    return result;
+  } catch (err) {
+    console.log('uploadFile: ', err)
+    return null;
+  }
+}
+
 export const watchUploadEvents = (web3, emitter) => {
   try {
     setContractAddress(web3);
