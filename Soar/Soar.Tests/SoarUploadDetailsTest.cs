@@ -5,19 +5,26 @@ using System.Threading.Tasks;
 
 using Xunit;
 using Amazon.Lambda.TestUtilities;
-using Soar.Upload.Link;
+
+using Soar.Core.Models;
+using Soar.Upload.Details;
 
 namespace Soar.Tests
 {
-    public class SoarUploadLinkTest
+    public class SoarUploadDetailsTest
     {
         [Fact]
-        public void TestSoarUploadLink()
+        public async Task TestSoarUploadDetails()
         {
             // Invoke the lambda function and confirm the string was upper cased.
             var function = new Function();
             var context = new TestLambdaContext();
-            var upperCase = function.FunctionHandler("eth-address", context);
+            var req = new UploadDetailsReq()
+            {
+                address = "eth-address",
+                fileHash = "file-hash"
+            };
+            var upperCase = await function.FunctionHandler(req, context);
         }
     }
 }

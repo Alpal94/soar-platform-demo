@@ -1,11 +1,18 @@
 import { put, call } from 'redux-saga/effects';
 import * as types from '../constants/actionTypes';
 import { 
-  getFilesCount, 
+  getFilesCount,
+  uploadVerification, 
   uploadFile,
   purchaseFile,
   verifyFile
 } from '../lib/soarService';
+import { 
+  getUploadDetails,
+  uploadFileToSponsor
+} from '../lib/soarSponsorService';
+
+
 
 export function* getSoarFileCountsSaga({web3}) {
   try {
@@ -20,10 +27,17 @@ export function* getSoarFileCountsSaga({web3}) {
   }
 };
 
-export function* soarUploadFileSaga({web3, file}) {
+export function* soarUploadFileSaga({web3, data}) {
   try {
+    console.log('File: ', data)
     yield put({ type: types.FETCHING}); 
-    const result = yield call(uploadFile, web3, file);
+    const details = yield call(getUploadDetails, web3, data.fileHash, data.extension);
+    console.log('FileUploadDetails: ', details);
+    const verification = yield call(uploadVerification, web3, details.challenge);
+    console.log('UploadVerification: ', verification);
+    const uploadResult = yield call(uploadFileToSponsor, data.file, details.uploadUrl, details.secret);
+    console.log('UploadResult: ', uploadResult);
+    const result = yield call(uploadFile, web3, details.previewUrl, details.downloadUrl, data.pointWKT, "{\"resolution\": 1048}", data.fileHash, data.price);
     yield put({ type: types.FETCH_COMPLETE});
     yield put({ type: types.SOAR_FILE_UPLOAD_SUCCESS, result: result });
   } catch (err) {

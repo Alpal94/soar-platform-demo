@@ -7,20 +7,8 @@ class UploadForm extends React.Component {
         return (
             <LocalForm onSubmit={(val) => this.props.handleSubmit(val)}>
                 <div>
-                    <label>Preview url</label>
-                    <Control.text model=".previewUrl" />
-                </div>
-                <div>
-                    <label>Url</label>
-                    <Control.text model=".url" />
-                </div>
-                <div>
                     <label>Point WKT</label>
                     <Control.text model=".pointWKT" />
-                </div>
-                <div>
-                    <label>Metadata</label>
-                    <Control.text model=".metadata" />
                 </div>
                 <div>
                     <label>Price</label>

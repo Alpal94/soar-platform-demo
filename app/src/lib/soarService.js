@@ -19,12 +19,25 @@ export const getFilesCount = (web3) => {
   }
 }
 
-export const uploadFile = (web3, file) => {
+export const uploadVerification = (web3, challenge) => {
+  try {
+    setContractAddress(web3);
+    const soar = new Soar(web3, soarAddress);
+    let currentAddress = getCurrentAddress(web3);
+    const result = soar.uploadVerification(challenge, currentAddress);
+    return result;
+  } catch (err) {
+    console.log('uploadFile: ', err)
+    return null;
+  }
+}
+
+export const uploadFile = (web3, previewUrl, url, pointWKT, metadata, fileHash, price) => {
   try {
     setContractAddress(web3);
     let currentAddress = getCurrentAddress(web3);
     const soar = new Soar(web3, soarAddress);
-    const result = soar.uploadFile(file, currentAddress);
+    const result = soar.uploadFile(previewUrl, url, pointWKT, metadata, fileHash, price, currentAddress);
     return result;
   } catch (err) {
     console.log('uploadFile: ', err)

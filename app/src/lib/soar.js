@@ -19,10 +19,20 @@ Soar.prototype.filesCount = function(callback) {
     });
 }
 
-Soar.prototype.uploadFile = function(file, address) {
+Soar.prototype.uploadVerification = function(challenge, address) {
   return this.soarPromise
     .then((soar) => {
-      return soar.fileUploadAsync(file.previewUrl, file.url, file.pointWKT, file.metadata, file.fileHash, this.web3.toWei(file.price), { from: address })
+      return soar.uploadVerificationAsync(challenge, { from: address })
+    }).then(res => {
+      return res;
+    });
+}
+
+Soar.prototype.uploadFile = function(previewUrl, url, pointWKT, metadata, fileHash, price, address) {
+  return this.soarPromise
+    .then((soar) => {
+      console.log(previewUrl, url, pointWKT, metadata, fileHash, this.web3.toWei(price))
+      return soar.fileUploadAsync(previewUrl, url, pointWKT, metadata, fileHash, this.web3.toWei(price), { from: address })
     }).then(res => {
       return res;
     });

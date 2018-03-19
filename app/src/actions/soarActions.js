@@ -5,10 +5,10 @@ export const soarFilesCountAction = (web3) => ({
   web3
 });
 
-export const soarUploadFileAction = (web3, file) => ({
+export const soarUploadFileAction = (web3, data) => ({
   type: types.SOAR_FILE_UPLOAD,
-  web3,
-  file
+  web3: web3,
+  data: data
 });
 
 export const soarFilePurchaseAction = (web3, fileHash, price) => ({

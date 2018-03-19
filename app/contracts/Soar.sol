@@ -24,8 +24,13 @@ contract Soar is Ownable, Pausable {
 
     event Upload(address owner, string previewUrl, string url, string pointWKT, string metadata, string fileHash, uint price);
     event Sale(address indexed buyer, string fileHash, uint price);
+    event UploadVerification(address uploader, bytes32 indexed challange);
 
     function Soar() public {
+    }
+
+    function uploadVerification(bytes32 _challange) {
+        UploadVerification(msg.sender, _challange);
     }
 
     function fileUpload(string _previewUrl, string _url, string _pointWKT, string _metadata, string _fileHash, uint _price) whenNotPaused public {

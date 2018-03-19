@@ -15,7 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Soar.Upload.Link\Soar.Upload.Link.csproj" />
+    <ProjectReference Include="..\Soar.Core\Soar.Core.csproj" />
+    <ProjectReference Include="..\Soar.Upload.Details\Soar.Upload.Details.csproj" />
+    <ProjectReference Include="..\Soar.Upload\Soar.Upload.csproj" />
   </ItemGroup>
 
 </Project>
