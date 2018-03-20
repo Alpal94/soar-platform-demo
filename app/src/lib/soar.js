@@ -56,6 +56,15 @@ Soar.prototype.verifyFile = function(fileHash, address) {
     });
 }
 
+Soar.prototype.fileExists = function(fileHash, address) {
+  return this.soarPromise
+    .then((soar) => {
+      return soar.fileExistsAsync(this.web3.fromAscii(fileHash))
+    }).then(res => {
+      return res;
+    });
+}
+
 Soar.prototype.watchUploadEvents = function(emitter) {
   return this.soarPromise
     .then((soar) => {
@@ -67,12 +76,9 @@ Soar.prototype.watchUploadEvents = function(emitter) {
 Soar.prototype.watchMyPurchaseEvents = function(address, emitter) {
   return this.soarPromise
     .then((soar) => {
-      console.log(address)
       //todo add filtering by buyr address
       var myPurchaseEvent = soar.Sale({fromBlock: 0, toBlock: 'latest'});
-      console.log(myPurchaseEvent)
       myPurchaseEvent.watch(emitter);
-
     });
 }
 

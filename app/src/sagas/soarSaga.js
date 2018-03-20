@@ -5,7 +5,8 @@ import {
   uploadVerification, 
   uploadFile,
   purchaseFile,
-  verifyFile
+  verifyFile,
+  fileExists
 } from '../lib/soarService';
 import { 
   getUploadDetails,
@@ -29,17 +30,27 @@ export function* getSoarFileCountsSaga({web3}) {
 
 export function* soarUploadFileSaga({web3, data}) {
   try {
+    console.log('Web3: ', web3)
     console.log('File: ', data)
     yield put({ type: types.FETCHING}); 
-    const details = yield call(getUploadDetails, web3, data.fileHash, data.extension);
-    console.log('FileUploadDetails: ', details);
-    const verification = yield call(uploadVerification, web3, details.challenge);
-    console.log('UploadVerification: ', verification);
-    const uploadResult = yield call(uploadFileToSponsor, data.file, details.uploadUrl, details.secret);
-    console.log('UploadResult: ', uploadResult);
-    const result = yield call(uploadFile, web3, details.previewUrl, details.downloadUrl, data.pointWKT, "{\"resolution\": 1048}", data.fileHash, data.price);
+    const exists = yield call(fileExists, web3, data.fileHash);
+    
+    if(!exists) {
+      const details = yield call(getUploadDetails, web3, data.fileHash, data.extension);
+      console.log('FileUploadDetails: ', details);
+      const verification = yield call(uploadVerification, web3, details.challenge);
+      console.log('UploadVerification: ', verification);
+      const uploadResult = yield call(uploadFileToSponsor, data.file, details.uploadUrl, details.secret);
+      console.log('UploadResult: ', uploadResult);
+      const result = yield call(uploadFile, web3, details.previewUrl, details.downloadUrl, data.pointWKT, "{\"resolution\": 1048}", data.fileHash, data.price);
+      yield put({ type: types.SOAR_FILE_UPLOAD_SUCCESS, result: result });
+    
+    } else {
+      yield put({ type: types.MESSAGE_ERROR, value: "File already exists on the platform." });
+
+    }
+    
     yield put({ type: types.FETCH_COMPLETE});
-    yield put({ type: types.SOAR_FILE_UPLOAD_SUCCESS, result: result });
   } catch (err) {
     yield put({ type: types.FETCH_COMPLETE});
     yield put({ type: types.MESSAGE_ERROR, value: err.toString() });

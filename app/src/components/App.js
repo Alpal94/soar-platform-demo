@@ -28,7 +28,7 @@ class App extends Component {
         transactionHash: res.transactionHash,
         blockNumber: res.blockNumber,
         owner: res.args.owner,
-        fileHash: res.args.fileHash,
+        fileHash: web3.toAscii(res.args.fileHash),
         metadata: res.args.metadata,
         pointWKT: res.args.pointWKT,
         previewUrl: res.args.previewUrl,

@@ -71,6 +71,18 @@ export const verifyFile = (web3, fileHash) => {
   }
 }
 
+export const fileExists = (web3, fileHash) => {
+  try {
+    setContractAddress(web3);
+    const soar = new Soar(web3, soarAddress);
+    const result = soar.fileExists(fileHash);
+    return result;
+  } catch (err) {
+    console.log('fileExists: ', err)
+    return null;
+  }
+}
+
 export const watchUploadEvents = (web3, emitter) => {
   try {
     setContractAddress(web3);

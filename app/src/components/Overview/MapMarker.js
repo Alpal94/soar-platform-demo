@@ -1,6 +1,5 @@
 import React from 'react';
 import parse from 'wellknown';
-import L from 'leaflet';
 import { Marker, Popup } from 'react-leaflet';
 
 const MapMarker = function(props) {
