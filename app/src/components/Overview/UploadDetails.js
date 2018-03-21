@@ -7,6 +7,7 @@ const UploadDetails = function(props) {
             Owner: {props.owner} <br/>
             PointWKT: {props.pointWKT} <br/>
             Preview: {props.previewUrl} <br/>
+            Url: {props.url} <br/>
             Price: {props.price} SOAR 
             <hr/>
         </div>

@@ -1,6 +1,6 @@
 import { fork, all } from 'redux-saga/effects';
 import { 
-  watchSoarFileCounts, watchSoarFileUpload, watchSoarFilePurchase, watchSoarFileVerify
+  watchSoarFileCounts, watchSoarFileUpload, watchSoarFilePurchase, watchSoarFileDownload
 } from './watcher';
 
 export default function* startForman() {
@@ -8,6 +8,6 @@ export default function* startForman() {
     fork(watchSoarFileCounts),
     fork(watchSoarFileUpload),
     fork(watchSoarFilePurchase),
-    fork(watchSoarFileVerify)
+    fork(watchSoarFileDownload)
   ]);
 };

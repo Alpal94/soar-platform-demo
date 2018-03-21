@@ -19,12 +19,12 @@ export const getFilesCount = (web3) => {
   }
 }
 
-export const uploadVerification = (web3, challenge) => {
+export const verification = (web3, challenge) => {
   try {
     setContractAddress(web3);
     const soar = new Soar(web3, soarAddress);
     let currentAddress = getCurrentAddress(web3);
-    const result = soar.uploadVerification(challenge, currentAddress);
+    const result = soar.verification(challenge, currentAddress);
     return result;
   } catch (err) {
     console.log('uploadFile: ', err)

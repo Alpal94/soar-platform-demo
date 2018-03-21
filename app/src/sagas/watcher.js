@@ -4,7 +4,7 @@ import {
   getSoarFileCountsSaga,
   soarUploadFileSaga,
   soarPurchaseFileSaga,
-  soarVerifyFileSaga
+  soarDownloadFileSaga
 } from './soarSaga';
 
 export function* watchSoarFileCounts() {
@@ -19,6 +19,6 @@ export function* watchSoarFilePurchase() {
   yield takeLatest(types.SOAR_FILE_PURCHASE, soarPurchaseFileSaga);
 }
 
-export function* watchSoarFileVerify() {
-  yield takeLatest(types.SOAR_FILE_VERIFY, soarVerifyFileSaga);
+export function* watchSoarFileDownload() {
+  yield takeLatest(types.SOAR_FILE_DOWNLOAD, soarDownloadFileSaga);
 }

@@ -19,10 +19,10 @@ Soar.prototype.filesCount = function(callback) {
     });
 }
 
-Soar.prototype.uploadVerification = function(challenge, address) {
+Soar.prototype.verification = function(challenge, address) {
   return this.soarPromise
     .then((soar) => {
-      return soar.uploadVerificationAsync(challenge, { from: address })
+      return soar.verificationAsync(challenge, { from: address })
     }).then(res => {
       return res;
     });

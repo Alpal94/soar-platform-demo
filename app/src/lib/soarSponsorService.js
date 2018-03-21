@@ -34,3 +34,44 @@ export const uploadFileToSponsor = (file, url, secret) => {
       return null;
     }
 }
+
+export const getDownloadDetails = (web3, url) => {
+    console.log(url)
+    try {
+        let address = getCurrentAddress(web3);
+        let promise = axios.post(url, {address})
+            .then(res => {
+                return res.data;
+            });
+        return promise;
+    } catch (err) {
+      console.log('getUploadDetails: ', err)
+      return null;
+    }
+}
+
+export const downloadFile = (web3, url, secret) => {
+    console.log(url)
+    try {
+        //let address = getCurrentAddress(web3);
+        let promise = axios.get(url + '?secret=' + secret)
+            .then(res => {
+                console.log('DownloadFile res: ', res)
+                return _base64ToArrayBuffer(res.data);
+            });
+        return promise;
+    } catch (err) {
+      console.log('downloadFile: ', err)
+      return null;
+    }
+}
+
+function _base64ToArrayBuffer(base64) {
+    var binary_string =  window.atob(base64);
+    var len = binary_string.length;
+    var bytes = new Uint8Array( len );
+    for (var i = 0; i < len; i++)        {
+        bytes[i] = binary_string.charCodeAt(i);
+    }
+    return bytes.buffer;
+}

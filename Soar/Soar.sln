@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Soar.Upload.Details", "Soar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Soar.ImagePreview", "Soar.ImagePreview\Soar.ImagePreview.csproj", "{7798A0C1-1788-4174-A1AC-DF091B910D7A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Soar.Download.Details", "Soar.Download.Details\Soar.Download.Details.csproj", "{F5D2DAE5-8FC5-4E21-889E-6C24AC5225CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{7798A0C1-1788-4174-A1AC-DF091B910D7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7798A0C1-1788-4174-A1AC-DF091B910D7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7798A0C1-1788-4174-A1AC-DF091B910D7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5D2DAE5-8FC5-4E21-889E-6C24AC5225CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5D2DAE5-8FC5-4E21-889E-6C24AC5225CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5D2DAE5-8FC5-4E21-889E-6C24AC5225CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5D2DAE5-8FC5-4E21-889E-6C24AC5225CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
