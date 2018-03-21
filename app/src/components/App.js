@@ -25,8 +25,6 @@ class App extends Component {
     watchUploadEvents(web3, (err, res) => {
       this.props.handleSoarFilesCount(web3);
       let upload = {
-        transactionHash: res.transactionHash,
-        blockNumber: res.blockNumber,
         owner: res.args.owner,
         fileHash: web3.toAscii(res.args.fileHash),
         metadata: res.args.metadata,
@@ -39,12 +37,11 @@ class App extends Component {
     })
     watchMyPurchaseEvents(web3, (err, res) => {
       let myPurchase = {
-        transactionHash: res.transactionHash,
-        blockNumber: res.blockNumber,
         buyer: res.args.buyer,
-        fileHash: res.args.fileHash,
+        fileHash: web3.toAscii(res.args.fileHash),
         price: web3.fromWei(res.args.price).toNumber()
       };
+      console.log('MyPurchase: ', myPurchase)
       this.props.eventSoarMyPurchase(myPurchase);
     })
 

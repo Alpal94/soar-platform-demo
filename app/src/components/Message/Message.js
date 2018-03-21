@@ -11,7 +11,7 @@ export const Message = (props) => (
     className={props.message.style}
     autoHideDuration={6000}
     open={props.message.open}
-    onRequestClose={props.handleMessageClose}
+    onClose={props.handleMessageClose}
     SnackbarContentProps={{
       'aria-describedby': 'message-id',
     }}

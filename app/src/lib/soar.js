@@ -76,8 +76,7 @@ Soar.prototype.watchUploadEvents = function(emitter) {
 Soar.prototype.watchMyPurchaseEvents = function(address, emitter) {
   return this.soarPromise
     .then((soar) => {
-      //todo add filtering by buyr address
-      var myPurchaseEvent = soar.Sale({fromBlock: 0, toBlock: 'latest'});
+      var myPurchaseEvent = soar.Sale({buyer: address}, {fromBlock: 0, toBlock: 'latest'});
       myPurchaseEvent.watch(emitter);
     });
 }

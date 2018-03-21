@@ -4,7 +4,7 @@ import {
   getFilesCount,
   uploadVerification, 
   uploadFile,
-  purchaseFile,
+  buyFile,
   verifyFile,
   fileExists
 } from '../lib/soarService';
@@ -60,7 +60,7 @@ export function* soarUploadFileSaga({web3, data}) {
 export function* soarPurchaseFileSaga({web3, fileHash, price}) {
   try {
     yield put({ type: types.FETCHING}); 
-    const result = yield call(purchaseFile, web3, fileHash, price);
+    const result = yield call(buyFile, web3, fileHash, price);
     yield put({ type: types.FETCH_COMPLETE});
     yield put({ type: types.SOAR_FILE_PURCHASE_SUCCESS, result: result });
   } catch (err) {

@@ -42,6 +42,7 @@ contract Soar is Ownable, Pausable {
     }
 
     function buyFile(bytes32 _fileHash) whenNotPaused external payable {
+        require(files[_fileHash].owner != msg.sender);
         uint weiAmount = msg.value;
         uint256 price = files[_fileHash].price;
         require(weiAmount == price);

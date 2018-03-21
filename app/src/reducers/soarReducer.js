@@ -6,7 +6,7 @@ const fetchFilesCount = (state, action) => {
 }
 
 const eventUpload = (state, action) => {
-  var res = { ...state, uploads: {...state.uploads, [action.value.transactionHash] : action.value}  }
+  var res = { ...state, uploads: {...state.uploads, [action.value.fileHash] : action.value}  }
   return res;
 }
 

@@ -45,7 +45,7 @@ export const uploadFile = (web3, previewUrl, url, pointWKT, metadata, fileHash, 
   }
 }
 
-export const purchaseFile = (web3, fileHash, price) => {
+export const buyFile = (web3, fileHash, price) => {
   try {
     setContractAddress(web3);
     let currentAddress = getCurrentAddress(web3);
