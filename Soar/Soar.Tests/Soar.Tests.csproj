@@ -15,9 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Soar.Authorizer.Ethereum\Soar.Authorizer.Ethereum.csproj" />
     <ProjectReference Include="..\Soar.Core\Soar.Core.csproj" />
+    <ProjectReference Include="..\Soar.Download.Details\Soar.Download.Details.csproj" />
     <ProjectReference Include="..\Soar.Upload.Details\Soar.Upload.Details.csproj" />
-    <ProjectReference Include="..\Soar.Upload\Soar.Upload.csproj" />
   </ItemGroup>
 
 </Project>

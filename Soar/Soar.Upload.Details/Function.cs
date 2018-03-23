@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 using Amazon.Lambda.Core;
 using Soar.Core.Models;
+using Soar.Core.Extensions;
+using Soar.Core.Services;
+using Soar.Core;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
@@ -13,27 +16,38 @@ namespace Soar.Upload.Details
 {
     public class Function
     {
-        
-        /// <summary>
-        /// A simple function that takes a string and does a ToUpper
-        /// </summary>
-        /// <param name="input"></param>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public Task<UploadDetailsRes> FunctionHandler(UploadDetailsReq input, ILambdaContext context)
+        private readonly IStorageService _storageService;
+
+        //todo refactor these constants into the enviroment variable
+        private readonly string BASE_URL = "https://f3cmroo3se.execute-api.ap-southeast-1.amazonaws.com/dev";
+        private readonly string SOAR_PREVIEWS_S3_BUCKET = "https://s3-ap-southeast-1.amazonaws.com/soar-previews/";
+
+
+        public Function()
         {
-            var baseUrl = "https://f3cmroo3se.execute-api.ap-southeast-1.amazonaws.com/dev";
-            var fileName = $"{input.fileHash}.{input.extension}";
+            _storageService = new DynamoDbStorageService();
+        }
+
+        public Function(IStorageService storageService)
+        {
+            _storageService = storageService;
+        }
+
+        public async Task<UploadDetailsRes> FunctionHandler(UploadDetailsReq req, ILambdaContext context)
+        {
+            var fileName = $"{req.fileHash}.{req.extension}";
             var res = new UploadDetailsRes()
             {
-                challenge = Guid.NewGuid().ToString(),
-                secret = Guid.NewGuid().ToString(),
-                uploadUrl = $"{baseUrl}/upload/{fileName}",
-                previewUrl = "https://s3-ap-southeast-1.amazonaws.com/soar-previews/" + fileName,
-                downloadUrl = $"{baseUrl}/download/{fileName}"
+                challenge = Guid.NewGuid().To32CharactesString(),
+                secret = Guid.NewGuid().To32CharactesString(),
+                uploadUrl = $"{BASE_URL}/upload/{fileName}",
+                previewUrl = $"{SOAR_PREVIEWS_S3_BUCKET}{fileName}",
+                downloadUrl = $"{BASE_URL}/download/{fileName}"
             };
-            //todo save it in dynamo db to verify when file is uploading, for now there is no check during uploading
-            return Task.FromResult(res);
+            var success = await _storageService.PutSecret(res.secret, res.challenge, req.address);
+            if (!success)
+                throw new SoarException("Error during storing verification secret in db");
+            return res;
         }
     }
 }

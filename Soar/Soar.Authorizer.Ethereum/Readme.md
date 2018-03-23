@@ -1,4 +1,4 @@
-# AWS Lambda Simple S3 Function Project
+# AWS Lambda Empty Function Project
 
 This starter project consists of:
 * Function.cs - class file containing a class with a single function handler method
@@ -6,9 +6,7 @@ This starter project consists of:
 
 You may also have a test project depending on the options selected.
 
-The generated function handler responds to events on an Amazon S3 bucket. The handler receives the bucket and object key details in an S3Event instance and returns the content type of the object as the function output. Replace the body of this method, and parameters, to suit your needs.
-
-After deploying your function you must configure an Amazon S3 bucket as an event source to trigger your Lambda function.
+The generated function handler is a simple method accepting a string argument that returns the uppercase equivalent of the input string. Replace the body of this method, and parameters, to suit your needs. 
 
 ## Here are some steps to follow from Visual Studio:
 
@@ -26,22 +24,22 @@ To view execution logs of invocations of your function use the Logs tab in the o
 
 ## Here are some steps to follow to get started from the command line:
 
-Once you have edited your function you can use the following command lines to build, test and deploy your function to AWS Lambda from the command line (these examples assume the project name is *SimpleS3Function*):
+Once you have edited your function you can use the following command lines to build, test and deploy your function to AWS Lambda from the command line (these examples assume the project name is *EmptyFunction*):
 
 Restore dependencies
 ```
-    cd "SimpleS3Function"
+    cd "Soar.Authorizer.Ethereum"
     dotnet restore
 ```
 
 Execute unit tests
 ```
-    cd "SimpleS3Function/test/SimpleS3Function.Tests"
+    cd "Soar.Authorizer.Ethereum/test/Soar.Authorizer.Ethereum.Tests"
     dotnet test
 ```
 
 Deploy function to AWS Lambda
 ```
-    cd "SimpleS3Function/src/SimpleS3Function"
+    cd "Soar.Authorizer.Ethereum/src/Soar.Authorizer.Ethereum"
     dotnet lambda deploy-function
 ```

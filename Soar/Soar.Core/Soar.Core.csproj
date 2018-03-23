@@ -4,4 +4,13 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Extensions\AmazonDynamoDBClientExtensions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.3.6.2" />
+    <PackageReference Include="Nethereum.Web3" Version="2.4.0" />
+  </ItemGroup>
+
 </Project>
