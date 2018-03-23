@@ -9,7 +9,7 @@ export const getSoarAddress = (networkId) => {
       return '0x0';
     //rinkeby
     case '4':
-      return '0x0';
+      return '0x84734ad2e474c00661867caf5c656a2398fc4d7b';
     case '42':
       return '0x0';
     case '5777':
