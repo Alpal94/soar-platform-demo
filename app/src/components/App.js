@@ -41,7 +41,6 @@ class App extends Component {
         fileHash: web3.toAscii(res.args.fileHash),
         price: web3.fromWei(res.args.price).toNumber()
       };
-      console.log('MyPurchase: ', myPurchase)
       this.props.eventSoarMyPurchase(myPurchase);
     })
 

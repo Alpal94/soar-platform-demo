@@ -83,7 +83,7 @@ export function* soarDownloadFileSaga({web3, fileHash, url}) {
       const verificationRes = yield call(verification, web3, details.challenge);
       console.log('Verification: ', verificationRes);
       //todo wait until the verification event is propagated
-      const file = yield call(downloadFile, web3, url, details.secret);
+      const file = yield call(downloadFile, web3, url, details.secret, verificationRes);
       fileDownload(file, url.split('/').pop());
       
 

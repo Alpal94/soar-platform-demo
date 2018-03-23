@@ -50,11 +50,15 @@ export const getDownloadDetails = (web3, url) => {
     }
 }
 
-export const downloadFile = (web3, url, secret) => {
-    console.log(url)
+export const downloadFile = (web3, url, secret, transactionHash) => {
+    console.log('Url: ', url, ' secret: ', secret, ' transactionHash: ', transactionHash)
     try {
         //let address = getCurrentAddress(web3);
-        let promise = axios.get(url + '?secret=' + secret)
+        let headers = {
+            "Soar-Secret": secret,
+            "Soar-Transaction-Hash": transactionHash
+        };
+        let promise = axios.get(url, { headers: headers})
             .then(res => {
                 console.log('DownloadFile res: ', res)
                 return _base64ToArrayBuffer(res.data);
