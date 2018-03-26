@@ -6,7 +6,8 @@ import {
   uploadFile,
   buyFile,
   verifyFile,
-  fileExists
+  fileExists,
+  watchForVerificationEvent
 } from '../lib/soarService';
 import { 
   getUploadDetails,
@@ -14,20 +15,19 @@ import {
   getDownloadDetails,
   downloadFile
 } from '../lib/soarSponsorService';
-
 import fileDownload from 'react-file-download';
 
 
 
 export function* getSoarFileCountsSaga({web3}) {
   try {
-    yield put({ type: types.FETCHING}); 
+    yield put({ type: types.PROGRESS_TEXT, value: "Loading total files count"}); 
     const fileCountResult = yield call(getFilesCount, web3);
-    yield put({ type: types.FETCH_COMPLETE});
-    
     yield put({ type: types.SOAR_FILE_COUNTS_SUCCESS, result: fileCountResult });
+    yield put({ type: types.PROGRESS_COMPLETE});
+    
   } catch (err) {
-    yield put({ type: types.FETCH_COMPLETE});
+    yield put({ type: types.PROGRESS_COMPLETE});
     yield put({ type: types.MESSAGE_ERROR, value: err.toString() });
   }
 };
@@ -75,25 +75,40 @@ export function* soarPurchaseFileSaga({web3, fileHash, price}) {
 
 export function* soarDownloadFileSaga({web3, fileHash, url}) {
   try {
-    yield put({ type: types.FETCHING}); 
+    // verify if user bought the file
+    yield put({ type: types.PROGRESS_TEXT, value: "Verifying purchase of file"}); 
     const result = yield call(verifyFile, web3, fileHash);
+    
     if(result){
+      // get secret and challenge from backend server for backend verification 
+      yield put({ type: types.PROGRESS_TEXT, value: "Get secret and challenge to verify with the network"}); 
       const details = yield call(getDownloadDetails, web3, url);
-      console.log('Download details: ', details);
-      const verificationRes = yield call(verification, web3, details.challenge);
-      console.log('Verification: ', verificationRes);
-      //todo wait until the verification event is propagated
-      const file = yield call(downloadFile, web3, url, details.secret, verificationRes);
-      fileDownload(file, url.split('/').pop());
       
+      // post challenge into the ethereum network to verify account
+      yield put({ type: types.PROGRESS_TEXT, value: "Verifying with the ethereum network for download"}); 
+      const verificationRes = yield call(verification, web3, details.challenge);
+      
+      // wait for verification event is fired into ethereum network 
+      yield put({ type: types.PROGRESS_TEXT, value: "Watching for verification event"}); 
+      const verificationPropagated = yield call(watchForVerificationEvent, web3, details.challenge);
+      
+      if(verificationPropagated){
+        // download file
+        yield put({ type: types.PROGRESS_TEXT, value: "Downloading file"}); 
+        const file = yield call(downloadFile, web3, url, details.secret, verificationRes);
+        fileDownload(file, url.split('/').pop());
+        yield put({ type: types.SOAR_FILE_DOWNLOAD_SUCCESS, result: result });
+      } else {
+        yield put({ type: types.MESSAGE_ERROR, value: "Verification propagation error" });
+      }
 
-      yield put({ type: types.SOAR_FILE_DOWNLOAD_SUCCESS, result: result });
+
     } else {
       yield put({ type: types.MESSAGE_ERROR, value: "You haven't bought this file." });
     }
-    yield put({ type: types.FETCH_COMPLETE});
+    yield put({ type: types.PROGRESS_COMPLETE});
   } catch (err) {
-    yield put({ type: types.FETCH_COMPLETE});
+    yield put({ type: types.PROGRESS_COMPLETE});
     yield put({ type: types.MESSAGE_ERROR, value: err.toString() });
   }
 };

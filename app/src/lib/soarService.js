@@ -83,6 +83,21 @@ export const fileExists = (web3, fileHash) => {
   }
 }
 
+export const watchForVerificationEvent = (web3, challenge) => {
+  try {
+    setContractAddress(web3);
+    const soar = new Soar(web3, soarAddress);
+    return new Promise(function (resolve, reject) {
+      soar.watchForVerificationEvent(challenge, resolve, reject);
+    }).then(res => {
+      return res;
+    })
+  } catch (err) {
+    console.log('watchForVerificationEvent: ', err)
+    return null;
+  }
+}
+
 export const watchUploadEvents = (web3, emitter) => {
   try {
     setContractAddress(web3);

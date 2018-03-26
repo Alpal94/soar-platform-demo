@@ -65,6 +65,22 @@ Soar.prototype.fileExists = function(fileHash, address) {
     });
 }
 
+Soar.prototype.watchForVerificationEvent = function(challenge, resolve, reject) {
+  return this.soarPromise
+    .then((soar) => {
+      var verificationEvent = soar.Verification({challange: challenge}, {fromBlock: 0, toBlock: 'latest'});
+      var emitter = (err, res) => {
+        verificationEvent.stopWatching();
+        if(res) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      }
+      verificationEvent.watch(emitter);
+    });
+}
+
 Soar.prototype.watchUploadEvents = function(emitter) {
   return this.soarPromise
     .then((soar) => {

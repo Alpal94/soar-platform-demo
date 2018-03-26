@@ -16,6 +16,11 @@ export const SOAR_FILE_DOWNLOAD_SUCCESS = 'SOAR_FILE_DOWNLOAD_SUCCESS';
 export const SOAR_EVENT_UPLOAD = 'SOAR_EVENT_UPLOAD';
 export const SOAR_EVENT_MY_SALE = 'SOAR_EVENT_MY_SALE';
 
+// for progress bar with text
+export const PROGRESS_TEXT = 'PROGRESS_TEXT';
+export const PROGRESS_COMPLETE = 'PROGRESS_COMPLETE';
+
+
 // for showing progress/onloading
 export const FETCHING = 'FETCHING';
 export const FETCH_COMPLETE = 'FETCH_COMPLETE';

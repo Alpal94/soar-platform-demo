@@ -3,11 +3,11 @@ import {MetaMask} from './MetaMask/MetaMask';
 import { Message } from './Message/Message';
 import Overview from './Overview/Overview';
 import Upload from './Upload/Upload';
+import Progress from './Shared/Progress'
 import { 
   watchUploadEvents,
   watchMyPurchaseEvents
 } from '../lib/soarService';
-import { LinearProgress } from 'material-ui/Progress';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 class App extends Component {
@@ -55,19 +55,19 @@ class App extends Component {
           </a>
           <a className="navbar-text" href="/upload">Upload file</a>
         </nav>
-        <div className="progress-container">
-          {this.props.isFetching && <LinearProgress />}
-        </div>
+        {this.props.progress && <Progress text={this.props.progress} />}  
+        
         <Message {...this.props}/>
         <MetaMask {...this.props} {...this.state} setWeb3={this.setWeb3}/>
-        <div className="container">
-        <BrowserRouter>
-          <Switch>
-            <Route exact path="/" render={() => (<Overview {...this.props} {...this.state}/>)}/>
-            <Route exact path="/upload" render={() => (<Upload {...this.props} {...this.state}/>)}/>
-          </Switch>
-        </BrowserRouter>
-        </div>
+          <BrowserRouter>
+            <Switch>
+              <Route exact path="/" render={() => (<Overview {...this.props} {...this.state}/>)}/>
+              <div className="container">
+                <Route exact path="/upload" render={() => (<Upload {...this.props} {...this.state}/>)}/>
+              </div>
+              
+            </Switch>
+          </BrowserRouter>
       </div>
     );
   }

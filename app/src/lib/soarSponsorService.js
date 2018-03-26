@@ -51,7 +51,6 @@ export const getDownloadDetails = (web3, url) => {
 }
 
 export const downloadFile = (web3, url, secret, transactionHash) => {
-    console.log('Url: ', url, ' secret: ', secret, ' transactionHash: ', transactionHash)
     try {
         //let address = getCurrentAddress(web3);
         let headers = {
@@ -60,7 +59,6 @@ export const downloadFile = (web3, url, secret, transactionHash) => {
         };
         let promise = axios.get(url, { headers: headers})
             .then(res => {
-                console.log('DownloadFile res: ', res)
                 return _base64ToArrayBuffer(res.data);
             });
         return promise;

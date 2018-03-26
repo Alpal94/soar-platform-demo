@@ -1,5 +1,6 @@
 export default {
   isFecthing: false,
+  progress: null,
   soar: {
     filesCount: null,
     uploads: {},

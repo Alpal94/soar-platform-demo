@@ -19,6 +19,7 @@ import {
 } from '../actions/metaMaskActions';
 
 const  mapStateToProps = (state) => ({
+  progress: state.progress,
   isFetching: state.isFetching,
   count: state.count,
   error: state.error,
