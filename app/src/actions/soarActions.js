@@ -11,11 +11,12 @@ export const soarUploadFileAction = (web3, data) => ({
   data: data
 });
 
-export const soarFilePurchaseAction = (web3, fileHash, price) => ({
+export const soarFilePurchaseAction = (web3, fileHash, price, url) => ({
   type: types.SOAR_FILE_PURCHASE,
   web3,
   fileHash,
-  price
+  price,
+  url
 });
 
 export const soarDownloadFileAction = (web3, fileHash, url) => ({

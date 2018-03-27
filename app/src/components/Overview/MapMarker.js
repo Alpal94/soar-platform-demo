@@ -7,7 +7,7 @@ const MapMarker = function(props) {
     let purchase = props.soar.myPurchases[upload.fileHash];
     let currentAddress = props.web3.eth.accounts[0];
     let owner = currentAddress === upload.owner;
-    let onBuyButtonClicked = (() => props.handleSoarFilePurchase(props.web3, upload.fileHash, upload.price));
+    let onBuyButtonClicked = (() => props.handleSoarFilePurchase(props.web3, upload.fileHash, upload.price, upload.url));
     let onDownloadButtonClicked = (() => props.handleSoarFileDownload(props.web3, upload.fileHash, upload.url));
     const buttonBuy = !owner && !purchase && (<button onClick={onBuyButtonClicked}>Buy</button>);
     const buttonDownload = !owner && purchase && (<button onClick={onDownloadButtonClicked}>Download</button>);

@@ -49,7 +49,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-dark bg-dark">
+        <nav className="navbar navbar-dark soar-bg-dark">
           <a className="navbar-brand" href="/">
             <img src="/assets/soar_logo.png" height="30" className="d-inline-block align-top" alt=""/>
           </a>
@@ -62,9 +62,10 @@ class App extends Component {
           <BrowserRouter>
             <Switch>
               <Route exact path="/" render={() => (<Overview {...this.props} {...this.state}/>)}/>
-              <div className="container">
-                <Route exact path="/upload" render={() => (<Upload {...this.props} {...this.state}/>)}/>
-              </div>
+              <Route exact path="/upload" render={() => (
+                <div className="container"><Upload {...this.props} {...this.state}/></div>)
+              }/>
+              
               
             </Switch>
           </BrowserRouter>

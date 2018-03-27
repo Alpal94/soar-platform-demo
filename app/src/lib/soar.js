@@ -19,12 +19,17 @@ Soar.prototype.filesCount = function(callback) {
     });
 }
 
-Soar.prototype.verification = function(challenge, address) {
+Soar.prototype.verification = function(challenge, fileHash, address) {
   return this.soarPromise
     .then((soar) => {
-      return soar.verificationAsync(challenge, { from: address })
+      console.log('Call verification: ', challenge, ' - ', fileHash)
+      return soar.verificationAsync(challenge, fileHash, { from: address })
     }).then(res => {
+      console.log(res)
+      
       return res;
+    }).catch(err => {
+      console.log(err)
     });
 }
 
@@ -38,10 +43,10 @@ Soar.prototype.uploadFile = function(previewUrl, url, pointWKT, metadata, fileHa
     });
 }
 
-Soar.prototype.buyFile = function(fileHash, price, address) {
+Soar.prototype.buyFile = function(fileHash, price, challenge, address) {
   return this.soarPromise
     .then((soar) => {
-      return soar.buyFileAsync(fileHash, { from: address, value: this.web3.toWei(price) })
+      return soar.buyFileAsync(fileHash, challenge, { from: address, value: this.web3.toWei(price) })
     }).then(res => {
       return res;
     });
@@ -68,7 +73,7 @@ Soar.prototype.fileExists = function(fileHash, address) {
 Soar.prototype.watchForVerificationEvent = function(challenge, resolve, reject) {
   return this.soarPromise
     .then((soar) => {
-      var verificationEvent = soar.Verification({challange: challenge}, {fromBlock: 0, toBlock: 'latest'});
+      var verificationEvent = soar.Verification({challenge: challenge}, {fromBlock: 0, toBlock: 'latest'});
       var emitter = (err, res) => {
         verificationEvent.stopWatching();
         if(res) {
