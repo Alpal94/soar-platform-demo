@@ -16,12 +16,13 @@ namespace Soar.Tests.Mocks
             _db = new Dictionary<string, SecretDetails>();
         }
         
-        public Task<bool> PutSecret(string secret, string challenge, string address)
+        public Task<bool> PutSecret(string secret, string challenge, string address, string fileHash)
         {
             var item = new SecretDetails()
             {
                 Challenge = challenge,
-                Address = address
+                Address = address,
+                FileHash = fileHash
             };
             _db.Add(secret, item);
             return Task.FromResult(true);

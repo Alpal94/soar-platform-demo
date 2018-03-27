@@ -8,5 +8,6 @@ namespace Soar.Core.Models
     {
         public string Challenge { get; set; }
         public string Address { get; set; }
+        public string FileHash { get; set; }
     }
 }

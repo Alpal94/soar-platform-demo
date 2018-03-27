@@ -7,21 +7,25 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Soar.Core.Models;
+using Newtonsoft.Json;
 
 namespace Soar.Core.Services
 {
     public class DynamoDbStorageService : IStorageService
     {
         private readonly AmazonDynamoDBClient _client;
+        private readonly Action<string> _logLine;
 
         private static string tableName = "SoarVerification";
         private static string columnSecret = "secret";
         private static string columnChallenge = "challenge";
         private static string columnAddress = "address";
+        private static string columnFileHash = "fileHash";
 
-        public DynamoDbStorageService()
+        public DynamoDbStorageService(Action<string> logLine = null)
         {
             _client = new AmazonDynamoDBClient(RegionEndpoint.APSoutheast1);
+            _logLine = logLine;
         }
 
         public DynamoDbStorageService(AmazonDynamoDBClient client)
@@ -29,7 +33,7 @@ namespace Soar.Core.Services
             _client = client;
         }
 
-        public async Task<bool> PutSecret(string secret, string challenge, string address)
+        public async Task<bool> PutSecret(string secret, string challenge, string address, string fileHash)
         {
             var request = new PutItemRequest
             {
@@ -38,7 +42,8 @@ namespace Soar.Core.Services
                     {
                         { columnSecret, new AttributeValue { S = secret } },
                         { columnChallenge, new AttributeValue { S = challenge } },
-                        { columnAddress, new AttributeValue { S = address } }
+                        { columnAddress, new AttributeValue { S = address } },
+                        { columnFileHash, new AttributeValue { S = fileHash } }
                     }
             };
             PutItemResponse dynamoDbResponse = await _client.PutItemAsync(request);
@@ -54,10 +59,12 @@ namespace Soar.Core.Services
                 ExpressionAttributeValues = new Dictionary<string, AttributeValue> {
                         {":v_Secret", new AttributeValue { S =  secret }}
                     },
-                ProjectionExpression = string.Format("{0}, {1}", columnAddress, columnChallenge),
+                ProjectionExpression = string.Format("{0}, {1}, {2}", columnAddress, columnChallenge, columnFileHash),
                 ConsistentRead = true
             };
             var response = await _client.QueryAsync(request);
+            if (response.Count == 0)
+                return null;
             var item = response.Items.First();
             AttributeValue attrAddress = null;
             item.TryGetValue(columnAddress, out attrAddress);
@@ -65,11 +72,15 @@ namespace Soar.Core.Services
             AttributeValue attrChallenge = null;
             item.TryGetValue(columnChallenge, out attrChallenge);
             var challenge = attrChallenge.S;
+            AttributeValue attrFileHash = null;
+            item.TryGetValue(columnFileHash, out attrFileHash);
+            var fileHash = attrFileHash.S;
 
             var res = new SecretDetails()
             {
                 Address = address,
-                Challenge = challenge
+                Challenge = challenge,
+                FileHash = fileHash
             };
             return res;
         }

@@ -11,5 +11,7 @@ namespace Soar.Core.Ethereum
         public string Sender { get; set; }
         [Parameter("bytes32", "challange", 2, true)]
         public byte[] Challange { get; set; }
+        [Parameter("bytes32", "fileHash", 3, false)]
+        public byte[] FileHash { get; set; }
     }
 }

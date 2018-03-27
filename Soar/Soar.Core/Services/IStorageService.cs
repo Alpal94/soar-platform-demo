@@ -8,7 +8,7 @@ namespace Soar.Core.Services
 {
     public interface IStorageService : IDisposable
     {
-        Task<bool> PutSecret(string secret, string challenge, string address);
+        Task<bool> PutSecret(string secret, string challenge, string address, string fileHash);
         Task<SecretDetails> GetSecretDetails(string secret);
     }
 }

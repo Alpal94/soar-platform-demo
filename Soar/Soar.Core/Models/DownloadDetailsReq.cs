@@ -7,5 +7,6 @@ namespace Soar.Core.Models
     public class DownloadDetailsReq
     {
         public string address { get; set; }
+        public string fileHash { get; set; }
     }
 }

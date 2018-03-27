@@ -8,6 +8,6 @@ namespace Soar.Core.Ethereum
 {
     public interface IEthereumService
     {
-        Task<SecretDetails> GetSecretDetails(string transactionHash);
+        Task<SecretDetails> GetSecretDetails(string transactionHash, VerificationEventType type);
     }
 }

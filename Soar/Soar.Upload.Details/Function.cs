@@ -8,6 +8,9 @@ using Soar.Core.Models;
 using Soar.Core.Extensions;
 using Soar.Core.Services;
 using Soar.Core;
+using Newtonsoft.Json;
+using Amazon.Lambda.APIGatewayEvents;
+using Soar.Core.Helpers;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
@@ -18,36 +21,44 @@ namespace Soar.Upload.Details
     {
         private readonly IStorageService _storageService;
 
-        //todo refactor these constants into the enviroment variable
-        private readonly string BASE_URL = "https://f3cmroo3se.execute-api.ap-southeast-1.amazonaws.com/dev";
-        private readonly string SOAR_PREVIEWS_S3_BUCKET = "https://s3-ap-southeast-1.amazonaws.com/soar-previews/";
-
-
-        public Function()
-        {
-            _storageService = new DynamoDbStorageService();
-        }
+        public Function() {}
 
         public Function(IStorageService storageService)
         {
             _storageService = storageService;
         }
 
-        public async Task<UploadDetailsRes> FunctionHandler(UploadDetailsReq req, ILambdaContext context)
+        public async Task<APIGatewayProxyResponse> FunctionHandler(APIGatewayProxyRequest req, ILambdaContext context)
         {
-            var fileName = $"{req.fileHash}.{req.extension}";
-            var res = new UploadDetailsRes()
+            context.Logger.LogLine(JsonConvert.SerializeObject(req));
+            var baseUrl = req.Headers["Host"];
+            var stage = req.RequestContext.Stage;
+            var soarPreviewsS3Bucket = req.StageVariables["soar_previews_s3_bucket"];
+
+            var reqDetails = JsonConvert.DeserializeObject<UploadDetailsReq>(req.Body);
+
+            using (var storageService = _storageService == null ? new DynamoDbStorageService() : _storageService)
             {
-                challenge = Guid.NewGuid().To32CharactesString(),
-                secret = Guid.NewGuid().To32CharactesString(),
-                uploadUrl = $"{BASE_URL}/upload/{fileName}",
-                previewUrl = $"{SOAR_PREVIEWS_S3_BUCKET}{fileName}",
-                downloadUrl = $"{BASE_URL}/download/{fileName}"
-            };
-            var success = await _storageService.PutSecret(res.secret, res.challenge, req.address);
-            if (!success)
-                throw new SoarException("Error during storing verification secret in db");
-            return res;
+                var fileName = $"{reqDetails.fileHash}.{reqDetails.extension}";
+                var details = new UploadDetailsRes()
+                {
+                    challenge = Guid.NewGuid().To32CharactesString(),
+                    secret = Guid.NewGuid().To32CharactesString(),
+                    uploadUrl = $"https://{baseUrl}/{stage}/upload/{fileName}",
+                    previewUrl = $"{soarPreviewsS3Bucket}/{fileName}",
+                    downloadUrl = $"https://{baseUrl}/{stage}/download/{fileName}"
+                };
+                var success = await storageService.PutSecret(details.secret, details.challenge, reqDetails.address, reqDetails.fileHash);
+                if (!success)
+                    throw new SoarException("Error during storing verification secret in db");
+                var res = new APIGatewayProxyResponse()
+                {
+                    Headers = APIGatewayHelpers.GetResponseHeaders(),
+                    Body = JsonConvert.SerializeObject(details),
+                    StatusCode = 200
+                };
+                return res;
+            }
         }
     }
 }

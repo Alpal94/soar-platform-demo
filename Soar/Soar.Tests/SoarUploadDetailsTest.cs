@@ -23,7 +23,7 @@ namespace Soar.Tests
                 address = "eth-address",
                 fileHash = "file-hash"
             };
-            var upperCase = await function.FunctionHandler(req, context);
+            //var upperCase = await function.FunctionHandler(req, context);
         }
     }
 }
