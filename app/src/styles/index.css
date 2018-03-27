@@ -6040,3 +6040,12 @@ a.text-dark:hover, a.text-dark:focus {
 
 body {
   min-width: 360px; }
+
+.soar-bg-yellow {
+  background-color: #eed926; }
+
+.soar-bg-dark {
+  background-color: #081b2c; }
+
+.soar-bg-dark .navbar-text {
+  color: #eed926; }
