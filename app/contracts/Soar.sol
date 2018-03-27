@@ -23,16 +23,24 @@ contract Soar is Ownable, Pausable {
 
     event Upload(address indexed owner, string previewUrl, string url, string pointWKT, string metadata, bytes32 fileHash, uint price);
     event Sale(address indexed buyer, bytes32 indexed fileHash, uint price);
-    event Verification(address account, bytes32 indexed challenge, bytes32 fileHash);
+    event VerificationSale(address account, bytes32 indexed challenge, bytes32 fileHash);
+    event VerificationUpload(address account, bytes32 indexed challenge, bytes32 fileHash);
 
     function Soar() public {
     }
 
-    function verification(bytes32 _challenge, bytes32 _fileHash) whenNotPaused public {
-        Verification(msg.sender, _challenge, _fileHash);
+    function verificationSale(bytes32 _challenge, bytes32 _fileHash) whenNotPaused public {
+        require(sales[_fileHash][msg.sender] > 0);
+        VerificationSale(msg.sender, _challenge, _fileHash);
+    }
+
+    function verificationUpload(bytes32 _challenge, bytes32 _fileHash) whenNotPaused public {
+        require(files[_fileHash].owner == address(0));
+        VerificationUpload(msg.sender, _challenge, _fileHash);
     }
 
     function fileUpload(string _previewUrl, string _url, string _pointWKT, string _metadata, bytes32 _fileHash, uint _price) whenNotPaused public {
+        require(files[_fileHash].owner == address(0));
         require(_price > 0);
         files[_fileHash].owner = msg.sender;
         files[_fileHash].price = _price;
@@ -50,14 +58,7 @@ contract Soar is Ownable, Pausable {
         sales[_fileHash][msg.sender] = weiAmount;
         owners[files[_fileHash].owner][_fileHash]++;
         Sale(msg.sender, _fileHash, price);
-        Verification(msg.sender, _challenge, _fileHash);
-    }
-
-    function verifySale(bytes32 _fileHash) whenNotPaused public view returns (
-            bool success_
-    ) {
-        uint price = sales[_fileHash][msg.sender];
-        success_ = price > 0;
+        VerificationSale(msg.sender, _challenge, _fileHash);
     }
 
     function fileExists(bytes32 _fileHash) whenNotPaused public view returns (

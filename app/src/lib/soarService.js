@@ -19,12 +19,25 @@ export const getFilesCount = (web3) => {
   }
 }
 
-export const verification = (web3, challenge, fileHash) => {
+export const verificationUpload = (web3, challenge, fileHash) => {
   try {
     setContractAddress(web3);
     const soar = new Soar(web3, soarAddress);
     let currentAddress = getCurrentAddress(web3);
-    const result = soar.verification(challenge, fileHash, currentAddress);
+    const result = soar.verificationUpload(challenge, fileHash, currentAddress);
+    return result;
+  } catch (err) {
+    console.log('uploadFile: ', err)
+    return null;
+  }
+}
+
+export const verificationSale = (web3, challenge, fileHash) => {
+  try {
+    setContractAddress(web3);
+    const soar = new Soar(web3, soarAddress);
+    let currentAddress = getCurrentAddress(web3);
+    const result = soar.verificationSale(challenge, fileHash, currentAddress);
     return result;
   } catch (err) {
     console.log('uploadFile: ', err)
@@ -83,12 +96,28 @@ export const fileExists = (web3, fileHash) => {
   }
 }
 
-export const watchForVerificationEvent = (web3, challenge) => {
+export const watchForVerificationSaleEvent = (web3, challenge) => {
   try {
     setContractAddress(web3);
     const soar = new Soar(web3, soarAddress);
     return new Promise(function (resolve, reject) {
-      soar.watchForVerificationEvent(challenge, resolve, reject);
+      soar.watchForVerificationSaleEvent(challenge, resolve, reject);
+    }).then(res => {
+      return res;
+    })
+  } catch (err) {
+    console.log('watchForVerificationEvent: ', err)
+    return null;
+  }
+}
+
+
+export const watchForVerificationUploadEvent = (web3, challenge) => {
+  try {
+    setContractAddress(web3);
+    const soar = new Soar(web3, soarAddress);
+    return new Promise(function (resolve, reject) {
+      soar.watchForVerificationUploadEvent(challenge, resolve, reject);
     }).then(res => {
       return res;
     })

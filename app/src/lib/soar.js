@@ -19,11 +19,25 @@ Soar.prototype.filesCount = function(callback) {
     });
 }
 
-Soar.prototype.verification = function(challenge, fileHash, address) {
+Soar.prototype.verificationSale = function(challenge, fileHash, address) {
   return this.soarPromise
     .then((soar) => {
       console.log('Call verification: ', challenge, ' - ', fileHash)
-      return soar.verificationAsync(challenge, fileHash, { from: address })
+      return soar.verificationSaleAsync(challenge, fileHash, { from: address })
+    }).then(res => {
+      console.log(res)
+      
+      return res;
+    }).catch(err => {
+      console.log(err)
+    });
+}
+
+Soar.prototype.verificationUpload = function(challenge, fileHash, address) {
+  return this.soarPromise
+    .then((soar) => {
+      console.log('Call verification: ', challenge, ' - ', fileHash)
+      return soar.verificationUploadAsync(challenge, fileHash, { from: address })
     }).then(res => {
       console.log(res)
       
@@ -70,13 +84,30 @@ Soar.prototype.fileExists = function(fileHash, address) {
     });
 }
 
-Soar.prototype.watchForVerificationEvent = function(challenge, resolve, reject) {
+Soar.prototype.watchForVerificationSaleEvent = function(challenge, resolve, reject) {
   return this.soarPromise
     .then((soar) => {
-      var verificationEvent = soar.Verification({challenge: challenge}, {fromBlock: 0, toBlock: 'latest'});
+      var verificationEvent = soar.VerificationSale({challenge: challenge}, {fromBlock: 0, toBlock: 'latest'});
       var emitter = (err, res) => {
         verificationEvent.stopWatching();
         if(res) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      }
+      verificationEvent.watch(emitter);
+    });
+}
+
+Soar.prototype.watchForVerificationUploadEvent = function(challenge, resolve, reject) {
+  return this.soarPromise
+    .then((soar) => {
+      var verificationEvent = soar.VerificationUpload({challenge: challenge}, {fromBlock: 0, toBlock: 'latest'});
+      var emitter = (err, res) => {
+        verificationEvent.stopWatching();
+        if(res) {
+          console.log('VerificationUploadEvent: ', res)
           resolve(true);
         } else {
           resolve(false);

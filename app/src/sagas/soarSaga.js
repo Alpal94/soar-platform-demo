@@ -2,12 +2,13 @@ import { put, call } from 'redux-saga/effects';
 import * as types from '../constants/actionTypes';
 import { 
   getFilesCount,
-  verification, 
+  verificationSale, 
+  verificationUpload, 
   uploadFile,
   buyFile,
   verifyFile,
-  fileExists,
-  watchForVerificationEvent
+  watchForVerificationSaleEvent,
+  watchForVerificationUploadEvent
 } from '../lib/soarService';
 import { 
   getUploadDetails,
@@ -35,28 +36,33 @@ export function* getSoarFileCountsSaga({web3}) {
 export function* soarUploadFileSaga({web3, data}) {
   try {
     console.log('File: ', data)
-    yield put({ type: types.FETCHING}); 
-    const exists = yield call(fileExists, web3, data.fileHash);
-    
-    if(!exists) {
-      const details = yield call(getUploadDetails, web3, data.fileHash, data.extension);
-      console.log('FileUploadDetails: ', details);
-      const verificationRes = yield call(verification, web3, details.challenge, data.fileHash);
-      console.log('Verification: ', verificationRes);
-      //todo wait until the verification event is propagated
-      const uploadResult = yield call(uploadFileToSponsor, data.file, details.uploadUrl, details.secret);
+    yield put({ type: types.PROGRESS_TEXT, value: "Preparing for upload"}); 
+    const details = yield call(getUploadDetails, web3, data.fileHash, data.extension);
+    console.log('FileUploadDetails: ', details);
+
+    yield put({ type: types.PROGRESS_TEXT, value: "Verification for upload"}); 
+    const verificationRes = yield call(verificationUpload, web3, details.challenge, data.fileHash);
+    console.log('Verification: ', verificationRes);
+    if(verificationRes){
+      yield put({ type: types.PROGRESS_TEXT, value: "Watching for verification event"}); 
+      const verificationPropagated = yield call(watchForVerificationUploadEvent, web3, details.challenge);
+      console.log('Verification propagated: ', verificationPropagated)
+  
+      yield put({ type: types.PROGRESS_TEXT, value: "Upload image to soar storage"}); 
+      const uploadResult = yield call(uploadFileToSponsor, data.file, details.uploadUrl, details.secret, verificationRes);
       console.log('UploadResult: ', uploadResult);
+  
+      yield put({ type: types.PROGRESS_TEXT, value: "Upload image hash and info to soar"}); 
       const result = yield call(uploadFile, web3, details.previewUrl, details.downloadUrl, data.pointWKT, "{\"resolution\": 1048}", data.fileHash, data.price);
       yield put({ type: types.SOAR_FILE_UPLOAD_SUCCESS, result: result });
-    
+  
     } else {
-      yield put({ type: types.MESSAGE_ERROR, value: "File already exists on the platform." });
-
+      yield put({ type: types.MESSAGE_ERROR, value: "Image already exists on the network." });
     }
-    
-    yield put({ type: types.FETCH_COMPLETE});
+  
+    yield put({ type: types.PROGRESS_COMPLETE});
   } catch (err) {
-    yield put({ type: types.FETCH_COMPLETE});
+    yield put({ type: types.PROGRESS_COMPLETE});
     yield put({ type: types.MESSAGE_ERROR, value: err.toString() });
   }
 };
@@ -65,14 +71,16 @@ export function* soarPurchaseFileSaga({web3, fileHash, price, url}) {
   try {
     // get secret and challenge from backend server for backend verification 
     yield put({ type: types.PROGRESS_TEXT, value: "Preparing for purchase"}); 
-    const details = yield call(getDownloadDetails, web3, url);
-
+    const details = yield call(getDownloadDetails, web3, url, fileHash);
+    console.log('Challenge details: ', details);
     yield put({ type: types.PROGRESS_TEXT, value: "Buying "}); 
     const result = yield call(buyFile, web3, fileHash, price, details.challenge);
-    console.log(result)
+    console.log('TxnHash: ', result);
+    
     yield put({ type: types.PROGRESS_TEXT, value: "Watching for verification event"}); 
-    const verificationPropagated = yield call(watchForVerificationEvent, web3, details.challenge);
-
+    const verificationPropagated = yield call(watchForVerificationSaleEvent, web3, details.challenge);
+    console.log('Verification propagated: ', verificationPropagated)
+    
     if(verificationPropagated){
       // download file
       yield put({ type: types.PROGRESS_TEXT, value: "Downloading file"}); 
@@ -94,37 +102,28 @@ export function* soarPurchaseFileSaga({web3, fileHash, price, url}) {
 
 export function* soarDownloadFileSaga({web3, fileHash, url}) {
   try {
-    // verify if user bought the file
-    yield put({ type: types.PROGRESS_TEXT, value: "Verifying purchase of file"}); 
-    const result = yield call(verifyFile, web3, fileHash);
+    // get secret and challenge from backend server for backend verification 
+    yield put({ type: types.PROGRESS_TEXT, value: "Get secret and challenge to verify with the network"}); 
+    const details = yield call(getDownloadDetails, web3, url, fileHash);
+    console.log('Details: ', details)
+    // post challenge into the ethereum network to verify account
+    yield put({ type: types.PROGRESS_TEXT, value: "Verifying with the ethereum network for download"}); 
+    const verificationRes = yield call(verificationSale, web3, details.challenge, fileHash);
     
-    if(result){
-      // get secret and challenge from backend server for backend verification 
-      yield put({ type: types.PROGRESS_TEXT, value: "Get secret and challenge to verify with the network"}); 
-      const details = yield call(getDownloadDetails, web3, url);
-      
-      // post challenge into the ethereum network to verify account
-      yield put({ type: types.PROGRESS_TEXT, value: "Verifying with the ethereum network for download"}); 
-      const verificationRes = yield call(verification, web3, details.challenge, fileHash);
-      
-      // wait for verification event is fired into ethereum network 
-      yield put({ type: types.PROGRESS_TEXT, value: "Watching for verification event"}); 
-      const verificationPropagated = yield call(watchForVerificationEvent, web3, details.challenge);
-      
-      if(verificationPropagated){
-        // download file
-        yield put({ type: types.PROGRESS_TEXT, value: "Downloading file"}); 
-        const file = yield call(downloadFile, web3, url, details.secret, verificationRes);
-        fileDownload(file, url.split('/').pop());
-        yield put({ type: types.SOAR_FILE_DOWNLOAD_SUCCESS, result: result });
-      } else {
-        yield put({ type: types.MESSAGE_ERROR, value: "Verification propagation error" });
-      }
-
-
+    // wait for verification event is fired into ethereum network 
+    yield put({ type: types.PROGRESS_TEXT, value: "Watching for verification event"}); 
+    const verificationPropagated = yield call(watchForVerificationSaleEvent, web3, details.challenge);
+    
+    if(verificationPropagated){
+      // download file
+      yield put({ type: types.PROGRESS_TEXT, value: "Downloading file"}); 
+      const file = yield call(downloadFile, web3, url, details.secret, verificationRes);
+      fileDownload(file, url.split('/').pop());
     } else {
-      yield put({ type: types.MESSAGE_ERROR, value: "You haven't bought this file." });
+      yield put({ type: types.MESSAGE_ERROR, value: "Verification propagation error" });
     }
+
+
     yield put({ type: types.PROGRESS_COMPLETE});
   } catch (err) {
     yield put({ type: types.PROGRESS_COMPLETE});

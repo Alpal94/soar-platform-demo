@@ -5,7 +5,7 @@ export const getUploadDetails = (web3, fileHash, extension) => {
     try {
         let address = getCurrentAddress(web3);
         let promise = axios.post(
-                'https://f3cmroo3se.execute-api.ap-southeast-1.amazonaws.com/dev/upload/details',
+                'https://f3cmroo3se.execute-api.ap-southeast-1.amazonaws.com/rinkeby/upload/details',
                 {address, fileHash, extension}
             )
             .then(res => {
@@ -18,13 +18,18 @@ export const getUploadDetails = (web3, fileHash, extension) => {
     }
 }
 
-export const uploadFileToSponsor = (file, url, secret) => {
+export const uploadFileToSponsor = (file, url, secret, txnHash) => {
     try {
         console.log(file)
+        let params = {
+            "soarSecret": secret,
+            "txnHash": txnHash
+        };
         const config = {
             headers: {
                 'content-type': file.type
-            }
+            },
+            params: params
         }
         return post(url, file, config).then(res => {
             return res;
@@ -35,29 +40,29 @@ export const uploadFileToSponsor = (file, url, secret) => {
     }
 }
 
-export const getDownloadDetails = (web3, url) => {
+export const getDownloadDetails = (web3, url, fileHash) => {
     console.log(url)
     try {
         let address = getCurrentAddress(web3);
-        let promise = axios.post(url, {address})
+        let promise = axios.post(url, {address, fileHash})
             .then(res => {
                 return res.data;
             });
         return promise;
     } catch (err) {
-      console.log('getUploadDetails: ', err)
+      console.log('getDownloadDetails: ', err)
       return null;
     }
 }
 
-export const downloadFile = (web3, url, secret, transactionHash) => {
+export const downloadFile = (web3, url, secret, txnHash) => {
     try {
         //let address = getCurrentAddress(web3);
-        let headers = {
-            "Soar-Secret": secret,
-            "Soar-Transaction-Hash": transactionHash
+        let params = {
+            "soarSecret": secret,
+            "txnHash": txnHash
         };
-        let promise = axios.get(url, { headers: headers})
+        let promise = axios.get(url, { params: params})
             .then(res => {
                 return _base64ToArrayBuffer(res.data);
             });
