@@ -67,9 +67,9 @@ namespace Soar.Upload.Details
             switch (contentType)
             {
                 case "image/jpeg":
-                    return ".jpg";
+                    return "jpg";
                 case "image/jpg":
-                    return ".jpg";
+                    return "jpg";
                 default:
                     throw new SoarException("Given content type is not supported");
             }
