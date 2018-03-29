@@ -1,12 +1,12 @@
 import { getCurrentAddress } from './web3Service';
 import axios, { post } from 'axios';
 
-export const getUploadDetails = (web3, fileHash, extension) => {
+export const getUploadDetails = (web3, fileHash, contentType) => {
     try {
         let address = getCurrentAddress(web3);
         let promise = axios.post(
                 'https://f3cmroo3se.execute-api.ap-southeast-1.amazonaws.com/rinkeby/upload/details',
-                {address, fileHash, extension}
+                {address, fileHash, contentType}
             )
             .then(res => {
                 return res.data;

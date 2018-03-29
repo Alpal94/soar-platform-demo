@@ -36,10 +36,11 @@ namespace Soar.Upload.Details
             var soarPreviewsS3Bucket = req.StageVariables["soar_previews_s3_bucket"];
 
             var reqDetails = JsonConvert.DeserializeObject<UploadDetailsReq>(req.Body);
+            string extension = GetExtensionForContentType(reqDetails.contentType);
 
             using (var storageService = _storageService == null ? new DynamoDbStorageService() : _storageService)
             {
-                var fileName = $"{reqDetails.fileHash}.{reqDetails.extension}";
+                var fileName = $"{reqDetails.fileHash}.{extension}";
                 var details = new UploadDetailsRes()
                 {
                     challenge = Guid.NewGuid().To32CharactesString(),
@@ -58,6 +59,19 @@ namespace Soar.Upload.Details
                     StatusCode = 200
                 };
                 return res;
+            }
+        }
+
+        private string GetExtensionForContentType(string contentType)
+        {
+            switch (contentType)
+            {
+                case "image/jpeg":
+                    return ".jpg";
+                case "image/jpg":
+                    return ".jpg";
+                default:
+                    throw new SoarException("Given content type is not supported");
             }
         }
     }

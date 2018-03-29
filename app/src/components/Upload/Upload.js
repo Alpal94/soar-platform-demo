@@ -6,7 +6,6 @@ import ChooseFile from './ChooseFile';
 import FileInfo from './FileInfo';
 import ChooseLocation from './ChooseLocation';
 
-
 class Upload extends Component {
 
     constructor(props) {
@@ -14,9 +13,12 @@ class Upload extends Component {
         this.state = {
             file: null,
             fileHash: '',
-            exifdata: null
+            exifdata: null,
+            metadata: null,
+            location: null
         };
         this.reset = this.reset.bind(this);
+        this.upload = this.upload.bind(this);
         this.onFileChosen = this.onFileChosen.bind(this);
         this.onFileInfoChange = this.onFileInfoChange.bind(this);
         this.onLocationChange = this.onLocationChange.bind(this);
@@ -27,7 +29,6 @@ class Upload extends Component {
     }
 
     onFileChosen(file){
-        console.log(file);
         if(file && file !== this.state.file){
             this.setState({file: file});
             var promises = [];
@@ -49,19 +50,29 @@ class Upload extends Component {
     }
 
     onFileInfoChange(values){
-        console.log("FileInfoChanges: ", values);
+        this.setState({metadata: values});
     }
 
     onLocationChange(loc){
-        console.log("LocationChange: ", loc);
+        this.setState({location: loc})
+    }
+
+    upload(){
+        if(this.state.file && this.state.metadata && this.state.location){
+            let loc = this.state.location;
+            let metadata = JSON.stringify(this.state.metadata);
+            let pointWKT = 'POINT(' + loc.lng + ' ' + loc.lat + ')';
+            this.props.handleSoarFileUpload(this.props.web3, this.state.file, pointWKT, metadata)
+        }
     }
 
     reset() {
-        console.log('reset')
         this.setState({
             file: null,
             fileHash: '',
-            exifdata: null
+            exifdata: null,
+            locationWKT: null,
+            metadata: null
         });
     }
 
@@ -90,7 +101,7 @@ class Upload extends Component {
                 <div className="col-sm-12">
                     <div className="button-panel">
                         <button className="btn btn-danger" onClick={this.reset}>Reset</button>
-                        <button className="btn btn-success">Upload</button>
+                        <button className="btn btn-success" onClick={this.upload} >Upload</button>
                     </div>
                 </div>
             </div>

@@ -8,6 +8,6 @@ namespace Soar.Core.Models
     {
         public string fileHash { get; set; }
         public string address { get; set; }
-        public string extension { get; set; }
+        public string contentType { get; set; }
     }
 }

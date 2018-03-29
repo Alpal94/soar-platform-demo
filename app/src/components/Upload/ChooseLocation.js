@@ -12,13 +12,13 @@ class ChooseLocation extends React.Component {
                 lat : 0,
                 lng : 0
             },
-            zoom: 13
+            zoom: 0,
+            exifdata: {}
         };
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(event) {
-        console.log('Marke: ', event.target)
         let latlng = event.target._latlng;
         let map = event.target._map;
         this.setState({
@@ -29,9 +29,10 @@ class ChooseLocation extends React.Component {
     }
 
     componentWillReceiveProps(props){
-        if(props.exifdata){
-            let exif = props.exifdata;
-            if(exif && exif.GPSLatitude && exif.GPSLongitude){
+        let exif = props.exifdata || {};
+        if(this.state.exifdata !== exif){
+            let state = {};
+            if(exif.GPSLatitude && exif.GPSLongitude){
                 let lat = toDecimal(exif.GPSLatitude);
                 if(exif.GPSLatitudeRef === 'S'){
                     lat = -lat;
@@ -40,22 +41,27 @@ class ChooseLocation extends React.Component {
                 if(exif.GPSLongitudeRef === 'W'){
                     lon = -lon;
                 }
-                this.setState({
+                let latlng = {
+                    lat: lat,
+                    lng: lon
+                };
+                state = {
+                    latlng: latlng,
+                    zoom: 13
+                };
+                this.props.onLocationChange(latlng);
+            } else {
+                state = {
                     latlng: {
-                        lat: lat,
-                        lng: lon
-                    }
-                });
+                        lat : 0,
+                        lng : 0
+                    },
+                    zoom: 0
+                };
             }
-        } else {
-            this.setState({
-                latlng: {
-                    lat : 0,
-                    lng : 0
-                },
-                zoom: 13
-            })
-        }
+            state.exifdata = exif;
+            this.setState(state);
+        } 
     }
 
     render() {

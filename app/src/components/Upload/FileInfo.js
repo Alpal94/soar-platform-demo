@@ -3,20 +3,27 @@ import { Control, LocalForm, actions } from 'react-redux-form';
 
 class FileInfo extends React.Component {
 
+    constructor(props){
+        super(props);
+        this.state = {
+            exif: {}
+        };
+    }
+
     attachDispatch(dispatch) {
         this.formDispatch = dispatch;
     }
 
     componentWillReceiveProps(props){
-        let exif = props.exifdata;
-        if(!exif){
-            exif = {};
+        let exif = props.exifdata || {};
+        if(this.state.exif !== exif){
+            this.setState({exif: exif});
+            this.formDispatch(actions.change('info.date', exif.DateTime || ''));
+            this.formDispatch(actions.change('info.make', exif.Make || ''));
+            this.formDispatch(actions.change('info.model', exif.Model || ''));
+            this.formDispatch(actions.change('info.dimX', exif.PixelXDimension || ''));
+            this.formDispatch(actions.change('info.dimY', exif.PixelYDimension || ''));
         }
-        this.formDispatch(actions.change('info.date', exif.DateTime || ''));
-        this.formDispatch(actions.change('info.make', exif.Make || ''));
-        this.formDispatch(actions.change('info.model', exif.Model || ''));
-        this.formDispatch(actions.change('info.dimX', exif.PixelXDimension || ''));
-        this.formDispatch(actions.change('info.dimY', exif.PixelYDimension || ''));
     }
 
     render() {

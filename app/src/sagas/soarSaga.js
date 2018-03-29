@@ -16,6 +16,7 @@ import {
   downloadFile
 } from '../lib/soarSponsorService';
 import fileDownload from 'react-file-download';
+import getMd5Hash from '../helpers/FileHashHelper';
 
 
 
@@ -32,15 +33,17 @@ export function* getSoarFileCountsSaga({web3}) {
   }
 };
 
-export function* soarUploadFileSaga({web3, data}) {
+export function* soarUploadFileSaga({web3, file, pointWKT, metadata}) {
   try {
-    console.log('File: ', data)
+    const fileHash = yield call(getMd5Hash, file);
+    const contentType = file.type;
+    console.log('File: ',pointWKT, ' ', metadata, ' ', file, ' ', fileHash, ' ', contentType);
     yield put({ type: types.PROGRESS_TEXT, value: "Preparing for upload"}); 
-    const details = yield call(getUploadDetails, web3, data.fileHash, data.extension);
+    const details = yield call(getUploadDetails, web3, fileHash, contentType);
     console.log('FileUploadDetails: ', details);
 
     yield put({ type: types.PROGRESS_TEXT, value: "Verification for upload"}); 
-    const verificationRes = yield call(verificationUpload, web3, details.challenge, data.fileHash);
+    const verificationRes = yield call(verificationUpload, web3, details.challenge, fileHash);
     console.log('Verification: ', verificationRes);
     if(verificationRes){
       yield put({ type: types.PROGRESS_TEXT, value: "Watching for verification event"}); 
@@ -48,11 +51,11 @@ export function* soarUploadFileSaga({web3, data}) {
       console.log('Verification propagated: ', verificationPropagated)
   
       yield put({ type: types.PROGRESS_TEXT, value: "Upload image to soar storage"}); 
-      const uploadResult = yield call(uploadFileToSponsor, data.file, details.uploadUrl, details.secret, verificationRes);
+      const uploadResult = yield call(uploadFileToSponsor, file, details.uploadUrl, details.secret, verificationRes);
       console.log('UploadResult: ', uploadResult);
   
       yield put({ type: types.PROGRESS_TEXT, value: "Upload image hash and info to soar"}); 
-      const result = yield call(uploadFile, web3, details.previewUrl, details.downloadUrl, data.pointWKT, "{\"resolution\": 1048}", data.fileHash, data.price);
+      const result = yield call(uploadFile, web3, details.previewUrl, details.downloadUrl, pointWKT, metadata, fileHash);
       yield put({ type: types.SOAR_FILE_UPLOAD_SUCCESS, result: result });
   
     } else {
