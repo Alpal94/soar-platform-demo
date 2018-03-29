@@ -59,10 +59,8 @@ class Upload extends Component {
 
     upload(){
         if(this.state.file && this.state.metadata && this.state.location){
-            let loc = this.state.location;
             let metadata = JSON.stringify(this.state.metadata);
-            let pointWKT = 'POINT(' + loc.lng + ' ' + loc.lat + ')';
-            this.props.handleSoarFileUpload(this.props.web3, this.state.file, pointWKT, metadata)
+            this.props.handleSoarFileUpload(this.props.web3, this.state.file, metadata, this.state.location)
         }
     }
 

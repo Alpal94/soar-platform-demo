@@ -47,9 +47,10 @@ Soar.prototype.verificationUpload = function(challenge, fileHash, address) {
     });
 }
 
-Soar.prototype.uploadFile = function(previewUrl, url, pointWKT, metadata, fileHash, price, address) {
+Soar.prototype.uploadFile = function(previewUrl, url, pointWKT, metadata, fileHash, geohash, price, address) {
   return this.soarPromise
     .then((soar) => {
+      //todo include geohash in the smart contract
       console.log(previewUrl, url, pointWKT, metadata, fileHash, this.web3.toWei(price))
       return soar.fileUploadAsync(previewUrl, url, pointWKT, metadata, fileHash, this.web3.toWei(price), { from: address })
     }).then(res => {

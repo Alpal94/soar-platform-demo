@@ -17,8 +17,7 @@ import {
 } from '../lib/soarSponsorService';
 import fileDownload from 'react-file-download';
 import getMd5Hash from '../helpers/FileHashHelper';
-
-
+import Geohash from 'geo-hash';
 
 export function* getSoarFileCountsSaga({web3}) {
   try {
@@ -33,11 +32,13 @@ export function* getSoarFileCountsSaga({web3}) {
   }
 };
 
-export function* soarUploadFileSaga({web3, file, pointWKT, metadata}) {
+export function* soarUploadFileSaga({web3, file, metadata, latlng}) {
   try {
     const fileHash = yield call(getMd5Hash, file);
     const contentType = file.type;
-    console.log('File: ',pointWKT, ' ', metadata, ' ', file, ' ', fileHash, ' ', contentType);
+    let pointWKT = 'POINT(' + latlng.lng + ' ' + latlng.lat + ')';
+    const geohash = Geohash.encode(latlng.lat, latlng.lng, 12);
+    console.log('File: ', pointWKT, ' ', metadata, ' ', file, ' ', fileHash, ' ', contentType);
     yield put({ type: types.PROGRESS_TEXT, value: "Preparing for upload"}); 
     const details = yield call(getUploadDetails, web3, fileHash, contentType);
     console.log('FileUploadDetails: ', details);
@@ -55,7 +56,7 @@ export function* soarUploadFileSaga({web3, file, pointWKT, metadata}) {
       console.log('UploadResult: ', uploadResult);
   
       yield put({ type: types.PROGRESS_TEXT, value: "Upload image hash and info to soar"}); 
-      const result = yield call(uploadFile, web3, details.previewUrl, details.downloadUrl, pointWKT, metadata, fileHash);
+      const result = yield call(uploadFile, web3, details.previewUrl, details.downloadUrl, pointWKT, metadata, fileHash, geohash);
       yield put({ type: types.SOAR_FILE_UPLOAD_SUCCESS, result: result });
   
     } else {

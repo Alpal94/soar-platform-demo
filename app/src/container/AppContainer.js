@@ -33,8 +33,8 @@ const mapDispatchToProps = (dispatch) => {
     handleSoarFilesCount: (web3) => {
       dispatch(soarFilesCountAction(web3));
     },
-    handleSoarFileUpload: (web3, file, pointWKT, metadata) => {
-      dispatch(soarUploadFileAction(web3, file, pointWKT, metadata));
+    handleSoarFileUpload: (web3, file, metadata, latlng) => {
+      dispatch(soarUploadFileAction(web3, file, metadata, latlng));
     },
     handleSoarFilePurchase: (web3, fileHash, price, url) => {
       dispatch(soarFilePurchaseAction(web3, fileHash, price, url));
