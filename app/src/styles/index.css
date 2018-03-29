@@ -6049,3 +6049,7 @@ body {
 
 .soar-bg-dark .navbar-text {
   color: #eed926; }
+
+.leaflet-container {
+  height: 100%;
+  width: 100%; }

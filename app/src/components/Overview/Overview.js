@@ -12,21 +12,20 @@ class Overview extends Component {
         const position = [-31.9550404, 115.9303017];
         const zoom = 10;
         return (
-            <div>
-                <div className="map-container">
-                    <Map center={position} zoom={zoom}>
-                        <TileLayer
-                            attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-                            url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
-                        />
-                        {Object.keys(this.props.soar.uploads).map(key => 
-                            <MapMarker key={key} {...this.props} fileHash={key}/>
-                        )}
-                    </Map>
-                    <p>Total uploaded files: {this.props.soar.filesCount}</p>
+            <div className="overview-map-container">
+                <Map center={position} zoom={zoom}>
+                    <TileLayer
+                        attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                        url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+                    />
+                    {Object.keys(this.props.soar.uploads).map(key => 
+                        <MapMarker key={key} {...this.props} fileHash={key}/>
+                    )}
+                </Map>
+                <p>Total uploaded files: {this.props.soar.filesCount}</p>
 
-                </div>
             </div>
+            
         );
     }
 }

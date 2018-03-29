@@ -6,7 +6,6 @@ import {
   verificationUpload, 
   uploadFile,
   buyFile,
-  verifyFile,
   watchForVerificationSaleEvent,
   watchForVerificationUploadEvent
 } from '../lib/soarService';
