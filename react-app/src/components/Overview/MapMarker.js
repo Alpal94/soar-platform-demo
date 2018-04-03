@@ -16,8 +16,6 @@ const MapMarker = function(props) {
     let info = JSON.parse(upload.metadata);
     let droneCamera = info.make + " / " + info.model;
     let date = new Date(info.date);
-    console.log(date);
-    console.log(info);
     return (
         <Marker position={position} >
             <Popup>

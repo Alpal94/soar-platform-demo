@@ -1,4 +1,4 @@
-# Soar React App
+# Soar Platform - react app
 
 This is create-app-project using ethereum blockchain
 
