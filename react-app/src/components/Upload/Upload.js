@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import getMd5Hash from '../../helpers/FileHashHelper';
-import './Upload.css';
 import EXIF from 'exif-js';
 import ChooseFile from './ChooseFile';
 import FileInfo from './FileInfo';
 import ChooseLocation from './ChooseLocation';
+import './Upload.css';
 
 class Upload extends Component {
 

@@ -1,2 +1,23 @@
-// My Bootstrap configuration
-@import 'custom_bootstrap';
+$soar-yellow: #eed926;
+$soar-dark: #081b2c;
+
+body {
+    min-width: 360px;
+}
+
+.soar-bg-yellow {
+    background-color: $soar-yellow;
+}
+
+.soar-bg-dark {
+    background-color: $soar-dark;
+}
+
+.soar-bg-dark .navbar-text {
+    color: $soar-yellow;
+}
+
+.leaflet-container {
+    height: 100%;
+    width: 100%;
+}
