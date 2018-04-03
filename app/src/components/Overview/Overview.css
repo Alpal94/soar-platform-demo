@@ -5,10 +5,25 @@
     width: 100%;
 }
 
+.overview-map-container .leaflet-popup-content-wrapper {
+}
+
+.overview-map-container .leaflet-container a.leaflet-popup-close-button {
+
+}
+
 .overview-popup img{
-    width: 300px;
+    width: 100%;
 }
 
 .overview-popup{
-    width: 300px;
+
+}
+
+.overview-popup .info-panel {
+    margin-top: 10px;
+}
+
+.overview-popup .info-panel label {
+    width: 100px;
 }

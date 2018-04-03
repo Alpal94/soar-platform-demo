@@ -1,5 +1,6 @@
 import React from 'react';
 import { Control, LocalForm, actions } from 'react-redux-form';
+import moment from 'moment';
 
 class FileInfo extends React.Component {
 
@@ -17,8 +18,13 @@ class FileInfo extends React.Component {
     componentWillReceiveProps(props){
         let exif = props.exifdata || {};
         if(this.state.exif !== exif){
+            let date;
+            if(exif.DateTime){
+                let momentDate = moment(exif.DateTime, 'YYYY:MM:DD HH:mm:ss');
+                date = momentDate.toDate().toISOString();
+            }
             this.setState({exif: exif});
-            this.formDispatch(actions.change('info.date', exif.DateTime || ''));
+            this.formDispatch(actions.change('info.date', date || ''));
             this.formDispatch(actions.change('info.make', exif.Make || ''));
             this.formDispatch(actions.change('info.model', exif.Model || ''));
             this.formDispatch(actions.change('info.dimX', exif.PixelXDimension || ''));
