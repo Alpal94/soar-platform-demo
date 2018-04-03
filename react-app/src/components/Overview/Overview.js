@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Map, TileLayer } from 'react-leaflet';
-import '../../styles/leaflet.css'
 import './Overview.css'
 import MapMarker from './MapMarker';
 
