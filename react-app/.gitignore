@@ -2,3 +2,4 @@ build/
 node_modules/
 src/lib/contracts/
 package-lock.json
+yarn-error.log
