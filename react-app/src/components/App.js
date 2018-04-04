@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import {MetaMask} from './MetaMask/MetaMask';
 import { Message } from './Message/Message';
+import NavigationBar from './NavigationBar/NavigationBar';
 import Overview from './Overview/Overview';
 import Upload from './Upload/Upload';
+import Browse from './Browse/Browse';
 import Progress from './Shared/Progress'
 import { 
   watchUploadEvents,
@@ -49,12 +51,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-dark soar-bg-dark">
-          <a className="navbar-brand" href="/">
-            <img src="/assets/soar_logo.png" height="30" className="d-inline-block align-top" alt=""/>
-          </a>
-          <a className="navbar-text" href="/upload">Upload file</a>
-        </nav>
+        <NavigationBar />
+
         {this.props.progress && <Progress text={this.props.progress} />}  
         
         <Message {...this.props}/>
@@ -65,6 +63,7 @@ class App extends Component {
               <Route exact path="/upload" render={() => (
                 <div className="container"><Upload {...this.props} {...this.state}/></div>)
               }/>
+              <Route exact path="/browse" render={() => (<Browse {...this.props} {...this.state} /> ) }/>
               
               
             </Switch>
