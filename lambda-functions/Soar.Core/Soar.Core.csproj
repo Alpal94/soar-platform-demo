@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Extensions\AmazonDynamoDBClientExtensions.cs" />
+    <Compile Remove="Services\ISoarLogger.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Ethereum\soar.abi" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.3.6.2" />
+    <PackageReference Include="Nethereum.Web3" Version="2.4.0" />
+  </ItemGroup>
+
+</Project>

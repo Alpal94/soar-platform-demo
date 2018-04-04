@@ -1,0 +1,29 @@
+ .overview-map-container {
+    position: absolute;
+    top: 52px;
+    bottom: 40px;
+    width: 100%;
+}
+
+.overview-map-container .leaflet-popup-content-wrapper {
+}
+
+.overview-map-container .leaflet-container a.leaflet-popup-close-button {
+
+}
+
+.overview-popup img{
+    width: 100%;
+}
+
+.overview-popup{
+
+}
+
+.overview-popup .info-panel {
+    margin-top: 10px;
+}
+
+.overview-popup .info-panel label {
+    width: 100px;
+}

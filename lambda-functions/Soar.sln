@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Soar.Tests", "Soar.Tests\Soar.Tests.csproj", "{133D1E5F-3838-4CD1-A2D9-A37774BDCF02}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Soar.Core", "Soar.Core\Soar.Core.csproj", "{E2DEFB39-0D2E-44E5-9418-E448CD02A9C8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Soar.Upload.Details", "Soar.Upload.Details\Soar.Upload.Details.csproj", "{A33118CE-2EEF-4B7E-8792-8428DB6A8DF7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Soar.Download.Details", "Soar.Download.Details\Soar.Download.Details.csproj", "{F5D2DAE5-8FC5-4E21-889E-6C24AC5225CE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Soar.Authorizer.Ethereum", "Soar.Authorizer.Ethereum\Soar.Authorizer.Ethereum.csproj", "{FE1FACCB-0F92-4FB6-92F7-3A06B475BDFC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Soar.ImagePreview", "Soar.ImagePreview\Soar.ImagePreview.csproj", "{45D5BAB0-9530-4617-B3F4-22342FB1777B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{133D1E5F-3838-4CD1-A2D9-A37774BDCF02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{133D1E5F-3838-4CD1-A2D9-A37774BDCF02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{133D1E5F-3838-4CD1-A2D9-A37774BDCF02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{133D1E5F-3838-4CD1-A2D9-A37774BDCF02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2DEFB39-0D2E-44E5-9418-E448CD02A9C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2DEFB39-0D2E-44E5-9418-E448CD02A9C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2DEFB39-0D2E-44E5-9418-E448CD02A9C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2DEFB39-0D2E-44E5-9418-E448CD02A9C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A33118CE-2EEF-4B7E-8792-8428DB6A8DF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A33118CE-2EEF-4B7E-8792-8428DB6A8DF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A33118CE-2EEF-4B7E-8792-8428DB6A8DF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A33118CE-2EEF-4B7E-8792-8428DB6A8DF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5D2DAE5-8FC5-4E21-889E-6C24AC5225CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5D2DAE5-8FC5-4E21-889E-6C24AC5225CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5D2DAE5-8FC5-4E21-889E-6C24AC5225CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5D2DAE5-8FC5-4E21-889E-6C24AC5225CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE1FACCB-0F92-4FB6-92F7-3A06B475BDFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE1FACCB-0F92-4FB6-92F7-3A06B475BDFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE1FACCB-0F92-4FB6-92F7-3A06B475BDFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE1FACCB-0F92-4FB6-92F7-3A06B475BDFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45D5BAB0-9530-4617-B3F4-22342FB1777B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45D5BAB0-9530-4617-B3F4-22342FB1777B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45D5BAB0-9530-4617-B3F4-22342FB1777B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45D5BAB0-9530-4617-B3F4-22342FB1777B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A4E1D24C-B270-441A-B369-C59F4A3B8F12}
+	EndGlobalSection
+EndGlobal
