@@ -2,6 +2,7 @@ import { takeLatest } from 'redux-saga/effects';
 import * as types from '../constants/actionTypes';
 import {
   getSoarFileCountsSaga,
+  getPriceForFileSaga,
   soarUploadFileSaga,
   soarPurchaseFileSaga,
   soarDownloadFileSaga
@@ -21,4 +22,8 @@ export function* watchSoarFilePurchase() {
 
 export function* watchSoarFileDownload() {
   yield takeLatest(types.SOAR_FILE_DOWNLOAD, soarDownloadFileSaga);
+}
+
+export function* watchSoarFilePrice() {
+  yield takeLatest(types.SOAR_FILE_PRICE, getPriceForFileSaga);
 }

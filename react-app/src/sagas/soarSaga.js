@@ -6,6 +6,7 @@ import {
   verificationUpload, 
   uploadFile,
   buyFile,
+  getPriceForFile,
   watchForVerificationSaleEvent,
   watchForVerificationUploadEvent
 } from '../lib/soarService';
@@ -125,9 +126,24 @@ export function* soarDownloadFileSaga({web3, fileHash, url}) {
     } else {
       yield put({ type: types.MESSAGE_ERROR, value: "Verification propagation error" });
     }
-
-
     yield put({ type: types.PROGRESS_COMPLETE});
+  } catch (err) {
+    yield put({ type: types.PROGRESS_COMPLETE});
+    yield put({ type: types.MESSAGE_ERROR, value: err.toString() });
+  }
+};
+
+export function* getPriceForFileSaga({web3, fileHash}) {
+  try {
+    yield put({ type: types.PROGRESS_TEXT, value: "Loading price for file"}); 
+    const filePriceResult = yield call(getPriceForFile, web3, fileHash);
+    let res = { 
+      fileHash: fileHash,
+      price: web3.fromWei(filePriceResult).toNumber()
+    };
+    yield put({ type: types.SOAR_FILE_PRICE_SUCCESS, result: res });
+    yield put({ type: types.PROGRESS_COMPLETE});
+    
   } catch (err) {
     yield put({ type: types.PROGRESS_COMPLETE});
     yield put({ type: types.MESSAGE_ERROR, value: err.toString() });

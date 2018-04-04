@@ -47,12 +47,10 @@ Soar.prototype.verificationUpload = function(challenge, fileHash, address) {
     });
 }
 
-Soar.prototype.uploadFile = function(previewUrl, url, pointWKT, metadata, fileHash, geohash, price, address) {
+Soar.prototype.uploadFile = function(previewUrl, url, pointWKT, metadata, fileHash, geohash, address) {
   return this.soarPromise
     .then((soar) => {
-      //todo include geohash in the smart contract
-      console.log(previewUrl, url, pointWKT, metadata, fileHash, this.web3.toWei(price))
-      return soar.fileUploadAsync(previewUrl, url, pointWKT, metadata, fileHash, this.web3.toWei(price), { from: address })
+      return soar.fileUploadAsync(previewUrl, url, pointWKT, geohash, metadata, fileHash, { from: address })
     }).then(res => {
       return res;
     });
@@ -67,10 +65,10 @@ Soar.prototype.buyFile = function(fileHash, price, challenge, address) {
     });
 }
 
-Soar.prototype.verifyFile = function(fileHash, address) {
+Soar.prototype.getPriceForFile = function(fileHash) {
   return this.soarPromise
     .then((soar) => {
-      return soar.verifySaleAsync(fileHash, {from: address})
+      return soar.getPriceForFileAsync(fileHash)
     }).then(res => {
       return res;
     });

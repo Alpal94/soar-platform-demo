@@ -7,7 +7,12 @@ const MapMarker = function(props) {
     let purchase = props.soar.myPurchases[upload.fileHash];
     let currentAddress = props.web3.eth.accounts[0];
     let owner = currentAddress === upload.owner;
-    let onBuyButtonClicked = (() => props.handleSoarFilePurchase(props.web3, upload.fileHash, upload.price, upload.url));
+
+    let onBuyButtonClicked = (() => {
+        if(upload.price){
+            props.handleSoarFilePurchase(props.web3, upload.fileHash, upload.price, upload.url)
+        }
+    });
     let onDownloadButtonClicked = (() => props.handleSoarFileDownload(props.web3, upload.fileHash, upload.url));
     const buttonBuy = !owner && !purchase && (<button  className="btn btn-primary" onClick={onBuyButtonClicked}>Buy</button>);
     const buttonDownload = !owner && purchase && (<button className="btn btn-primary" onClick={onDownloadButtonClicked}>Download</button>);
@@ -16,8 +21,13 @@ const MapMarker = function(props) {
     let info = JSON.parse(upload.metadata);
     let droneCamera = info.make + " / " + info.model;
     let date = new Date(info.date);
+    let onPopUpOpen = (() => {
+        if(!upload.price){
+            props.handleSoarFilePriceCount(props.web3, upload.fileHash)
+        }
+    });
     return (
-        <Marker position={position} >
+        <Marker onpopupopen={onPopUpOpen} position={position} >
             <Popup>
                 <div className="overview-popup">
                     <img src={upload.previewUrl} alt={upload.previewUrl} />
@@ -27,6 +37,7 @@ const MapMarker = function(props) {
                         <div><label>Date:</label>{date.toDateString()}</div>
                         <div><label>Latitude:</label>{position[1]}</div>
                         <div><label>Longitude:</label>{position[0]}</div>
+                        <div><label>Price:</label>{upload.price} ETH</div>
                         
                     </div>
                     {buttonBuy}

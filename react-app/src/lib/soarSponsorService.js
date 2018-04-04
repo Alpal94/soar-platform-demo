@@ -1,11 +1,14 @@
-import { getCurrentAddress } from './web3Service';
+import { getCurrentAddress, getCurrentNetwork } from './web3Service';
 import axios, { post } from 'axios';
+
+
 
 export const getUploadDetails = (web3, fileHash, contentType) => {
     try {
+        let apiUrl = _getApiUrl(web3);
         let address = getCurrentAddress(web3);
         let promise = axios.post(
-                'https://f3cmroo3se.execute-api.ap-southeast-1.amazonaws.com/rinkeby/upload/details',
+                apiUrl,
                 {address, fileHash, contentType}
             )
             .then(res => {
@@ -82,3 +85,19 @@ function _base64ToArrayBuffer(base64) {
     }
     return bytes.buffer;
 }
+
+function _getApiUrl(web3) {
+    let networkId = getCurrentNetwork(web3);
+    switch (networkId) {
+      //mainnet
+      case '1':
+        return '';
+      //rinkeby
+      case '4':
+        return 'https://f3cmroo3se.execute-api.ap-southeast-1.amazonaws.com/rinkeby/upload/details';
+      case '5777':
+        return 'https://f3cmroo3se.execute-api.ap-southeast-1.amazonaws.com/dev/upload/details';
+      default:
+        return '';
+    }
+  }

@@ -26,11 +26,11 @@ class App extends Component {
       this.props.handleSoarFilesCount(web3);
       let upload = {
         owner: res.args.owner,
-        fileHash: web3.toAscii(res.args.fileHash),
+        fileHash: web3.toUtf8(res.args.fileHash),
+        geoHash: web3.toUtf8(res.args.geoHash),
         metadata: res.args.metadata,
         pointWKT: res.args.pointWKT,
         previewUrl: res.args.previewUrl,
-        price: web3.fromWei(res.args.price).toNumber(),
         url: res.args.url
       };
       this.props.eventSoarFileUpload(upload);
@@ -38,7 +38,7 @@ class App extends Component {
     watchMyPurchaseEvents(web3, (err, res) => {
       let myPurchase = {
         buyer: res.args.buyer,
-        fileHash: web3.toAscii(res.args.fileHash),
+        fileHash: web3.toUtf8(res.args.fileHash),
         price: web3.fromWei(res.args.price).toNumber()
       };
       this.props.eventSoarMyPurchase(myPurchase);

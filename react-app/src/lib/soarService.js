@@ -50,8 +50,7 @@ export const uploadFile = (web3, previewUrl, url, pointWKT, metadata, fileHash, 
     setContractAddress(web3);
     let currentAddress = getCurrentAddress(web3);
     const soar = new Soar(web3, soarAddress);
-    //temporary set default price to 0.1eth
-    const result = soar.uploadFile(previewUrl, url, pointWKT, metadata, fileHash, geohash, 0.1, currentAddress);
+    const result = soar.uploadFile(previewUrl, url, pointWKT, metadata, fileHash, geohash, currentAddress);
     return result;
   } catch (err) {
     console.log('uploadFile: ', err)
@@ -72,15 +71,14 @@ export const buyFile = (web3, fileHash, price, challenge) => {
   }
 }
 
-export const verifyFile = (web3, fileHash) => {
+export const getPriceForFile = (web3, fileHash) => {
   try {
     setContractAddress(web3);
-    let currentAddress = getCurrentAddress(web3);
     const soar = new Soar(web3, soarAddress);
-    const result = soar.verifyFile(fileHash, currentAddress);
+    const result = soar.getPriceForFile(fileHash);
     return result;
   } catch (err) {
-    console.log('uploadFile: ', err)
+    console.log('getPriceForFile: ', err)
     return null;
   }
 }

@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import App from '../components/App';
 import { 
   soarFilesCountAction, 
+  soarFilePriceAction,
   soarUploadFileAction,
   soarFilePurchaseAction,
   soarDownloadFileAction,
@@ -32,6 +33,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     handleSoarFilesCount: (web3) => {
       dispatch(soarFilesCountAction(web3));
+    },
+    handleSoarFilePriceCount: (web3, fileHash) => {
+      dispatch(soarFilePriceAction(web3, fileHash));
     },
     handleSoarFileUpload: (web3, file, metadata, latlng) => {
       dispatch(soarUploadFileAction(web3, file, metadata, latlng));
