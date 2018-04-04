@@ -4,6 +4,7 @@ import { Message } from './Message/Message';
 import NavigationBar from './NavigationBar/NavigationBar';
 import Overview from './Overview/Overview';
 import Upload from './Upload/Upload';
+import Browse from './Browse/Browse';
 import Progress from './Shared/Progress'
 import { 
   watchUploadEvents,
@@ -62,6 +63,7 @@ class App extends Component {
               <Route exact path="/upload" render={() => (
                 <div className="container"><Upload {...this.props} {...this.state}/></div>)
               }/>
+              <Route exact path="/browse" render={() => (<Browse {...this.props} {...this.state} /> ) }/>
               
               
             </Switch>
