@@ -9,7 +9,7 @@ class Browse extends Component {
             <Grid>
                 <Row>
                     {Object.keys(this.props.soar.uploads).map(key =>
-                        <Col md={4}> 
+                        <Col key={key} md={4}> 
                             <BrowseItem key={key} {...this.props} fileHash={key} />
                         </Col>
                     )}
