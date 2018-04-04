@@ -33,7 +33,8 @@ namespace Soar.Upload.Details
             context.Logger.LogLine(JsonConvert.SerializeObject(req));
             var baseUrl = req.Headers["Host"];
             var stage = req.RequestContext.Stage;
-            var soarPreviewsS3Bucket = req.StageVariables["soar_previews_s3_bucket"];
+            var soarS3Base = req.StageVariables["soar_s3_base"];
+            var soarPreviewsBucketName = req.StageVariables["soar_previews_bucket_name"];
 
             var reqDetails = JsonConvert.DeserializeObject<UploadDetailsReq>(req.Body);
             string extension = GetExtensionForContentType(reqDetails.contentType);
@@ -46,7 +47,7 @@ namespace Soar.Upload.Details
                     challenge = Guid.NewGuid().To32CharactesString(),
                     secret = Guid.NewGuid().To32CharactesString(),
                     uploadUrl = $"https://{baseUrl}/{stage}/upload/{fileName}",
-                    previewUrl = $"{soarPreviewsS3Bucket}/{fileName}",
+                    previewUrl = $"{soarS3Base}/{soarPreviewsBucketName}/{fileName}",
                     downloadUrl = $"https://{baseUrl}/{stage}/download/{fileName}"
                 };
                 var success = await storageService.PutSecret(details.secret, details.challenge, reqDetails.address, reqDetails.fileHash);

@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Soar.Download.Details", "So
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Soar.Authorizer.Ethereum", "Soar.Authorizer.Ethereum\Soar.Authorizer.Ethereum.csproj", "{FE1FACCB-0F92-4FB6-92F7-3A06B475BDFC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Soar.ImagePreview", "Soar.ImagePreview\Soar.ImagePreview.csproj", "{45D5BAB0-9530-4617-B3F4-22342FB1777B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{FE1FACCB-0F92-4FB6-92F7-3A06B475BDFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE1FACCB-0F92-4FB6-92F7-3A06B475BDFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE1FACCB-0F92-4FB6-92F7-3A06B475BDFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45D5BAB0-9530-4617-B3F4-22342FB1777B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45D5BAB0-9530-4617-B3F4-22342FB1777B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45D5BAB0-9530-4617-B3F4-22342FB1777B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45D5BAB0-9530-4617-B3F4-22342FB1777B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

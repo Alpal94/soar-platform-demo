@@ -13,5 +13,7 @@ namespace Soar.Core.Helpers
                 { "Access-Control-Allow-Origin", "*" }
             };
         }
+
+
     }
 }
