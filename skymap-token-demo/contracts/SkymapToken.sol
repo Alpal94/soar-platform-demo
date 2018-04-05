@@ -1,13 +1,13 @@
 pragma solidity ^0.4.2;
 
-import "zeppelin-solidity/contracts/token/ERC20/StandardToken.sol";
+import "zeppelin-solidity/contracts/token/ERC827/ERC827Token.sol";
 
 /**
  * @title Standard ERC20 token
  *
  */
  
-contract SkymapToken is StandardToken {
+contract SkymapToken is ERC827Token {
 
     string public constant symbol = "SKYM";
     string public constant name = "Skymap";
