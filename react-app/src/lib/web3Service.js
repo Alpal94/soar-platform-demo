@@ -1,4 +1,5 @@
 import SoarContract from './contracts/Soar.json';
+import SkymapTokenContract from './contracts/SkymapTokenDemo.json';
 
 export const getSoarAddress = (networkId) => {
   switch (networkId) {
@@ -14,6 +15,25 @@ export const getSoarAddress = (networkId) => {
       return '0x0';
     case '5777':
       return SoarContract.networks[5777].address;
+    default:
+      return '0x0';
+  }
+}
+
+export const getSkymapTokenAddress = (networkId) => {
+  switch (networkId) {
+    //mainnet
+    case '1':
+      return '0x0';
+    case '3':
+      return '0x0';
+    //rinkeby
+    case '4':
+      return '';
+    case '42':
+      return '0x0';
+    case '5777':
+      return SkymapTokenContract.networks[5777].address;
     default:
       return '0x0';
   }

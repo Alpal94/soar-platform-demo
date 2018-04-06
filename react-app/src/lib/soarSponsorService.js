@@ -59,6 +59,7 @@ export const getDownloadDetails = (web3, url, fileHash) => {
 }
 
 export const downloadFile = (web3, url, secret, txnHash) => {
+    console.log('DownloadFile: ', url);
     try {
         //let address = getCurrentAddress(web3);
         let params = {

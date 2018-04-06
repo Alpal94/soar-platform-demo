@@ -5,7 +5,10 @@ import {
   verificationSale, 
   verificationUpload, 
   uploadFile,
+  approve,
   buyFile,
+  getBuyFileData,
+  approveAndBuy,
   getPriceForFile,
   watchForVerificationSaleEvent,
   watchForVerificationUploadEvent
@@ -75,12 +78,21 @@ export function* soarPurchaseFileSaga({web3, fileHash, price, url}) {
   try {
     // get secret and challenge from backend server for backend verification 
     yield put({ type: types.PROGRESS_TEXT, value: "Preparing for purchase"}); 
-    const details = yield call(getDownloadDetails, web3, url, fileHash);
+    let details = yield call(getDownloadDetails, web3, url, fileHash);
     console.log('Challenge details: ', details);
     yield put({ type: types.PROGRESS_TEXT, value: "Buying "}); 
-    const result = yield call(buyFile, web3, fileHash, price, details.challenge);
-    console.log('TxnHash: ', result);
     
+    // let data = yield call(getBuyFileData, web3, fileHash, price, details.challenge);
+    // console.log('Data: ', data);
+    // let approveAndBuyRes = yield call(approveAndBuy, web3, price, data);
+    // console.log('ApproveAndBuy: ', approveAndBuyRes);
+    
+    
+    let approveRes = yield call(approve, web3, price);
+    console.log('Approve: ', approveRes);
+    let buyRes = yield call(buyFile, web3, fileHash, details.challenge);
+    console.log('BuyRes: ', buyRes);
+
     yield put({ type: types.PROGRESS_TEXT, value: "Watching for verification event"}); 
     const verificationPropagated = yield call(watchForVerificationSaleEvent, web3, details.challenge);
     console.log('Verification propagated: ', verificationPropagated)
@@ -95,6 +107,7 @@ export function* soarPurchaseFileSaga({web3, fileHash, price, url}) {
       yield put({ type: types.MESSAGE_ERROR, value: "Verification propagation error" });
     }
 
+    let result = 'done';
     yield put({ type: types.SOAR_FILE_PURCHASE_SUCCESS, result: result });
     yield put({ type: types.PROGRESS_COMPLETE});
   

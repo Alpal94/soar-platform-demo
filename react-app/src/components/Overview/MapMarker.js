@@ -22,9 +22,7 @@ const MapMarker = function(props) {
     let droneCamera = info.make + " / " + info.model;
     let date = new Date(info.date);
     let onPopUpOpen = (() => {
-        if(!upload.price){
-            props.handleSoarFilePriceCount(props.web3, upload.fileHash)
-        }
+        props.handleSoarFilePriceCount(props.web3, upload.fileHash)
     });
     return (
         <Marker onpopupopen={onPopUpOpen} position={position} >
@@ -37,7 +35,8 @@ const MapMarker = function(props) {
                         <div><label>Date:</label>{date.toDateString()}</div>
                         <div><label>Latitude:</label>{position[1]}</div>
                         <div><label>Longitude:</label>{position[0]}</div>
-                        <div><label>Price:</label>{upload.price} ETH</div>
+                        <div><label>Geohash:</label>{upload.geoHash}</div>
+                        <div><label>Price:</label>{upload.price} SKYM</div>
                         
                     </div>
                     {buttonBuy}
