@@ -11,8 +11,8 @@ const geoHash = "u2g1jwqbj78e";
 const geoHash2 = "u2g1jefg453h";
 const geoHash3 = "i2g1jwqbj78e";
 const selectedGeoHash = "u2g1j";
-const defaultPrice = new BigNumber(10000000000000000);
-const selectedPrice = new BigNumber(220000000000000000);
+const defaultPrice = web3.toWei(1);
+const selectedPrice = web3.toWei(22);
 
 contract('PricingManual', function ([owner, buyer]) {
   

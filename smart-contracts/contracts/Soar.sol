@@ -2,6 +2,7 @@ pragma solidity ^0.4.2;
 
 import "zeppelin-solidity/contracts/ownership/Ownable.sol";
 import "zeppelin-solidity/contracts/lifecycle/Pausable.sol";
+import "zeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 import "./IPricing.sol";
 
 /**
@@ -11,28 +12,42 @@ import "./IPricing.sol";
  
 contract Soar is Ownable, Pausable {
 
-    struct FileUpload {
+    struct File {
         address owner;
         bytes12 geoHash;
+        mapping (address => uint) sales;
+        uint256 salesCount;
     }
 
-    uint public filesCount = 0;
+    // contracts
     IPricing private pricingContract;
+    ERC20 private skymapTokenContract;
 
-    mapping (bytes32 => FileUpload) internal files;
-    mapping (bytes32 => mapping (address => uint)) internal sales;
-    mapping (address => uint256) internal balances;
+    // attributes
+    uint public filesCount = 0;
+    mapping (bytes32 => File) internal files;
+    address wallet;
 
+    // event definitions
     event Upload(address indexed owner, string previewUrl, string url, string pointWKT, bytes12 geoHash, string metadata, bytes32 fileHash);
-    event Sale(address indexed buyer, bytes32 indexed fileHash, uint price);
+    event Sale(address indexed buyer, address indexed owner, bytes32 indexed fileHash, uint price);
     event VerificationSale(address account, bytes32 indexed challenge, bytes32 fileHash);
     event VerificationUpload(address account, bytes32 indexed challenge, bytes32 fileHash);
 
     function Soar() public {
+        wallet = msg.sender;
+    }
+
+    function setWalletAddress(address _walletAddress) onlyOwner public {
+        wallet = _walletAddress;
     }
 
     function setPricingContract(address _pricingAddress) onlyOwner public {
         pricingContract = IPricing(_pricingAddress);
+    }
+
+    function setSkymapTokenContract(address _skymapTokenAddress) onlyOwner public {
+        skymapTokenContract = ERC20(_skymapTokenAddress);
     }
 
     function getPrice(bytes12 _geoHash) whenNotPaused public view returns (
@@ -49,7 +64,7 @@ contract Soar is Ownable, Pausable {
     }
 
     function verificationSale(bytes32 _challenge, bytes32 _fileHash) whenNotPaused public {
-        require(sales[_fileHash][msg.sender] > 0);
+        require(files[_fileHash].sales[msg.sender] > 0);
         VerificationSale(msg.sender, _challenge, _fileHash);
     }
 
@@ -65,27 +80,39 @@ contract Soar is Ownable, Pausable {
         filesCount++;
         Upload(msg.sender, _previewUrl, _url, _pointWKT, _geoHash, _metadata, _fileHash);
     }
-
-    function buyFile(bytes32 _fileHash, bytes32 _challenge) whenNotPaused external payable {
+    
+    function buyFile(bytes32 _fileHash, bytes32 _challenge) whenNotPaused external {
         address owner = files[_fileHash].owner;
         // verify user is not owner
         require(owner != msg.sender);
         // verify user has not bought file
-        require(sales[_fileHash][msg.sender] == 0);
-        uint256 weiAmount = msg.value;
+        require(files[_fileHash].sales[msg.sender] == 0);
+        uint256 allowance = skymapTokenContract.allowance(msg.sender, this);
+        uint256 balance = skymapTokenContract.balanceOf(msg.sender);
         uint256 price = pricingContract.getPrice(files[_fileHash].geoHash);
-        // verify price matches amount sent with call
-        require(weiAmount == price);
-        // update data and fire events
-        sales[_fileHash][msg.sender] = weiAmount;
-        balances[owner] = balances[owner] + weiAmount;
-        Sale(msg.sender, _fileHash, price);
+        // verify balance and allowance are higher than price
+        require(balance >= price);
+        require(allowance >= price);
+
+        // calculate cut for owner and for wallet
+        uint256 ownerCut = (price / 100) * 95;
+        uint256 walletCut = price - ownerCut;
+
+        // tranfer skymap to file owner and soar
+        skymapTokenContract.transferFrom(msg.sender, owner, ownerCut);
+        skymapTokenContract.transferFrom(msg.sender, wallet, walletCut);
+        // // update contract state
+        files[_fileHash].sales[msg.sender] = price;
+        files[_fileHash].salesCount++;
+        // //fire events
+        Sale(msg.sender, owner, _fileHash, price);
         VerificationSale(msg.sender, _challenge, _fileHash);
     }
 
     function fileExists(bytes32 _fileHash) whenNotPaused public view returns (
         bool exists_
     ) {
+        require(msg.sender == address(0));
         exists_ = files[_fileHash].owner != address(0);
     }
 

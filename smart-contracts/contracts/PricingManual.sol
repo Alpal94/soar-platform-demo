@@ -10,7 +10,7 @@ import "./IPricing.sol";
  
 contract PricingManual is Ownable, IPricing {
 
-    uint256 private defaultPrice = 1 * (uint(10) ** 16);
+    uint256 private defaultPrice = 1 * (uint(10) ** 18);
 
     mapping (bytes5 => uint256) internal prices;
 
