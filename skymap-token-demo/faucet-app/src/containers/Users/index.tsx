@@ -20,11 +20,33 @@ interface UsersPageProps extends React.Props<Users> {
   onUsersFetch: () => void;
 };
 
-class Users extends React.Component<UsersPageProps, void> {
+interface UserPageState {
+  web3: any;
+}
+
+class Users extends React.Component<UsersPageProps, UserPageState> {
+  
+  static contextTypes = {
+    web3: React.PropTypes.object
+  };
+
+  constructor(props: UsersPageProps, context: any){
+    super(props, context);
+    this.state = {
+      web3: null
+    };
+  }
+
+  componentDidUpdate(){
+    if(!this.state.web3 && this.context.web3){
+      this.setState({web3 : this.context.web3});
+      console.log('ComponentUpdate: ', this.context.web3)
+    }
+  }
+
   public render(): React.ReactElement<{}> {
 
     const { users, isLoading, isFetched, onUsersFetch } = this.props;
-
     return (
       <Container>
         <Header>US Presidents List</Header>
