@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {orange500} from 'material-ui/styles/colors';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {MetaMask} from './MetaMask/MetaMask';
 import { Message } from './Message/Message';
 import NavigationBar from './NavigationBar/NavigationBar';
@@ -49,8 +53,18 @@ class App extends Component {
   }
 
   render() {
+
+    const muiTheme = getMuiTheme({
+      palette: {
+        primary1Color: orange500
+      },
+      appBar: {
+        height: 50,
+      },
+    });
+
     return (
-      <div>
+      <MuiThemeProvider muiTheme={muiTheme}>
         <NavigationBar />
 
         {this.props.progress && <Progress text={this.props.progress} />}  
@@ -68,7 +82,7 @@ class App extends Component {
               
             </Switch>
           </BrowserRouter>
-      </div>
+      </MuiThemeProvider>
     );
   }
 }

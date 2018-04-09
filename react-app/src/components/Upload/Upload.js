@@ -93,6 +93,7 @@ class Upload extends Component {
                             exifdata={this.state.exifdata}
                             onLocationChange={this.onLocationChange}
                         />
+                        
 
                     </div>
                 </div>

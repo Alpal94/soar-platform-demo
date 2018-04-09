@@ -1,5 +1,7 @@
 import React from 'react';
-import { Control, LocalForm, actions } from 'react-redux-form';
+import { Field, Control, LocalForm, actions } from 'react-redux-form';
+import TextField from 'material-ui/TextField';
+import TextArea from 'material-ui'
 import moment from 'moment';
 
 class FileInfo extends React.Component {
@@ -10,6 +12,8 @@ class FileInfo extends React.Component {
             exif: {}
         };
     }
+
+  
 
     attachDispatch(dispatch) {
         this.formDispatch = dispatch;
@@ -33,6 +37,11 @@ class FileInfo extends React.Component {
     }
 
     render() {
+
+        const renderTextField = ({input, label, hint, ...custom}) => (
+            <TextField floatingLabelText={label} hintText={hint} {...input} {...custom}/>
+        )
+
         return (
             <LocalForm 
                 model="info"
@@ -41,6 +50,11 @@ class FileInfo extends React.Component {
                 getDispatch={(dispatch) => this.attachDispatch(dispatch)}>
                     
                     <Control.text className="form-control readonly" hidden readOnly model=".fileHash"/>
+
+                    <Field label="Title" hintText="Enter a title for the content" component={renderTextField} model=".title" /><br />
+                    <Field label="Description" hintText="Enter a description for the content" component={renderTextField} multiLine model=".description" /><br />
+                    <Field label="Drone Make" component={renderTextField} model=".make" /><br />
+
                     <label>Make</label>
                     <Control.text className="form-control" model=".make" />
                     <label>Model</label>

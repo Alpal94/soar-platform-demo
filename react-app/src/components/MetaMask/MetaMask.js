@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
 import Web3 from 'web3';
-import Button from 'material-ui/Button';
+import RaisedButton from 'material-ui/RaisedButton'
 import Dialog, {
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog';
-import Slide from 'material-ui/transitions/Slide';
 
 const messages = {
   'LOAD_MATAMASK_WALLET_ERROR': 'Load metamask wallet error, maybe try Metamask later, or upload a wallet json file.',
@@ -20,8 +19,7 @@ const messages = {
 const MetaMaskInstallDialog = (props) => (
   <Dialog
     className="MetaMaskDialog"
-    open={props.metaMaskInstallDialogOpen}
-    transition={Slide}>
+    open={props.metaMaskInstallDialogOpen}>
     <DialogTitle>{"Oops, you haven't install MetaMask"}</DialogTitle>
     <DialogContent>
       <DialogContentText>
@@ -29,12 +27,12 @@ const MetaMaskInstallDialog = (props) => (
       </DialogContentText>
     </DialogContent>
     <DialogActions>
-      <Button raised href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?utm_source=chrome-ntp-icon" color="primary">
+      <RaisedButton raised href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?utm_source=chrome-ntp-icon" color="primary">
         Install MetaMask
-      </Button>
-      <Button raised onClick={props.handleMetaMaskInstallDialogClose} color="primary">
+      </RaisedButton>
+      <RaisedButton raised onClick={props.handleMetaMaskInstallDialogClose} color="primary">
         I understand, continue
-      </Button>
+      </RaisedButton>
     </DialogActions>
   </Dialog>
 );
@@ -42,8 +40,7 @@ const MetaMaskInstallDialog = (props) => (
 const MetaMaskLockDialog = (props) => (
   <Dialog
     className="MetaMaskDialog"
-    open={props.metaMaskLockDialogOpen}
-    transition={Slide}>
+    open={props.metaMaskLockDialogOpen}>
     <DialogTitle>{"Oops, your MetaMask is locked"}</DialogTitle>
     <DialogContent>
       <DialogContentText>
@@ -51,9 +48,9 @@ const MetaMaskLockDialog = (props) => (
       </DialogContentText>
     </DialogContent>
     <DialogActions>
-      <Button raised onClick={props.handleMetaMaskLockDialogClose} color="primary">
+      <RaisedButton raised onClick={props.handleMetaMaskLockDialogClose} color="primary">
         I understand, continue
-      </Button>
+      </RaisedButton>
     </DialogActions>
   </Dialog>
 );
