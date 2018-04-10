@@ -25,7 +25,7 @@ interface UserPageState {
 }
 
 class Users extends React.Component<UsersPageProps, UserPageState> {
-  
+
   public render(): React.ReactElement<{}> {
 
     const { users, isLoading, isFetched, onUsersFetch } = this.props;
@@ -40,7 +40,7 @@ class Users extends React.Component<UsersPageProps, UserPageState> {
                 key={idx}
                 title={item.nm}
                 label={item.pp}
-                />
+              />
             );
           })}
         </List>

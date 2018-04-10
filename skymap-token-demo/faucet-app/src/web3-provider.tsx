@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { Redirect, Route, Switch } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -11,51 +12,54 @@ declare global {
 interface Web3ProviderState {
     web3: any;
     loading: boolean;
+    networkId: number;
 }
 
 class Web3Provider extends React.Component<any, Web3ProviderState> {
-    
-    constructor(props: any){
+
+    constructor(props: any) {
         super(props);
         this.state = {
             web3: null,
-            loading: true
-        }
+            loading: true,
+            networkId: 0
+        };
     }
 
     static childContextTypes = {
-        web3: React.PropTypes.object
-      };
+        web3: PropTypes.object
+    };
 
     getChildContext() {
-        return { 
+        return {
             web3: {
                 instance: this.state.web3,
+                networkId: this.state.networkId,
                 loading: this.state.loading,
                 setWeb3: (provider: string) => {
                     let web3 = new Web3(new Web3.providers.HttpProvider(provider));
-                    this.setState({web3: web3, loading: false})
+                    this.setState({ web3: web3, loading: false })
                 }
             }
-        }
+        };
     }
 
     componentDidMount() {
         let self = this;
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             let web3 = this.window.web3;
             if (typeof web3 !== 'undefined') {
                 web3 = new Web3(web3.currentProvider);
-                self.setState({loading: false, web3: web3});
+                self.setState({ loading: false, web3: web3, networkId: web3.version.network });
             } else {
-                self.setState({loading: false});
+                self.setState({ loading: false });
             }
-        })
+        });
     }
 
     public render(): React.ReactElement<{}> {
         let element;
-        if(this.state.loading){
+        if (this.state.loading) {
             element = 'loading';
         } else {
             element = this.props.children;

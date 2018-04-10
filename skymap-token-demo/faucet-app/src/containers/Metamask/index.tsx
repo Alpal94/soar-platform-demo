@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as PropTypes from 'prop-types';
 
 interface MetamaskProps extends React.Props<Metamask> {
 };
@@ -13,21 +14,21 @@ interface MetamaskState {
 class Metamask extends React.Component<MetamaskProps, MetamaskState> {
 
     static contextTypes = {
-        web3: React.PropTypes.object
+        web3: PropTypes.object
     };
 
     setWeb3() {
         let web3 = this.context.web3;
         if (web3.instance == null && !web3.loading) {
-            web3.setWeb3('https://rinkeby.infura.io/trgLCqvmmrvTb46D5Iz4'); 
+            web3.setWeb3('https://rinkeby.infura.io/trgLCqvmmrvTb46D5Iz4');
         }
     }
 
     public render(): React.ReactElement<{}> {
         let network = 'undefined';
         let setWeb3Button;
-        if(this.context.web3.instance){
-            network = this.context.web3.instance.version.network;
+        if (this.context.web3.instance) {
+            network = this.context.web3.networkId;
         } else {
             setWeb3Button = (<button onClick={() => this.setWeb3()}>Set default</button>);
         }
@@ -36,7 +37,7 @@ class Metamask extends React.Component<MetamaskProps, MetamaskState> {
             <div>
                 Your network: {network}{setWeb3Button}
             </div>
-        );
+        )
     }
 }
 

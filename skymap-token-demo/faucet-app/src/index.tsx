@@ -15,11 +15,10 @@ const Root = (
   <Web3Provider>
     <Provider store={store}>
       <div>
-      <Metamask/>
-      <BrowserRouter>
-        <RouteMap />
-      </BrowserRouter>
-        
+        <Metamask />
+        <BrowserRouter>
+          <RouteMap />
+        </BrowserRouter>
       </div>
     </Provider>
   </Web3Provider>
