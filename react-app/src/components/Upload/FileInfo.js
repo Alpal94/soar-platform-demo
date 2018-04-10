@@ -28,11 +28,16 @@ class FileInfo extends React.Component {
                 date = momentDate.toDate().toISOString();
             }
             this.setState({exif: exif});
-            this.formDispatch(actions.change('info.date', date || ''));
-            this.formDispatch(actions.change('info.make', exif.Make || ''));
-            this.formDispatch(actions.change('info.model', exif.Model || ''));
-            this.formDispatch(actions.change('info.dimX', exif.PixelXDimension || ''));
-            this.formDispatch(actions.change('info.dimY', exif.PixelYDimension || ''));
+            this.formDispatch(actions.change('info.title', date || ''));
+            this.formDispatch(actions.change('info.description', date || ''));
+            this.formDispatch(actions.change('info.manufacturer', date || ''));
+            this.formDispatch(actions.change('info.model', date || ''));
+            this.formDispatch(actions.change('info.shutterSpeed', date || ''));
+            this.formDispatch(actions.change('info.apertureValue', date || ''));
+            this.formDispatch(actions.change('info.focalLength', date || ''));
+            this.formDispatch(actions.change('info.bearing', date || ''));
+            this.formDispatch(actions.change('info.angle', date || ''));
+            this.formDispatch(actions.change('info.height', date || ''));
         }
     }
 
@@ -48,23 +53,21 @@ class FileInfo extends React.Component {
                 className="form-group upload-summary-form"
                 onChange={(values) => this.props.onFileInfoChange(values)}
                 getDispatch={(dispatch) => this.attachDispatch(dispatch)}>
-                    
-                    <Control.text className="form-control readonly" hidden readOnly model=".fileHash"/>
-
+                    <h3>File info</h3>
                     <Field label="Title" hintText="Enter a title for the content" component={renderTextField} model=".title" /><br />
                     <Field label="Description" hintText="Enter a description for the content" component={renderTextField} multiLine model=".description" /><br />
-                    <Field label="Drone Make" component={renderTextField} model=".make" /><br />
 
-                    <label>Make</label>
-                    <Control.text className="form-control" model=".make" />
-                    <label>Model</label>
-                    <Control.text className="form-control" model=".model" />
-                    <label>Date</label>
-                    <Control.text className="form-control" model=".date" />
-                    <label>Dimension X</label>
-                    <Control.text className="form-control" model=".dimX" />
-                    <label>Dimension Y</label>
-                    <Control.text className="form-control" model=".dimY" />
+                    <h3>Drone and Camera info</h3>
+                    <Field label="Drone Manufacturer" hintText="Enter the manufacturer of your drone" component={renderTextField} model=".manufacturer" /><br />
+                    <Field label="Drone Model" hintText="Enter the model of your drone" component={renderTextField} model=".model" /><br />
+                    <Field label="Shutter Speed" hintText="Enter shutter speed of the camera (if known)" component={renderTextField} model=".shutterSpeed" /><br />
+                    <Field label="Aperture Value" hintText="Enter aperture of the camera (if known)" component={renderTextField} model=".apertureValue" /><br />
+                    <Field label="Focal Length" hintText="Enter focal length of camera (if known)" component={renderTextField} model=".focalLength" /><br />
+
+                    <h3>Extra location info</h3>
+                    <Field label="Height" hintText="Enter height the photo was taken at" component={renderTextField} model=".height" /><br />
+                    <Field label="Bearing" hintText="Enter the compass bearing the drone was facing " component={renderTextField} model=".bearing" /><br />
+                    <Field label="Angle of incidence" hintText="Enter angle in degrees from the horizon the photo was taken an" component={renderTextField} model=".angle" /><br />
             </LocalForm>
         );
   }

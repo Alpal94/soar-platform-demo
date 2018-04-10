@@ -81,7 +81,6 @@ class Upload extends Component {
                 <ChooseFile file={this.state.file} onFileChosen={this.onFileChosen}/>
                 <div className="row">
                     <div className="col-sm-12 col-md-6">
-                        <h2>File info</h2>
                         <FileInfo 
                             file={this.state.file} 
                             exifdata={this.state.exifdata}
