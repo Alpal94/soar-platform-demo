@@ -8,12 +8,18 @@ declare global {
     interface Window { web3: any; }
 }
 
-class Web3Provider extends React.Component<any, any> {
+interface Web3ProviderState {
+    web3: any;
+    loading: boolean;
+}
+
+class Web3Provider extends React.Component<any, Web3ProviderState> {
     
     constructor(props: any){
         super(props);
         this.state = {
-            web3: null
+            web3: null,
+            loading: true
         }
     }
 
@@ -22,7 +28,16 @@ class Web3Provider extends React.Component<any, any> {
       };
 
     getChildContext() {
-        return { web3: this.state.web3}
+        return { 
+            web3: {
+                instance: this.state.web3,
+                loading: this.state.loading,
+                setWeb3: (provider: string) => {
+                    let web3 = new Web3(new Web3.providers.HttpProvider(provider));
+                    this.setState({web3: web3, loading: false})
+                }
+            }
+        }
     }
 
     componentDidMount() {
@@ -31,16 +46,22 @@ class Web3Provider extends React.Component<any, any> {
             let web3 = this.window.web3;
             if (typeof web3 !== 'undefined') {
                 web3 = new Web3(web3.currentProvider);
-                console.log('App: ', web3);
-                self.setState({web3: web3});
+                self.setState({loading: false, web3: web3});
             } else {
+                self.setState({loading: false});
             }
         })
     }
 
     public render(): React.ReactElement<{}> {
+        let element;
+        if(this.state.loading){
+            element = 'loading';
+        } else {
+            element = this.props.children;
+        }
 
-        return <div id="web3">{this.props.children}</div>;
+        return <div id="web3-wrapper">{element}</div>;
     }
 }
 

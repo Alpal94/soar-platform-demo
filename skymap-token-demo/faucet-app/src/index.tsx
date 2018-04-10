@@ -9,13 +9,18 @@ import Web3Provider from './web3-provider';
 import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
+import Metamask from './containers/Metamask';
 
 const Root = (
   <Web3Provider>
     <Provider store={store}>
+      <div>
+      <Metamask/>
       <BrowserRouter>
         <RouteMap />
       </BrowserRouter>
+        
+      </div>
     </Provider>
   </Web3Provider>
 );
