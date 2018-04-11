@@ -1,7 +1,8 @@
 import { actionTypes as at } from './constants';
-import { Info } from './model';
+import { Info } from '../../lib/model';
+import * as Web3 from 'web3';
 
-export const fetchInfo = (web3: any) => {
+export const fetchInfo = (web3: Web3) => {
     return {
         type: at.TOKEN_INFO_FETCH,
         web3: web3

@@ -2,9 +2,8 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import Web3Helper from '../../lib/web3-helper';
 
-
 interface MetamaskProps extends React.Props<Metamask> {
-};
+}
 
 interface MetamaskState {
 }
@@ -39,7 +38,7 @@ class Metamask extends React.Component<MetamaskProps, MetamaskState> {
             <div>
                 Your network: {network}{setWeb3Button}
             </div>
-        )
+        );
     }
 }
 

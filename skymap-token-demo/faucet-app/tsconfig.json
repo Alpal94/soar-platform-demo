@@ -28,5 +28,8 @@
   ],
   "types": [
     "typePatches"
+  ],
+  "include": [
+    "typings/**/*.ts"
   ]
 }

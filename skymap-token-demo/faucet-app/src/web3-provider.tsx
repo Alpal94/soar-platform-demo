@@ -1,32 +1,35 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
+import * as Web3 from 'web3';
 import { Redirect, Route, Switch } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 
-const Web3 = require('web3');
-
 declare global {
-    interface Window { web3: any; }
+    interface Window { web3: Web3; }
+}
+
+interface Web3ProviderPros {
+
 }
 
 interface Web3ProviderState {
-    web3: any;
+    web3?: Web3;
     loading: boolean;
 }
 
-class Web3Provider extends React.Component<any, Web3ProviderState> {
-
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            web3: null,
-            loading: true
-        };
-    }
+class Web3Provider extends React.Component<Web3ProviderPros, Web3ProviderState> {
 
     static childContextTypes = {
         web3: PropTypes.object
     };
+
+    constructor(props: Web3ProviderPros) {
+        super(props);
+        this.state = {
+            web3: undefined,
+            loading: true
+        };
+    }
 
     getChildContext() {
         return {
@@ -35,7 +38,7 @@ class Web3Provider extends React.Component<any, Web3ProviderState> {
                 loading: this.state.loading,
                 setWeb3: (provider: string) => {
                     let web3 = new Web3(new Web3.providers.HttpProvider(provider));
-                    this.setState({ web3: web3, loading: false })
+                    this.setState({ web3: web3, loading: false });
                 }
             }
         };

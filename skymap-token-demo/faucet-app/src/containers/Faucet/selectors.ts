@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 
+// tslint:disable-next-line
 const getFaucetDomain = () => (state: any) => state.get('faucetDomain');
 
 const selectInfo = () => createSelector(

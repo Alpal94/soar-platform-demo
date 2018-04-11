@@ -17,14 +17,13 @@ import './index.css';
 interface NavigationBarProps {
 }
 
-
 interface NavigationBarState {
   isOpen: boolean;
 }
 
 class NavigationBar extends React.Component<NavigationBarProps, NavigationBarState> {
 
-  constructor(props) {
+  constructor(props: NavigationBarProps) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
@@ -47,9 +46,9 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
+              {/* <NavItem>
                 <NavLink href="/users/">Users</NavLink>
-              </NavItem>
+              </NavItem> */}
             </Nav>
           </Collapse>
         </Navbar>

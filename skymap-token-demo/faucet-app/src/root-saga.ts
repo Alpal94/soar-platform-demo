@@ -1,9 +1,9 @@
-import { sampleWatcher } from './containers/Users/saga';
+import { all } from 'redux-saga/effects';
+
 import { tokenInfoWatcher } from './containers/Faucet/saga';
 
 export default function* rootSaga() {
-  yield [
-    sampleWatcher(),
+  yield all([
     tokenInfoWatcher()
-  ];
+  ]);
 }

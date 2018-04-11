@@ -1,13 +1,14 @@
 import { call, put, take } from 'redux-saga/effects';
+import * as Web3 from 'web3';
 
 import { fetchInfo } from '../../lib/skymap-token';
 import { actionTypes as at } from './constants';
 import { fetchInfoSuccess, fetchInfoError } from './actions';
-import { Info } from './model';
+import { Info } from '../../lib/model';
 
-export function* fetchTokenInfo(web3: any) {
+export function* fetchTokenInfo(web3: Web3) {
     try {
-        const result: any = yield call(fetchInfo, web3);
+        const result: Info = yield call(fetchInfo, web3);
         yield put(fetchInfoSuccess(result));
     } catch (err) {
         yield put(fetchInfoError(err));
