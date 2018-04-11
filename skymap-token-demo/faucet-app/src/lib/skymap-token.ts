@@ -1,11 +1,10 @@
 import { Promise } from 'bluebird';
+import Web3Helper from './web3-helper';
+
 const SkymapTokenContract = require('./contracts/SkymapToken.json');
 
-
 export const fetchInfo = (web3: any) => {
-    let address = '0xea09e2dab14d2de7a1983ca4047c3f30e8796d3c';
-    let tokenContract = web3.eth.contract(SkymapTokenContract.abi);
-    let tokenPromise = Promise.resolve(Promise.promisifyAll(tokenContract.at(address)));
+    let tokenPromise = getTokenContractPromise(web3);
     return tokenPromise.then(instance => {
         let promises: any[] = [];
         promises.push(instance.symbolAsync());
@@ -17,4 +16,10 @@ export const fetchInfo = (web3: any) => {
             supply: web3.fromWei(results[1]).toNumber()
         };
     });
+}
+
+function getTokenContractPromise(web3: any): any {
+    let address = Web3Helper.getSkymapTokenContractAddress(web3);
+    let tokenContract = web3.eth.contract(SkymapTokenContract.abi);
+    return Promise.resolve(Promise.promisifyAll(tokenContract.at(address)));
 }

@@ -16,7 +16,12 @@
     "redux-saga": "^0.16.0",
     "reselect": "^3.0.1",
     "styled-components": "^3.2.5",
-    "web3": "^0.20.6"
+    "web3": "^0.20.6",
+    "bootstrap": "4.0.0",
+    "reactstrap": "5.0.0",
+    "react-addons-transition-group": "15.6.2",
+    "react-addons-css-transition-group": "15.6.2",
+    "optional-require":"1.0.0"
   },
   "devDependencies": {
     "@types/bluebird": "^3.5.20",
@@ -29,6 +34,7 @@
     "@types/react-router": "4.0.23",
     "@types/react-router-dom": "^4.2.6",
     "@types/redux-immutable": "^3.0.38",
+    "@types/reactstrap": "5.0.21",
     "react-scripts-ts": "2.4.0"
   },
   "scripts": {

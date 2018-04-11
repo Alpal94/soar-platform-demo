@@ -1,5 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
+import Web3Helper from '../../lib/web3-helper';
+
 
 interface MetamaskProps extends React.Props<Metamask> {
 };
@@ -28,7 +30,7 @@ class Metamask extends React.Component<MetamaskProps, MetamaskState> {
         let network = 'undefined';
         let setWeb3Button;
         if (this.context.web3.instance) {
-            network = this.context.web3.networkId;
+            network = Web3Helper.getCurrentNetworkName(this.context.web3.instance);
         } else {
             setWeb3Button = (<button onClick={() => this.setWeb3()}>Set default</button>);
         }

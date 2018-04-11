@@ -12,7 +12,6 @@ declare global {
 interface Web3ProviderState {
     web3: any;
     loading: boolean;
-    networkId: number;
 }
 
 class Web3Provider extends React.Component<any, Web3ProviderState> {
@@ -21,8 +20,7 @@ class Web3Provider extends React.Component<any, Web3ProviderState> {
         super(props);
         this.state = {
             web3: null,
-            loading: true,
-            networkId: 0
+            loading: true
         };
     }
 
@@ -34,7 +32,6 @@ class Web3Provider extends React.Component<any, Web3ProviderState> {
         return {
             web3: {
                 instance: this.state.web3,
-                networkId: this.state.networkId,
                 loading: this.state.loading,
                 setWeb3: (provider: string) => {
                     let web3 = new Web3(new Web3.providers.HttpProvider(provider));
@@ -50,7 +47,7 @@ class Web3Provider extends React.Component<any, Web3ProviderState> {
             let web3 = this.window.web3;
             if (typeof web3 !== 'undefined') {
                 web3 = new Web3(web3.currentProvider);
-                self.setState({ loading: false, web3: web3, networkId: web3.version.network });
+                self.setState({ loading: false, web3: web3 });
             } else {
                 self.setState({ loading: false });
             }

@@ -7,18 +7,26 @@ import store from './store';
 import Web3Provider from './web3-provider';
 
 import { BrowserRouter } from 'react-router-dom';
+import Metamask from './containers/Metamask';
 
 import './index.css';
-import Metamask from './containers/Metamask';
+// Import default Bootstrap 4 CSS
+import 'bootstrap/dist/css/bootstrap.css';
+
+import { Container } from 'reactstrap';
+import NavigationBar from './components/NavigationBar';
 
 const Root = (
   <Web3Provider>
     <Provider store={store}>
       <div>
         <Metamask />
-        <BrowserRouter>
-          <RouteMap />
-        </BrowserRouter>
+        <NavigationBar/>
+        <Container>
+          <BrowserRouter>
+            <RouteMap />
+          </BrowserRouter>
+        </Container>
       </div>
     </Provider>
   </Web3Provider>
