@@ -1,9 +1,13 @@
 import { all } from 'redux-saga/effects';
 
-import { tokenInfoWatcher } from './containers/Faucet/saga';
+import { tokenInfoWatcher, getSKYMWatcher } from './containers/Faucet/saga';
+import { infoAdminWatcher, setTokenContractWatcher } from './containers/FaucetAdmin/saga';
 
 export default function* rootSaga() {
   yield all([
-    tokenInfoWatcher()
+    tokenInfoWatcher(),
+    getSKYMWatcher(),
+    infoAdminWatcher(),
+    setTokenContractWatcher()
   ]);
 }

@@ -4,23 +4,23 @@ import * as Web3 from 'web3';
 import { createStructuredSelector } from 'reselect';
 const connect = require('react-redux').connect;
 
-import { fetchInfo, getSKYM } from './actions';
+import { fetchInfo, setSkymapContract } from './actions';
 import { selectInfo, selectIsLoading, selectIsFetched } from './selectors';
-import { Info } from '../../lib/model';
+import { InfoAdmin } from '../../lib/model';
 
-interface FaucetProps extends React.Props<Faucet> {
-    info: Info;
+interface FaucetAdminProps extends React.Props<FaucetAdmin> {
+    info: InfoAdmin;
     isLoading: boolean;
     isFetched: boolean;
     infoFetch: (web3: Web3) => void;
-    getSKYM: (web3: Web3) => void;
+    setSkymapContract: (web3: Web3, address: string) => void;
 }
 
-interface FaucetState {
+interface FaucetAdminState {
 
 }
 
-class Faucet extends React.Component<FaucetProps, FaucetState> {
+class FaucetAdmin extends React.Component<FaucetAdminProps, FaucetAdminState> {
 
     static contextTypes = {
         web3: PropTypes.object
@@ -36,8 +36,9 @@ class Faucet extends React.Component<FaucetProps, FaucetState> {
             <div>
                 <h1>Faucet</h1>
                 <p>Symbol: {info.symbol}</p>
-                <p>Supply: {info.supply}</p>
-                <button onClick={() => this.props.getSKYM(this.context.web3.instance)}>Get SKYM</button>
+                <p>Allowance: {info.faucetAllowance}</p>
+                <p>Wallet Balance: {info.walletBalance}</p>
+                {/* <button onClick={() => this.props.getSKYM(this.context.web3.instance)}>Get SKYM</button> */}
             </div>
         );
     }
@@ -57,10 +58,10 @@ function mapDispatchToProps(dispatch: any) {
         infoFetch: (web3: Web3): void => {
             dispatch(fetchInfo(web3));
         },
-        getSKYM: (web3: Web3): void => {
-            dispatch(getSKYM(web3));
+        setSkymapContract: (web3: Web3, address: string): void => {
+            dispatch(setSkymapContract(web3, address));
         }
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Faucet);
+export default connect(mapStateToProps, mapDispatchToProps)(FaucetAdmin);

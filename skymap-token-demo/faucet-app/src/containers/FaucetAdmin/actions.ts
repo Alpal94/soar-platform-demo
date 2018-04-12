@@ -4,28 +4,28 @@ import * as Web3 from 'web3';
 
 export const fetchInfo = (web3: Web3) => {
     return {
-        type: at.TOKEN_INFO_FETCH,
+        type: at.ADMIN_INFO_FETCH,
         web3: web3
     };
 };
 
 export const fetchInfoSuccess = (result: Info) => {
     return {
-        type: at.TOKEN_INFO_FETCH_SUCCESS,
+        type: at.ADMIN_INFO_FETCH_SUCCESS,
         payload: result
     };
 };
 
 export const fetchInfoError = (error: Error) => {
     return {
-        type: at.TOKEN_INFO_FETCH_ERROR,
+        type: at.ADMIN_INFO_FETCH_ERROR,
         payload: error
     };
 };
 
-export const getSKYM = (web3: Web3) => {
+export const setSkymapContract = (web3: Web3, address: string) => {
     return {
-        type: at.FAUCET_GET_SKYM,
+        type: at.FAUCET_SET_TOKEN_CONTRACT,
         web3: web3
     };
 };
