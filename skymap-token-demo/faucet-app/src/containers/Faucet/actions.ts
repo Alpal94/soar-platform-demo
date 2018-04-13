@@ -1,8 +1,7 @@
 import { actionTypes as at } from './constants';
 import { Info } from '../../lib/model';
-import * as Web3 from 'web3';
 
-export const fetchInfo = (web3: Web3) => {
+export const fetchInfo = (web3: any) => {
     return {
         type: at.TOKEN_INFO_FETCH,
         web3: web3
@@ -23,7 +22,7 @@ export const fetchInfoError = (error: Error) => {
     };
 };
 
-export const getSKYM = (web3: Web3) => {
+export const getSKYM = (web3: any) => {
     return {
         type: at.FAUCET_GET_SKYM,
         web3: web3

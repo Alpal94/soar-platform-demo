@@ -1,11 +1,12 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import * as Web3 from 'web3';
 import { Redirect, Route, Switch } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 
+const Web3 = require('web3');
+
 declare global {
-    interface Window { web3: Web3; }
+    interface Window { web3: any; }
 }
 
 interface Web3ProviderPros {
@@ -13,7 +14,7 @@ interface Web3ProviderPros {
 }
 
 interface Web3ProviderState {
-    web3?: Web3;
+    web3?: any;
     loading: boolean;
 }
 

@@ -18,6 +18,7 @@
     "noUnusedLocals": false
   },
   "exclude": [
+    "node_modules",
     "build",
     "scripts",
     "acceptance-tests",
@@ -27,8 +28,5 @@
   ],
   "types": [
     "typePatches"
-  ],
-  "include": [
-    "typings/**/*.ts"
   ]
 }

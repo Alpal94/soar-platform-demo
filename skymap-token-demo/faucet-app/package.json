@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "bignumber.js": "6.0.0",
-    "bluebird": "^3.5.1",
     "bootstrap": "4.0.0",
     "immutable": "^3.8.2",
     "prop-types": "^15.6.1",
@@ -22,11 +20,10 @@
     "redux-saga": "^0.16.0",
     "reselect": "^3.0.1",
     "styled-components": "^3.2.5",
-    "web3": "^0.20.6"
+    "web3": "0.20.6",
+    "truffle-contract": "3.0.4"
   },
   "devDependencies": {
-    "@types/bignumber.js": "5.0.0",
-    "@types/bluebird": "^3.5.20",
     "@types/jest": "^22.2.2",
     "@types/node": "^7.0.60",
     "@types/prop-types": "15.5.2",

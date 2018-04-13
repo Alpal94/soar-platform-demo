@@ -1,8 +1,7 @@
 import { actionTypes as at } from './constants';
 import { Info } from '../../lib/model';
-import * as Web3 from 'web3';
 
-export const fetchInfo = (web3: Web3) => {
+export const fetchInfoAction = (web3: any) => {
     return {
         type: at.ADMIN_INFO_FETCH,
         web3: web3
@@ -23,9 +22,17 @@ export const fetchInfoError = (error: Error) => {
     };
 };
 
-export const setSkymapContract = (web3: Web3, address: string) => {
+export const setSkymapContractAction = (web3: any, address: string) => {
     return {
         type: at.FAUCET_SET_TOKEN_CONTRACT,
         web3: web3
+    };
+};
+
+export const setAllowanceAction = (web3: any, value: number) => {
+    return {
+        type: at.FAUCET_SET_ALLOWANCE,
+        web3: web3,
+        value: value
     };
 };

@@ -4,6 +4,7 @@ export interface Info {
 }
 
 export interface InfoAdmin {
+    isOwner: boolean,
     symbol: string,
     faucetAllowance: number,
     walletBalance: number

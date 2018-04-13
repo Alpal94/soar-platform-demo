@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import * as Web3 from 'web3';
 import { createStructuredSelector } from 'reselect';
 const connect = require('react-redux').connect;
 
@@ -12,8 +11,8 @@ interface FaucetProps extends React.Props<Faucet> {
     info: Info;
     isLoading: boolean;
     isFetched: boolean;
-    infoFetch: (web3: Web3) => void;
-    getSKYM: (web3: Web3) => void;
+    infoFetch: (web3: any) => void;
+    getSKYM: (web3: any) => void;
 }
 
 interface FaucetState {
@@ -51,13 +50,12 @@ function mapStateToProps() {
     });
 }
 
-// tslint:disable-next-line
 function mapDispatchToProps(dispatch: any) {
     return {
-        infoFetch: (web3: Web3): void => {
+        infoFetch: (web3: any): void => {
             dispatch(fetchInfo(web3));
         },
-        getSKYM: (web3: Web3): void => {
+        getSKYM: (web3: any): void => {
             dispatch(getSKYM(web3));
         }
     };
