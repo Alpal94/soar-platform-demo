@@ -1,6 +1,7 @@
 export interface Info {
     symbol: string,
-    supply: number
+    balance: number,
+    individualCap: number
 }
 
 export interface InfoAdmin {

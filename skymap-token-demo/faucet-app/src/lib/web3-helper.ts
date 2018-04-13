@@ -74,4 +74,26 @@ export default class Web3Helper {
     faucetContract.setProvider(web3.currentProvider);
     return faucetContract.at(address);
   }
+
+  public static waitTxConfirmed(web3: any, txHash: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      let latestFilter = web3.eth.filter('latest');
+      let counter = 0;
+      latestFilter.watch((error, result) => {
+        if (error) {
+          resolve(false);
+        }
+        let receiptPromise = web3.eth.getTransactionReceipt(txHash, (err, res) => {
+          if (res !== null) {
+            resolve(true);
+          } else if (counter > 50) {
+            resolve(false);
+          } else if (err) {
+            resolve(false);
+          }
+          counter++;
+        });
+      });
+    });
+  }
 }

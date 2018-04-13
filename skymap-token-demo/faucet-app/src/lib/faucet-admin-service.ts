@@ -41,7 +41,7 @@ export function setAllowance(web3: any, value: number): Promise<boolean> {
         userAddress = results[1];
         let approve = tokenContract.approve(faucetAddress, Web3Helper.fromSkymap(web3, value), {from: userAddress});
         return Promise.resolve(approve);
-    }).then(results => {
-        return true;
+    }).then(result => {
+        return Web3Helper.waitTxConfirmed(web3, result.tx);
     });
 }

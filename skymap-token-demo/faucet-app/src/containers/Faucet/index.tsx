@@ -3,16 +3,17 @@ import * as PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 const connect = require('react-redux').connect;
 
-import { fetchInfo, getSKYM } from './actions';
+import { fetchInfo, getSKYMTokens } from './actions';
 import { selectInfo, selectIsLoading, selectIsFetched } from './selectors';
 import { Info } from '../../lib/model';
+import { Button } from 'reactstrap';
 
 interface FaucetProps extends React.Props<Faucet> {
     info: Info;
     isLoading: boolean;
     isFetched: boolean;
     infoFetch: (web3: any) => void;
-    getSKYM: (web3: any) => void;
+    getSKYMTokens: (web3: any) => void;
 }
 
 interface FaucetState {
@@ -31,12 +32,14 @@ class Faucet extends React.Component<FaucetProps, FaucetState> {
 
     public render(): React.ReactElement<{}> {
         const { info, isLoading, isFetched } = this.props;
+        const web3 = this.context.web3.instance;
         return (
             <div>
                 <h1>Faucet</h1>
-                <p>Symbol: {info.symbol}</p>
-                <p>Supply: {info.supply}</p>
-                <button onClick={() => this.props.getSKYM(this.context.web3.instance)}>Get SKYM</button>
+                <p>Your Balance: {info.balance} {info.symbol}</p>
+                <Button onClick={() => this.props.getSKYMTokens(web3)}>
+                    Get {info.individualCap + ' ' + info.symbol}
+                </Button>
             </div>
         );
     }
@@ -55,8 +58,8 @@ function mapDispatchToProps(dispatch: any) {
         infoFetch: (web3: any): void => {
             dispatch(fetchInfo(web3));
         },
-        getSKYM: (web3: any): void => {
-            dispatch(getSKYM(web3));
+        getSKYMTokens: (web3: any): void => {
+            dispatch(getSKYMTokens(web3));
         }
     };
 }

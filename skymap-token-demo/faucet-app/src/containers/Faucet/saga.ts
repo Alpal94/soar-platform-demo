@@ -7,8 +7,8 @@ import { Info } from '../../lib/model';
 
 export function* fetchTokenInfo(web3: any) {
     try {
-        const result: Info = yield call(fetchInfo, web3);
-        yield put(fetchInfoSuccess(result));
+        const info: Info = yield call(fetchInfo, web3);
+        yield put(fetchInfoSuccess(info));
     } catch (err) {
         yield put(fetchInfoError(err));
     }
@@ -23,8 +23,9 @@ export function* tokenInfoWatcher() {
 
 export function* getSKYM(web3: any) {
     try {
-        const result: Info = yield call(getSKYMTokens, web3);
-        // yield put(fetchInfoSuccess(result));
+        const result: boolean = yield call(getSKYMTokens, web3);
+        const info: Info = yield call(fetchInfo, web3);
+        yield put(fetchInfoSuccess(info));
     } catch (err) {
         // yield put(fetchInfoError(err));
     }

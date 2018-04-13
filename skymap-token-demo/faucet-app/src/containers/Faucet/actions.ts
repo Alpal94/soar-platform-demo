@@ -22,7 +22,7 @@ export const fetchInfoError = (error: Error) => {
     };
 };
 
-export const getSKYM = (web3: any) => {
+export const getSKYMTokens = (web3: any) => {
     return {
         type: at.FAUCET_GET_SKYM,
         web3: web3
