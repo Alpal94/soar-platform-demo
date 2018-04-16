@@ -9,5 +9,6 @@ export interface InfoAdmin {
     symbol: string,
     faucetAllowance: number,
     walletBalance: number,
-    tokenAddress: string
+    tokenAddress: string,
+    walletAddress: string
 }

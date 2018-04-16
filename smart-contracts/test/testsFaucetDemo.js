@@ -1,5 +1,5 @@
-const SkymapToken = artifacts.require("SkymapToken");
-const Faucet = artifacts.require("Faucet");
+const SkymapToken = artifacts.require("SkymapTokenDemo");
+const Faucet = artifacts.require("FaucetDemo");
 
 const BigNumber = web3.BigNumber;
 
@@ -14,7 +14,7 @@ const individualCap = new BigNumber(web3.toWei(1000));
 const txSuccess = new BigNumber(1);
 const txFailure = new BigNumber(0);
 
-contract('SkymapToken', function ([owner, user1, user2]) {
+contract('FaucetDemo', function ([owner, user1, user2]) {
   
   beforeEach(async function () {
     this.skymapToken = await SkymapToken.new(owner);

@@ -42,6 +42,7 @@ class FaucetAdmin extends React.Component<FaucetAdminProps, FaucetAdminState> {
             <div>
                 <h1>Administration SKYM Faucet</h1>
                 <p>Skymap address: {info.tokenAddress}</p>
+                <p>Wallet Address: {info.walletAddress}</p>
                 <p>Allowance left: {info.faucetAllowance} {info.symbol}</p>
                 <p>Wallet Balance: {info.walletBalance} {info.symbol}</p>
                 {info.isOwner && (

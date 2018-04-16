@@ -28,7 +28,7 @@ contract('PricingManual', function ([owner, buyer]) {
   });
   
   it("..only owner can change the price", async function () {
-    await this.pricingManual.setPrice(selectedGeoHash, selectedPrice, {from: buyer});
+    await this.pricingManual.setPrice(selectedGeoHash, selectedPrice, {from: buyer}).should.be.rejectedWith(Error);;
     let price = await this.pricingManual.getPrice(geoHash);
     price.should.be.bignumber.equal(defaultPrice);
 

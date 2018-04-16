@@ -1,5 +1,5 @@
 {
-  "contractName": "SkymapToken",
+  "contractName": "SkymapTokenDemo",
   "abi": [
     {
       "constant": true,
@@ -372,12 +372,7 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "name": "beneficiary",
-          "type": "address"
-        }
-      ],
+      "inputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
       "type": "constructor"

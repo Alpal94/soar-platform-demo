@@ -3,8 +3,8 @@ const Web3 = require('web3');
 
 var TruffleContract = require('truffle-contract');
 
-const SkymapTokenContract = require('./contracts/SkymapToken.json');
-const FaucetContract = require('./contracts/Faucet.json');
+const SkymapTokenContract = require('./contracts/SkymapTokenDemo.json');
+const FaucetContract = require('./contracts/FaucetDemo.json');
 
 const Config = require('./config.json');
 const ConfigLocal = require('./config.local.json');

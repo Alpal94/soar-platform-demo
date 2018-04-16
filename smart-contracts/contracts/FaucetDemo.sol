@@ -10,7 +10,7 @@ import "zeppelin-solidity/contracts/token/ERC20/ERC20.sol";
  *
  */
  
-contract Faucet is Ownable, Pausable {
+contract FaucetDemo is Ownable, Pausable {
     
     ERC20 private skymapTokenContract;
     address public wallet;
@@ -23,7 +23,7 @@ contract Faucet is Ownable, Pausable {
 
     event Transfer(address indexed account, uint256 value);
 
-    function Faucet(address _walletAddress) public {
+    function FaucetDemo(address _walletAddress) public {
         wallet = _walletAddress;
     }
     

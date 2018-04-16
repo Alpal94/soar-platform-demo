@@ -8,15 +8,16 @@ export function fetchInfoAdmin(web3: any): Promise<InfoAdmin> {
     let faucetPromise = Web3Helper.getFaucetContractPromise(web3);
     let tokenContract;
     let faucetContract;
+    let walletAddress;
     return Promise.all([tokenPromise, faucetPromise]).then(results => {
         tokenContract = results[0];    
         faucetContract = results[1];
         return faucetContract.wallet();
     }).then(result => {
-        let wallet = result;
+        walletAddress = result;
         let symbol = tokenContract.symbol();
-        let faucetAllowance = tokenContract.allowance(wallet, faucetAddress);
-        let walletBalance = tokenContract.balanceOf(wallet);
+        let faucetAllowance = tokenContract.allowance(walletAddress, faucetAddress);
+        let walletBalance = tokenContract.balanceOf(walletAddress);
         let owner = faucetContract.owner();
         let tokenAddress = faucetContract.skymapTokenAddress();
         return Promise.all([symbol, faucetAllowance, walletBalance, owner, tokenAddress]);
@@ -26,7 +27,8 @@ export function fetchInfoAdmin(web3: any): Promise<InfoAdmin> {
             symbol: results[0],
             faucetAllowance: Web3Helper.toSkymap(web3, results[1]),
             walletBalance: Web3Helper.toSkymap(web3, results[2]),
-            tokenAddress: results[4]
+            tokenAddress: results[4],
+            walletAddress: walletAddress
         };
         return infoRes;
     });
