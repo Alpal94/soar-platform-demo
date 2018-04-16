@@ -5,6 +5,7 @@ import { waitTxConfirmed } from '../../lib/web3-service';
 import { actionTypes as at } from './constants';
 import { fetchInfoSuccess, fetchInfoError } from './actions';
 import { progressMessageAction, progressMessageDoneAction } from '../ProgressBar/actions';
+import { alertSuccessAction, alertErorrAction  } from '../Alert/actions';
 
 import { Info } from '../../lib/model';
 
@@ -26,8 +27,9 @@ export function* setTokenContract(web3: any, address: string) {
         yield put(progressMessageAction('Updating admin information'));
         const result: Info = yield call(fetchInfoAdmin, web3);
         yield put(fetchInfoSuccess(result));
+        yield put(alertSuccessAction('Skymap token was successfully set'));
     } catch (err) {
-        yield put(fetchInfoError(err));
+        yield put(alertErorrAction(err.message));
     } finally {
         yield put(progressMessageDoneAction());
     }
@@ -42,8 +44,9 @@ export function* setAllowanceSaga(web3: any, value: number) {
         yield put(progressMessageAction('Updating admin information'));
         const result: Info = yield call(fetchInfoAdmin, web3);
         yield put(fetchInfoSuccess(result));
+        yield put(alertSuccessAction('Allowance was successfully set'));
     } catch (err) {
-        yield put(fetchInfoError(err));
+        yield put(alertErorrAction(err));
     } finally {
         yield put(progressMessageDoneAction());
     }

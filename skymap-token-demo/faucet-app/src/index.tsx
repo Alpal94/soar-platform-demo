@@ -9,18 +9,18 @@ import ContextProvider from './context-provider';
 import { BrowserRouter } from 'react-router-dom';
 import { Redirect, Route, Switch } from 'react-router';
 
+import { Container } from 'reactstrap';
+
+import NavigationBar from './components/NavigationBar';
 import Metamask from './containers/Metamask';
 import ProgressBar from './containers/ProgressBar';
-
+import Alert from './containers/Alert';
 import Faucet from './containers/Faucet/';
 import FaucetAdmin from './containers/FaucetAdmin/';
 
 import './index.css';
 // Import default Bootstrap 4 CSS
 import 'bootstrap/dist/css/bootstrap.css';
-
-import { Container } from 'reactstrap';
-import NavigationBar from './components/NavigationBar';
 
 const Root = (
   <ContextProvider>
@@ -29,6 +29,7 @@ const Root = (
         <Metamask />
         <NavigationBar />
         <ProgressBar />
+        <Alert/>
         <BrowserRouter>
           <Container>
             <Switch>
