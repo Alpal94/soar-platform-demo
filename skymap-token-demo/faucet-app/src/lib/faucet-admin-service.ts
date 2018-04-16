@@ -18,19 +18,21 @@ export function fetchInfoAdmin(web3: any): Promise<InfoAdmin> {
         let faucetAllowance = tokenContract.allowance(wallet, faucetAddress);
         let walletBalance = tokenContract.balanceOf(wallet);
         let owner = faucetContract.owner();
-        return Promise.all([symbol, faucetAllowance, walletBalance, owner]);
+        let tokenAddress = faucetContract.skymapTokenAddress();
+        return Promise.all([symbol, faucetAllowance, walletBalance, owner, tokenAddress]);
     }).then(results => {
         let infoRes: InfoAdmin = {
             isOwner: results[3].toUpperCase() === userAddress.toUpperCase(),
             symbol: results[0],
             faucetAllowance: Web3Helper.toSkymap(web3, results[1]),
-            walletBalance: Web3Helper.toSkymap(web3, results[2])
+            walletBalance: Web3Helper.toSkymap(web3, results[2]),
+            tokenAddress: results[4]
         };
         return infoRes;
     });
 }
 
-export function setAllowance(web3: any, value: number): Promise<boolean> {
+export function setAllowance(web3: any, value: number): Promise<string> {
     let userAddressPromise = Web3Helper.getCurrentAddress(web3);
     let faucetAddress = Web3Helper.getFaucetContractAddress(web3);
     let tokenPromise = Web3Helper.getSkymapTokenContractPromise(web3);
@@ -39,9 +41,18 @@ export function setAllowance(web3: any, value: number): Promise<boolean> {
     return Promise.all([tokenPromise, userAddressPromise]).then(results => {
         tokenContract = results[0];
         userAddress = results[1];
-        let approve = tokenContract.approve(faucetAddress, Web3Helper.fromSkymap(web3, value), {from: userAddress});
-        return Promise.resolve(approve);
+        return tokenContract.approve(faucetAddress, Web3Helper.fromSkymap(web3, value), {from: userAddress});
     }).then(result => {
-        return Web3Helper.waitTxConfirmed(web3, result.tx);
+        return result.tx;
+    });
+}
+
+export function setTokenAddress(web3: any, address: string): Promise<string> {
+    let userAddress = Web3Helper.getCurrentAddress(web3);
+    let faucetPromise = Web3Helper.getFaucetContractPromise(web3);
+    return Promise.resolve(faucetPromise).then(faucetContract => {
+        return faucetContract.setSkymapTokenContract(address, {from: userAddress});
+    }).then(result => {
+        return result.tx;
     });
 }

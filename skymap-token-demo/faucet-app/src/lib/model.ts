@@ -8,5 +8,6 @@ export interface InfoAdmin {
     isOwner: boolean,
     symbol: string,
     faucetAllowance: number,
-    walletBalance: number
+    walletBalance: number,
+    tokenAddress: string
 }

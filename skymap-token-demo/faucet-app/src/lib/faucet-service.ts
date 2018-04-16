@@ -22,12 +22,12 @@ export function fetchInfo(web3: any): Promise<Info> {
     });
 }
 
-export function getSKYMTokens(web3: any): Promise<boolean> {
+export function getSKYMTokens(web3: any): Promise<string> {
     let address = Web3Helper.getCurrentAddress(web3);
     let promise = Web3Helper.getFaucetContractPromise(web3);
     return Promise.resolve(promise).then(instance => {
         return instance.getSKYMTokens({from: address});
     }).then(result => {
-        return Web3Helper.waitTxConfirmed(web3, result.tx);
+        return result.tx;
     });
 }

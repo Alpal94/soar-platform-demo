@@ -1,9 +1,11 @@
 import { call, put, take } from 'redux-saga/effects';
 
-import { fetchInfoAdmin, setAllowance } from '../../lib/faucet-admin-service';
-import { getSKYMTokens } from '../../lib/faucet-service';
+import { fetchInfoAdmin, setAllowance, setTokenAddress } from '../../lib/faucet-admin-service';
+import { waitTxConfirmed } from '../../lib/web3-service';
 import { actionTypes as at } from './constants';
 import { fetchInfoSuccess, fetchInfoError } from './actions';
+import { progressMessageAction, progressMessageDoneAction } from '../ProgressBar/actions';
+
 import { Info } from '../../lib/model';
 
 export function* fetchAdminInfo(web3: any) {
@@ -17,25 +19,34 @@ export function* fetchAdminInfo(web3: any) {
 
 export function* setTokenContract(web3: any, address: string) {
     try {
-        const success: boolean = yield call(getSKYMTokens, web3);
-        if (success) {
-            const result: Info = yield call(fetchInfoAdmin, web3);
-            yield put(fetchInfoSuccess(result));
-        }
+        yield put(progressMessageAction('Please confirm transaction using metamask'));
+        const txHash: string = yield call(setTokenAddress, web3, address);
+        yield put(progressMessageAction('Waiting for transaction to be confirmed by network'));
+        const confirmed: boolean = yield call(waitTxConfirmed, web3, txHash);
+        yield put(progressMessageAction('Updating admin information'));
+        const result: Info = yield call(fetchInfoAdmin, web3);
+        yield put(fetchInfoSuccess(result));
     } catch (err) {
+        console.log(err)
         yield put(fetchInfoError(err));
+    } finally {
+        yield put(progressMessageDoneAction());
     }
 }
 
 export function* setAllowanceSaga(web3: any, value: number) {
     try {
-        const success: boolean = yield call(setAllowance, web3, value);
-        if (success) {
-            const result: Info = yield call(fetchInfoAdmin, web3);
-            yield put(fetchInfoSuccess(result));
-        }
+        yield put(progressMessageAction('Please confirm transaction using metamask'));
+        const txHash: string = yield call(setAllowance, web3, value);
+        yield put(progressMessageAction('Waiting for transaction to be confirmed by network'));
+        const confirmed: boolean = yield call(waitTxConfirmed, web3, txHash);
+        yield put(progressMessageAction('Updating admin information'));
+        const result: Info = yield call(fetchInfoAdmin, web3);
+        yield put(fetchInfoSuccess(result));
     } catch (err) {
         yield put(fetchInfoError(err));
+    } finally {
+        yield put(progressMessageDoneAction());
     }
 }
 

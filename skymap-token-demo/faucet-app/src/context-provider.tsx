@@ -9,22 +9,22 @@ declare global {
     interface Window { web3: any; }
 }
 
-interface Web3ProviderPros {
+interface ContextProviderPros {
 
 }
 
-interface Web3ProviderState {
+interface ContextProviderState {
     web3?: any;
     loading: boolean;
 }
 
-class Web3Provider extends React.Component<Web3ProviderPros, Web3ProviderState> {
+class ContextProvider extends React.Component<ContextProviderPros, ContextProviderState> {
 
     static childContextTypes = {
         web3: PropTypes.object
     };
 
-    constructor(props: Web3ProviderPros) {
+    constructor(props: ContextProviderPros) {
         super(props);
         this.state = {
             web3: undefined,
@@ -70,4 +70,4 @@ class Web3Provider extends React.Component<Web3ProviderPros, Web3ProviderState> 
     }
 }
 
-export default Web3Provider;
+export default ContextProvider;

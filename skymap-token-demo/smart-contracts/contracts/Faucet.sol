@@ -14,6 +14,7 @@ contract Faucet is Ownable, Pausable {
     
     ERC20 private skymapTokenContract;
     address public wallet;
+    address public skymapTokenAddress;
 
     uint256 public INDIVIDUAL_CAP = 1000 * (uint(10) ** 18);
     uint256 public WAITING_PERIOD = 24 * 60 * 60 * 1000;
@@ -31,6 +32,7 @@ contract Faucet is Ownable, Pausable {
     }
     
     function setSkymapTokenContract(address _skymapTokenAddress) onlyOwner external {
+        skymapTokenAddress = _skymapTokenAddress;
         skymapTokenContract = ERC20(_skymapTokenAddress);
     }
 

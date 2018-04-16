@@ -47,18 +47,14 @@ export default class Web3Helper {
     }
   }
 
-  public static getSkymapTokenContractAddress(web3: any): string {
-    // merge object the right-most (last) object's value wins out:
-    let addresses = { ...Config.SkymapToken, ...ConfigLocal.SkymapToken };
-    let networkId = this.getCurrentNetwork(web3);
-    return addresses[networkId];
-  }
-
   public static getSkymapTokenContractPromise(web3: any): Promise<any> {
-    let address = this.getSkymapTokenContractAddress(web3);
-    let skymapTokenContract = TruffleContract(SkymapTokenContract);
-    skymapTokenContract.setProvider(web3.currentProvider);
-    return skymapTokenContract.at(address);
+    return this.getFaucetContractPromise(web3).then(faucetContract => {
+      return faucetContract.skymapTokenAddress();
+    }).then(address => {
+      let skymapTokenContract = TruffleContract(SkymapTokenContract);
+      skymapTokenContract.setProvider(web3.currentProvider);
+      return skymapTokenContract.at(address);
+    });
   }
 
   public static getFaucetContractAddress(web3: any): string {

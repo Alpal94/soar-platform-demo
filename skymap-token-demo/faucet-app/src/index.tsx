@@ -4,10 +4,16 @@ import { Provider } from 'react-redux';
 
 import { RouteMap } from './routes';
 import store from './store';
-import Web3Provider from './web3-provider';
+import ContextProvider from './context-provider';
 
 import { BrowserRouter } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router';
+
 import Metamask from './containers/Metamask';
+import ProgressBar from './containers/ProgressBar';
+
+import Faucet from './containers/Faucet/';
+import FaucetAdmin from './containers/FaucetAdmin/';
 
 import './index.css';
 // Import default Bootstrap 4 CSS
@@ -17,19 +23,23 @@ import { Container } from 'reactstrap';
 import NavigationBar from './components/NavigationBar';
 
 const Root = (
-  <Web3Provider>
+  <ContextProvider>
     <Provider store={store}>
       <div>
         <Metamask />
-        <NavigationBar/>
-        <Container>
-          <BrowserRouter>
-            <RouteMap />
-          </BrowserRouter>
-        </Container>
+        <NavigationBar />
+        <ProgressBar />
+        <BrowserRouter>
+          <Container>
+            <Switch>
+              <Route exact path="/" component={Faucet} />
+              <Route path="/admin" component={FaucetAdmin} />
+            </Switch>
+          </Container>
+        </BrowserRouter>
       </div>
     </Provider>
-  </Web3Provider>
+  </ContextProvider>
 );
 
 render(

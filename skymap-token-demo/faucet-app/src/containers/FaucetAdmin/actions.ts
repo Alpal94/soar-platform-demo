@@ -25,7 +25,8 @@ export const fetchInfoError = (error: Error) => {
 export const setSkymapContractAction = (web3: any, address: string) => {
     return {
         type: at.FAUCET_SET_TOKEN_CONTRACT,
-        web3: web3
+        web3: web3,
+        address: address
     };
 };
 
