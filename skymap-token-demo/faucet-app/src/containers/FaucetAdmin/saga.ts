@@ -27,7 +27,6 @@ export function* setTokenContract(web3: any, address: string) {
         const result: Info = yield call(fetchInfoAdmin, web3);
         yield put(fetchInfoSuccess(result));
     } catch (err) {
-        console.log(err)
         yield put(fetchInfoError(err));
     } finally {
         yield put(progressMessageDoneAction());

@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 const connect = require('react-redux').connect;
 import { selectMessage } from './selectors';
-import { Prompt } from 'react-router'
+import { Prompt } from 'react-router';
 
 import { Progress } from 'reactstrap';
 
@@ -13,7 +13,6 @@ interface ProgressBarProps extends React.Props<ProgressBar> {
     message?: string;
     router: any;
 }
-
 
 interface ProgressBarState {
 }
@@ -38,7 +37,7 @@ class ProgressBar extends React.Component<ProgressBarProps, ProgressBarState> {
             <div>
                 {message &&
                     <Progress animated value="100">
-                        <span>{message}<span className="dotdotdot"></span></span>
+                        <span className="dotdotdot">{message}</span>
                     </Progress>
                 }
             </div>
