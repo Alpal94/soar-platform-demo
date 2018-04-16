@@ -65,23 +65,25 @@ class App extends Component {
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <NavigationBar />
+        <div>
+          <NavigationBar />
 
-        {this.props.progress && <Progress text={this.props.progress} />}  
-        
-        <Message {...this.props}/>
-        <MetaMask {...this.props} {...this.state} setWeb3={this.setWeb3}/>
-          <BrowserRouter>
-            <Switch>
-              <Route exact path="/" render={() => (<Overview {...this.props} {...this.state}/>)}/>
-              <Route exact path="/upload" render={() => (
-                <div className="container"><Upload {...this.props} {...this.state}/></div>)
-              }/>
-              <Route exact path="/browse" render={() => (<Browse {...this.props} {...this.state} /> ) }/>
-              
-              
-            </Switch>
-          </BrowserRouter>
+          {this.props.progress && <Progress text={this.props.progress} />}  
+          
+          <Message {...this.props}/>
+          <MetaMask {...this.props} {...this.state} setWeb3={this.setWeb3}/>
+            <BrowserRouter>
+              <Switch>
+                <Route exact path="/" render={() => (<Overview {...this.props} {...this.state}/>)}/>
+                <Route exact path="/upload" render={() => (
+                  <div className="container"><Upload {...this.props} {...this.state}/></div>)
+                }/>
+                <Route exact path="/browse" render={() => (<Browse {...this.props} {...this.state} /> ) }/>
+                
+                
+              </Switch>
+            </BrowserRouter>
+          </div>
       </MuiThemeProvider>
     );
   }

@@ -4,6 +4,8 @@ import EXIF from 'exif-js';
 import ChooseFile from './ChooseFile';
 import FileInfo from './FileInfo';
 import ChooseLocation from './ChooseLocation';
+import FileExif from './FileExif';
+import ExifDetails from './ExifDetails';
 import './Upload.css';
 
 class Upload extends Component {
@@ -92,10 +94,23 @@ class Upload extends Component {
                             exifdata={this.state.exifdata}
                             onLocationChange={this.onLocationChange}
                         />
-                        
-
                     </div>
                 </div>
+                {
+                    this.state.exifdata ? 
+                        Object.keys(this.state.exifdata).map((key, index) => {
+                            // console.log(key + ": " + this.state.exifdata[key]);
+                            return <FileExif key={index} exifKey={key} exifValue={this.state.exifdata[key]} />
+                        })
+                    
+                    
+                    : null 
+                }
+
+                {this.state.exifdata ? <ExifDetails exifData={this.state.exifdata} /> : null }
+
+
+
                 <div className="col-sm-12">
                     <div className="button-panel">
                         <button className="btn btn-danger" onClick={this.reset}>Reset</button>

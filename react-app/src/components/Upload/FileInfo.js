@@ -1,7 +1,6 @@
 import React from 'react';
-import { Field, Control, LocalForm, actions } from 'react-redux-form';
-import TextField from 'material-ui/TextField';
-import TextArea from 'material-ui'
+import { Control, LocalForm, actions } from 'react-redux-form';
+import { TextField } from 'redux-form-material-ui';
 import moment from 'moment';
 
 class FileInfo extends React.Component {
@@ -13,14 +12,15 @@ class FileInfo extends React.Component {
         };
     }
 
-  
-
     attachDispatch(dispatch) {
         this.formDispatch = dispatch;
     }
 
     componentWillReceiveProps(props){
         let exif = props.exifdata || {};
+
+        console.log(JSON.stringify(this.state.exif));
+
         if(this.state.exif !== exif){
             let date;
             if(exif.DateTime){
@@ -43,32 +43,70 @@ class FileInfo extends React.Component {
 
     render() {
 
-        const renderTextField = ({input, label, hint, ...custom}) => (
-            <TextField floatingLabelText={label} hintText={hint} {...input} {...custom}/>
-        )
-
         return (
+
             <LocalForm 
                 model="info"
                 className="form-group upload-summary-form"
                 onChange={(values) => this.props.onFileInfoChange(values)}
                 getDispatch={(dispatch) => this.attachDispatch(dispatch)}>
-                    <h3>File info</h3>
-                    <Field label="Title" hintText="Enter a title for the content" component={renderTextField} model=".title" /><br />
-                    <Field label="Description" hintText="Enter a description for the content" component={renderTextField} multiLine model=".description" /><br />
+
+                    <h3>File Info</h3>
+                    <label>Title</label>
+                    <Control.text className="form-control" model=".title" />
+
+                    <label>Description</label>
+                    <Control.text className="form-control" model=".description" />
 
                     <h3>Drone and Camera info</h3>
-                    <Field label="Drone Manufacturer" hintText="Enter the manufacturer of your drone" component={renderTextField} model=".manufacturer" /><br />
-                    <Field label="Drone Model" hintText="Enter the model of your drone" component={renderTextField} model=".model" /><br />
-                    <Field label="Shutter Speed" hintText="Enter shutter speed of the camera (if known)" component={renderTextField} model=".shutterSpeed" /><br />
-                    <Field label="Aperture Value" hintText="Enter aperture of the camera (if known)" component={renderTextField} model=".apertureValue" /><br />
-                    <Field label="Focal Length" hintText="Enter focal length of camera (if known)" component={renderTextField} model=".focalLength" /><br />
+                    <label>Drone Manufacturer</label>
+                    <Control.text className="form-control" model=".manufacturer" />
 
+                    <label>Drone Model</label>
+                    <Control.text className="form-control" model=".model" />
+
+                    <label>Shutter Speed</label>
+                    <Control.text className="form-control" model=".shutterSpeed" />
+
+                    <label>Aperture</label>
+                    <Control.text className="form-control" model=".apertureValue" />
+
+                    <label>Focal Length</label>
+                    <Control.text className="form-control" model=".focalLength" />
+                    
                     <h3>Extra location info</h3>
-                    <Field label="Height" hintText="Enter height the photo was taken at" component={renderTextField} model=".height" /><br />
-                    <Field label="Bearing" hintText="Enter the compass bearing the drone was facing " component={renderTextField} model=".bearing" /><br />
-                    <Field label="Angle of incidence" hintText="Enter angle in degrees from the horizon the photo was taken an" component={renderTextField} model=".angle" /><br />
+                    <label>Altitude</label>
+                    <Control.text className="form-control" model=".altitude" />
+
+                    <label>Bearing</label>
+                    <Control.text className="form-control" model=".bearing" />
+
+                    <label>Angle from horizon</label>
+                    <Control.text className="form-control" model=".angle" />
+
             </LocalForm>
+
+            // <LocalForm 
+            //     model="info"
+            //     className="form-group upload-summary-form"
+            //     onChange={(values) => this.props.onFileInfoChange(values)}
+            //     getDispatch={(dispatch) => this.attachDispatch(dispatch)}>
+            //         <h3>File info</h3>
+            //         <Field floatingLabelText="Title" hintText="Enter a title for the content" component={TextField} model=".title" name="Title" validate={required} /><br />
+            //         <Field floatingLabelText="Description" hintText="Enter a description for the content" component={TextField} multiLine model=".description" /><br />
+
+            //         <h3>Drone and Camera info</h3>
+            //         <Field floatingLabelText="Drone Manufacturer" hintText="Enter the manufacturer of your drone" component={TextField} model=".manufacturer" /><br />
+            //         <Field floatingLabelText="Drone Model" hintText="Enter the model of your drone" component={TextField} model=".model" /><br />
+            //         <Field floatingLabelText="Shutter Speed" hintText="Enter shutter speed of the camera (if known)" component={TextField} model=".shutterSpeed" /><br />
+            //         <Field floatingLabelText="Aperture Value" hintText="Enter aperture of the camera (if known)" component={TextField} model=".apertureValue" /><br />
+            //         <Field floatingLabelText="Focal Length" hintText="Enter focal length of camera (if known)" component={TextField} model=".focalLength" /><br />
+
+            //         <h3>Extra location info</h3>
+            //         <Field floatingLabelText="Height" hintText="Enter height the photo was taken at" component={TextField} model=".height" /><br />
+            //         <Field floatingLabelText="Bearing" hintText="Enter the compass bearing the drone was facing " component={TextField} model=".bearing" /><br />
+            //         <Field floatingLabelText="Angle of incidence" hintText="Enter angle in degrees from the horizon the photo was taken an" component={TextField} model=".angle" /><br />
+            // </LocalForm>
         );
   }
 }

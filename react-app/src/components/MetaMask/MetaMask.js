@@ -17,42 +17,45 @@ const messages = {
 };
 
 const MetaMaskInstallDialog = (props) => (
-  <Dialog
-    className="MetaMaskDialog"
-    open={props.metaMaskInstallDialogOpen}>
-    <DialogTitle>{"Oops, you haven't install MetaMask"}</DialogTitle>
-    <DialogContent>
-      <DialogContentText>
-        {"You’ll need a safe place to store all of your adorable purchased drone data! The perfect place is in a secure wallet like MetaMask. This will also act as your login to the platform (no extra password needed)."}
-      </DialogContentText>
-    </DialogContent>
-    <DialogActions>
-      <RaisedButton raised href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?utm_source=chrome-ntp-icon" color="primary">
-        Install MetaMask
-      </RaisedButton>
-      <RaisedButton raised onClick={props.handleMetaMaskInstallDialogClose} color="primary">
-        I understand, continue
-      </RaisedButton>
-    </DialogActions>
-  </Dialog>
+    props.metaMaskInstallDialogOpen ? <div><p>Oops you haven't installed metamask</p></div> : null
+  
+  // <Dialog
+  //   className="MetaMaskDialog"
+  //   open={props.metaMaskInstallDialogOpen}>
+  //   <DialogTitle>{"Oops, you haven't install MetaMask"}</DialogTitle>
+  //   <DialogContent>
+  //     <DialogContentText>
+  //       {"You’ll need a safe place to store all of your adorable purchased drone data! The perfect place is in a secure wallet like MetaMask. This will also act as your login to the platform (no extra password needed)."}
+  //     </DialogContentText>
+  //   </DialogContent>
+  //   <DialogActions>
+  //     <RaisedButton raised href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?utm_source=chrome-ntp-icon" color="primary">
+  //       Install MetaMask
+  //     </RaisedButton>
+  //     <RaisedButton raised onClick={props.handleMetaMaskInstallDialogClose} color="primary">
+  //       I understand, continue
+  //     </RaisedButton>
+  //   </DialogActions>
+  // </Dialog>
 );
 
 const MetaMaskLockDialog = (props) => (
-  <Dialog
-    className="MetaMaskDialog"
-    open={props.metaMaskLockDialogOpen}>
-    <DialogTitle>{"Oops, your MetaMask is locked"}</DialogTitle>
-    <DialogContent>
-      <DialogContentText>
-        {"You should unlock MetaMask to interact with this application."}
-      </DialogContentText>
-    </DialogContent>
-    <DialogActions>
-      <RaisedButton raised onClick={props.handleMetaMaskLockDialogClose} color="primary">
-        I understand, continue
-      </RaisedButton>
-    </DialogActions>
-  </Dialog>
+  props.metaMaskLockDialogOpen ? <div>Oops meta mask is locked!.</div> : null
+  // <Dialog
+  //   className="MetaMaskDialog"
+  //   open={props.metaMaskLockDialogOpen}>
+  //   <DialogTitle>{"Oops, your MetaMask is locked"}</DialogTitle>
+  //   <DialogContent>
+  //     <DialogContentText>
+  //       {"You should unlock MetaMask to interact with this application."}
+  //     </DialogContentText>
+  //   </DialogContent>
+  //   <DialogActions>
+  //     <RaisedButton raised onClick={props.handleMetaMaskLockDialogClose} color="primary">
+  //       I understand, continue
+  //     </RaisedButton>
+  //   </DialogActions>
+  // </Dialog>
 );
 
 export class MetaMask extends Component {
