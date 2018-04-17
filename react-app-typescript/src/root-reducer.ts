@@ -5,6 +5,7 @@ import faucetAdminReducer from './containers/FaucetAdmin/reducer';
 import progressBarReducer from './containers/ProgressBar/reducer';
 import alertReducer from './containers/Alert/reducer';
 import listingsReducer from './containers/Listings/reducer';
+import uploadReducer from './containers/Upload/reducer';
 
 export interface State {
   faucetDomain: any;
@@ -12,6 +13,7 @@ export interface State {
   progressBarDomain: any;
   alertDomain: any;
   listingsDomain: any;
+  uploadDomain: any;
 }
 
 export const state = combineReducers({
@@ -19,5 +21,6 @@ export const state = combineReducers({
   faucetAdminDomain: faucetAdminReducer,
   progressBarDomain: progressBarReducer,
   alertDomain: alertReducer,
-  listingsDomain: listingsReducer
+  listingsDomain: listingsReducer,
+  uploadDomain: uploadReducer
 });

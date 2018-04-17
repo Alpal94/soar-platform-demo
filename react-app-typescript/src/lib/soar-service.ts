@@ -18,6 +18,7 @@ export function fetchInfo(web3: any): Promise<SoarInfo> {
 export function uploadListing(web3: any, upload: UploadListing) {
     let userAddress = Web3Helper.getCurrentAddress(web3);
     let soarPromise = Web3Helper.getSoarContractPromise(web3);
+    console.log(upload)
     return Promise.resolve(soarPromise).then(soarContract => {
         let uploadPromise = soarContract.uploadListing(
             upload.previewUrl, upload.url, upload.pointWKT,
