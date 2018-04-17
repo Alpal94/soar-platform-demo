@@ -6,12 +6,12 @@ import { actionTypes as at } from './constants';
 import { fetchInfoSuccess, fetchInfoError } from './actions';
 import { progressMessageAction, progressMessageDoneAction } from '../ProgressBar/actions';
 import { alertSuccessAction, alertErorrAction  } from '../Alert/actions';
-import { Info } from '../../lib/model';
+import { FaucetInfo } from '../../lib/model';
 
 export function* fetchTokenInfo(web3: any) {
     try {
         yield put(progressMessageAction('Updating user information'));
-        const info: Info = yield call(fetchInfo, web3);
+        const info: FaucetInfo = yield call(fetchInfo, web3);
         yield put(fetchInfoSuccess(info));
     } catch (err) {
         yield put(alertErorrAction(err.message));
@@ -34,7 +34,7 @@ export function* getSKYM(web3: any) {
         yield put(progressMessageAction('Waiting for transaction to be confirmed by network'));
         const confirmed: boolean = yield call(waitTxConfirmed, web3, txHash);
         yield put(progressMessageAction('Updating user information'));
-        const info: Info = yield call(fetchInfo, web3);
+        const info: FaucetInfo = yield call(fetchInfo, web3);
         yield put(fetchInfoSuccess(info));
         yield put(alertSuccessAction('Skymap tokens was added to your account'));
     } catch (err) {

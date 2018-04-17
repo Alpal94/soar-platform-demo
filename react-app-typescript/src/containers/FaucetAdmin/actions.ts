@@ -1,5 +1,5 @@
 import { actionTypes as at } from './constants';
-import { Info } from '../../lib/model';
+import { FaucetInfo } from '../../lib/model';
 
 export const fetchInfoAction = (web3: any) => {
     return {
@@ -8,7 +8,7 @@ export const fetchInfoAction = (web3: any) => {
     };
 };
 
-export const fetchInfoSuccess = (result: Info) => {
+export const fetchInfoSuccess = (result: FaucetInfo) => {
     return {
         type: at.ADMIN_INFO_FETCH_SUCCESS,
         payload: result

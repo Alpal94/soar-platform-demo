@@ -33,28 +33,28 @@ const should = require('chai')
       await this.soar.setWalletAddress(wallet);
     });
   
-    it("filesCount: returns 0 after deployment", async function () {
+    it("listingsCount: returns 0 after deployment", async function () {
       let expected = new BigNumber(0);
-      let filesCount = await this.soar.filesCount();
+      let filesCount = await this.soar.listingsCount();
       filesCount.should.be.bignumber.equal(expected);
     });
 
-    it("uploadFile: is successfull and fileCounts returns 1", async function () {
-      let tx = await this.soar.fileUpload(previewUrl, url, pointWKT, geoHash, metadata, fileHash, {from: owner});
+    it("uploadListing: is successfull and listingCounts returns 1", async function () {
+      let tx = await this.soar.uploadListing(previewUrl, url, pointWKT, geoHash, metadata, fileHash, {from: owner});
       // TODO find better way how to check transaction success
       let status = new BigNumber(tx.receipt.status);
       status.should.be.bignumber.equal(txSuccess);
 
       let expected = new BigNumber(1);
-      let filesCount = await this.soar.filesCount();
-      filesCount.should.be.bignumber.equal(expected);
+      let listingsCount = await this.soar.listingsCount();
+      listingsCount.should.be.bignumber.equal(expected);
     });
 
-    it("uploadFile: events are fired correctly", async function () {
-      let tx = await this.soar.fileUpload(previewUrl, url, pointWKT, geoHash, metadata, fileHash, {from: owner});
+    it("uploadListing: events are fired correctly", async function () {
+      let tx = await this.soar.uploadListing(previewUrl, url, pointWKT, geoHash, metadata, fileHash, {from: owner});
       tx.logs.length.should.be.equal(1);
       let event = tx.logs[0];
-      event.event.should.be.equal("Upload");
+      event.event.should.be.equal("ListingUploaded");
       event.args.owner.should.be.equal(owner);
       event.args.previewUrl.should.be.equal(previewUrl);
       event.args.url.should.be.equal(url);
@@ -72,33 +72,33 @@ const should = require('chai')
 
     it("getPrice: returns price for fileHash bigger than 0", async function () {
       let zero = new BigNumber(0);
-      await this.soar.fileUpload(previewUrl, url, pointWKT, geoHash, metadata, fileHash, {from: owner});
-      let price = await this.soar.getPriceForFile(fileHash);
+      await this.soar.uploadListing(previewUrl, url, pointWKT, geoHash, metadata, fileHash, {from: owner});
+      let price = await this.soar.getListingPrice(fileHash);
       price.should.be.bignumber.greaterThan(zero);
     });
 
-    it("getPrice: throws error for non existing file", async function () {
-      await this.soar.getPriceForFile(fileHash).should.be.rejectedWith(Error);
+    it("getListingPrice: throws error for non existing file", async function () {
+      await this.soar.getListingPrice(fileHash).should.be.rejectedWith(Error);
     });
 
-    it("buyFile: is successfull", async function () {
-      let res = await this.soar.fileUpload(previewUrl, url, pointWKT, geoHash, metadata, fileHash, {from: user1});
+    it("buyListing: is successfull", async function () {
+      let res = await this.soar.uploadListing(previewUrl, url, pointWKT, geoHash, metadata, fileHash, {from: user1});
       // transfer SKYM to the buyer and set allowance for soar contract to transfer it
       await this.skymapToken.transfer(user2, defaultPrice, {from: owner});
       await this.skymapToken.approve(this.soar.address, defaultPrice, {from: user2});
 
-      let tx = await this.soar.buyFile(fileHash, challenge, { from: user2 }).should.be.fulfilled;
+      let tx = await this.soar.buyListing(fileHash, challenge, { from: user2 }).should.be.fulfilled;
       // TODO find better way how to check transaction success
       let status = new BigNumber(tx.receipt.status);
       status.should.be.bignumber.equal(txSuccess);
     });
 
-    it("buyFile: skymap tokens are transfered to owner and wallet", async function () {
+    it("buyListing: skymap tokens are transfered to owner and wallet", async function () {
       let selectedPrice = web3.toWei(25); 
       let expectedWalletCut = web3.toWei(1.25);
       let expectedOwnerCut = web3.toWei(23.75);
 
-      let res = await this.soar.fileUpload(previewUrl, url, pointWKT, geoHash, metadata, fileHash, {from: user1});
+      let res = await this.soar.uploadListing(previewUrl, url, pointWKT, geoHash, metadata, fileHash, {from: user1});
       
       // transfer SKYM to the buyer and set allowance for soar contract to transfer it
       await this.pricingManual.setPrice(selectedGeoHash, selectedPrice);
@@ -116,7 +116,7 @@ const should = require('chai')
       buyerBal.should.be.bignumber.equal(selectedPrice);
       soarAllowance.should.be.bignumber.equal(selectedPrice);
 
-      let tx = await this.soar.buyFile(fileHash, challenge, { from: user2 }).should.be.fulfilled;
+      let tx = await this.soar.buyListing(fileHash, challenge, { from: user2 }).should.be.fulfilled;
 
       // check the state after sale was made
       walletBal = await this.skymapToken.balanceOf(wallet);
@@ -130,13 +130,13 @@ const should = require('chai')
       soarAllowance.should.be.bignumber.equal(zero);
     });
 
-    it("buyFile: events are fired correctly", async function () {
-      let res = await this.soar.fileUpload(previewUrl, url, pointWKT, geoHash, metadata, fileHash, {from: user1});
+    it("buyListing: events are fired correctly", async function () {
+      let res = await this.soar.uploadListing(previewUrl, url, pointWKT, geoHash, metadata, fileHash, {from: user1});
       // transfer SKYM to the buyer and set allowance for soar contract to transfer it
       await this.skymapToken.transfer(user2, defaultPrice, {from: owner});
       await this.skymapToken.approve(this.soar.address, defaultPrice, {from: user2});
 
-      let tx = await this.soar.buyFile(fileHash, challenge, { from: user2 }).should.be.fulfilled;
+      let tx = await this.soar.buyListing(fileHash, challenge, { from: user2 }).should.be.fulfilled;
       
       tx.logs.length.should.be.equal(2);
       

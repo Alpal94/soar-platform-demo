@@ -5,14 +5,14 @@ const connect = require('react-redux').connect;
 
 import { fetchInfoAction, setSkymapContractAction, setAllowanceAction } from './actions';
 import { selectInfo, selectIsLoading, selectIsFetched } from './selectors';
-import { InfoAdmin } from '../../lib/model';
+import { FaucetInfoAdmin } from '../../lib/model';
 
 import AllowanceForm from '../../components/Admin/AllowanceForm';
 import TokenAddressForm from '../../components/Admin/TokenAddressForm';
 import { Row, Col } from 'reactstrap';
 
 interface FaucetAdminProps extends React.Props<FaucetAdmin> {
-    info: InfoAdmin;
+    info: FaucetInfoAdmin;
     isLoading: boolean;
     isFetched: boolean;
 

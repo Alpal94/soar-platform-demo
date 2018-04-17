@@ -5,6 +5,7 @@ var TruffleContract = require('truffle-contract');
 
 const SkymapTokenContract = require('./contracts/SkymapTokenDemo.json');
 const FaucetContract = require('./contracts/FaucetDemo.json');
+const SoarContract = require('./contracts/Soar.json');
 
 const Config = require('./config.json');
 const ConfigLocal = require('./config.local.json');
@@ -69,6 +70,20 @@ export default class Web3Helper {
     let faucetContract = TruffleContract(FaucetContract);
     faucetContract.setProvider(web3.currentProvider);
     return faucetContract.at(address);
+  }
+
+  public static getSoarContractAddress(web3: any): string {
+    // merge object the right-most (last) object's value wins out:
+    let addresses = { ...Config.Soar, ...ConfigLocal.Soar };
+    let networkId = this.getCurrentNetwork(web3);
+    return addresses[networkId];
+  }
+
+  public static getSoarContractPromise(web3: any): Promise<any> {
+    let address = this.getSoarContractAddress(web3);
+    let soarContract = TruffleContract(SoarContract);
+    soarContract.setProvider(web3.currentProvider);
+    return soarContract.at(address);
   }
 
   public static waitTxConfirmed(web3: any, txHash: string): Promise<boolean> {

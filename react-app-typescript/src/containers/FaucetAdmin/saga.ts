@@ -7,11 +7,11 @@ import { fetchInfoSuccess, fetchInfoError } from './actions';
 import { progressMessageAction, progressMessageDoneAction } from '../ProgressBar/actions';
 import { alertSuccessAction, alertErorrAction  } from '../Alert/actions';
 
-import { Info } from '../../lib/model';
+import { FaucetInfo } from '../../lib/model';
 
 export function* fetchAdminInfo(web3: any) {
     try {
-        const result: Info = yield call(fetchInfoAdmin, web3);
+        const result: FaucetInfo = yield call(fetchInfoAdmin, web3);
         yield put(fetchInfoSuccess(result));
     } catch (err) {
         yield put(fetchInfoError(err));
@@ -25,7 +25,7 @@ export function* setTokenContract(web3: any, address: string) {
         yield put(progressMessageAction('Waiting for transaction to be confirmed by network'));
         const confirmed: boolean = yield call(waitTxConfirmed, web3, txHash);
         yield put(progressMessageAction('Updating admin information'));
-        const result: Info = yield call(fetchInfoAdmin, web3);
+        const result: FaucetInfo = yield call(fetchInfoAdmin, web3);
         yield put(fetchInfoSuccess(result));
         yield put(alertSuccessAction('Skymap token was successfully set'));
     } catch (err) {
@@ -42,7 +42,7 @@ export function* setAllowanceSaga(web3: any, value: number) {
         yield put(progressMessageAction('Waiting for transaction to be confirmed by network'));
         const confirmed: boolean = yield call(waitTxConfirmed, web3, txHash);
         yield put(progressMessageAction('Updating admin information'));
-        const result: Info = yield call(fetchInfoAdmin, web3);
+        const result: FaucetInfo = yield call(fetchInfoAdmin, web3);
         yield put(fetchInfoSuccess(result));
         yield put(alertSuccessAction('Allowance was successfully set'));
     } catch (err) {

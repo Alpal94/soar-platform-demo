@@ -5,11 +5,11 @@ const connect = require('react-redux').connect;
 
 import { fetchInfo, getSKYMTokens } from './actions';
 import { selectInfo, selectIsLoading, selectIsFetched } from './selectors';
-import { Info } from '../../lib/model';
+import { FaucetInfo } from '../../lib/model';
 import { Button } from 'reactstrap';
 
 interface FaucetProps extends React.Props<Faucet> {
-    info: Info;
+    info: FaucetInfo;
     isLoading: boolean;
     isFetched: boolean;
     infoFetch: (web3: any) => void;

@@ -1,7 +1,7 @@
 import Web3Helper from './web3-helper';
-import { Info, InfoAdmin } from './model';
+import { FaucetInfo, FaucetInfoAdmin } from './model';
 
-export function fetchInfoAdmin(web3: any): Promise<InfoAdmin> {
+export function fetchInfoAdmin(web3: any): Promise<FaucetInfoAdmin> {
     let userAddress = Web3Helper.getCurrentAddress(web3);
     let faucetAddress = Web3Helper.getFaucetContractAddress(web3);
     let tokenPromise = Web3Helper.getSkymapTokenContractPromise(web3);
@@ -22,7 +22,7 @@ export function fetchInfoAdmin(web3: any): Promise<InfoAdmin> {
         let tokenAddress = faucetContract.skymapTokenAddress();
         return Promise.all([symbol, faucetAllowance, walletBalance, owner, tokenAddress]);
     }).then(results => {
-        let infoRes: InfoAdmin = {
+        let infoRes: FaucetInfoAdmin = {
             isOwner: results[3].toUpperCase() === userAddress.toUpperCase(),
             symbol: results[0],
             faucetAllowance: Web3Helper.toSkymap(web3, results[1]),

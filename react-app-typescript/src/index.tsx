@@ -15,8 +15,6 @@ import NavigationBar from './components/NavigationBar';
 import Metamask from './containers/Metamask';
 import ProgressBar from './containers/ProgressBar';
 import Alert from './containers/Alert';
-import Faucet from './containers/Faucet/';
-import FaucetAdmin from './containers/FaucetAdmin/';
 
 import './index.css';
 // Import default Bootstrap 4 CSS
@@ -32,10 +30,7 @@ const Root = (
         <Alert/>
         <BrowserRouter>
           <Container>
-            <Switch>
-              <Route exact path="/" component={Faucet} />
-              <Route path="/admin" component={FaucetAdmin} />
-            </Switch>
+            <RouteMap/>
           </Container>
         </BrowserRouter>
       </div>
