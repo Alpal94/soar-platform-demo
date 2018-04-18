@@ -1,0 +1,39 @@
+
+
+.choose-file-button-row {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.btn-clear-file {
+    padding: 10px;
+    margin-right: 20px;
+}
+
+.btn-select-file {
+    padding: 10px;
+}
+
+.choose-file {
+    padding: 30px;
+    border: 1px dashed #222;
+}
+
+.choose-file img {
+    width: 35%;
+    margin: 0 auto;
+    display: block;
+    padding: 20px;
+}
+
+.choose-file p {
+    padding-top: 30px;
+    text-align: center;
+}
+
+.choose-file-preview img {
+    width: 35%;
+    margin: 0 auto;
+    display: block;
+    padding: 20px;
+}

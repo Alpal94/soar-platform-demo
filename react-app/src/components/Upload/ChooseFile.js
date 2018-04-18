@@ -1,7 +1,9 @@
 import React from 'react';
 import { Control, LocalForm } from 'react-redux-form';
 import { Grid, Row, Col } from 'react-bootstrap';
+import Dropzone from 'react-dropzone';
 import './Upload.css';
+import './ChooseFile.css';
 import Aux from '../../hoc/Aux';
 
 class ChooseFile extends React.Component {
@@ -13,26 +15,44 @@ class ChooseFile extends React.Component {
             file: null
         }
         this.handleFileConfirmed = this.handleFileConfirmed.bind(this);
-        this.handleFileSelected = this.handleFileSelected.bind(this);
+        this.handleFileDropped = this.handleFileDropped.bind(this);
+        this.handleFileClear = this.handleFileClear.bind(this);
     }
 
-    handleFileSelected(values) {
-        if(values.file.length > 0){
-            let file = values.file[0];
-            let reader = new FileReader();
-            reader.onloadend = () => {
-                this.setState({imagePreviewUrl: reader.result});
-            }
-            reader.readAsDataURL(file);
-            this.setState({file: file});
+    handleFileDropped(files) {
+        let file = files[0];
+        this.setState({file: file});
+        let reader = new FileReader();
+        reader.onload = () => {
+            console.log("Typeof file dropeed: " + typeof reader.result);
+            this.setState({imagePreviewUrl: reader.result});
+
+            const binaryFileAsString = reader.result;
         }
+        reader.onabort = () => console.log("File reading aborted");
+        reader.onerror = () => console.log("File reader error");
+
+        reader.readAsDataURL(file);
+        this.setState({file: file});
     }
 
     handleFileConfirmed() {
         this.props.onFileChosen(this.state.file);
     }
 
+    handleFileClear() {
+        this.setState({imagePreviewUrl: null, file: null});
+    }
+
+    
+
     render() {
+     
+        const activeDragStyle = {
+            backgroundColor: '#00ff00',
+            border: '1px dashed #00ff00'
+        };
+     
         return (
             this.props.visible ? (
                 <Grid className="wizard-card row preview-image">
@@ -43,16 +63,23 @@ class ChooseFile extends React.Component {
                             {
                                 this.state.imagePreviewUrl ? ( 
                                     <Aux>
-                                        <Row><img src={this.state.imagePreviewUrl} /></Row>
-                                        <Row><button className="btn btn-primary" onClick={this.handleFileConfirmed}>Next</button></Row>
+                                        <Row><img src={this.state.imagePreviewUrl} className="choose-file-preview"/></Row>
+                                        <Row className="choose-file-button-row">
+                                            <button className="btn btn-danger btn-clear-file" onClick={this.handleFileClear}>Clear</button>
+                                            <button className="btn btn-primary btn-select-file" onClick={this.handleFileConfirmed}>Next</button>
+                                        </Row>
                                     </Aux>
                                 ) : (
-                                    <LocalForm className="choose-file-form" onChange={(values) => this.handleFileSelected(values)}>
-                                        <label htmlFor="file-input">
+                                    <Dropzone 
+                                        onDrop={this.handleFileDropped}
+                                        accept="image/jpeg, image/png"
+                                        className="choose-file" 
+                                        activeStyle={activeDragStyle}>
+                                        <div>
                                             <img alt="choose file to upload" src="assets/placeholder_upload.png"/>
-                                        </label>
-                                        <Control.file id="file-input" model=".file" />
-                                    </LocalForm>
+                                            <p><strong>Choose a file</strong> or drag it here</p>
+                                        </div>
+                                    </Dropzone>
                                 )
                             }
                         </Col>

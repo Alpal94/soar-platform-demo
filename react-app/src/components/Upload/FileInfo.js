@@ -27,7 +27,6 @@ class FileInfo extends React.Component {
 
     render() {
 
-       
         if (this.props.exifdata) {
             var make = this.props.exifdata["Make"].toString() || '';
             var model = this.props.exifdata["Model"].toString() || '';
