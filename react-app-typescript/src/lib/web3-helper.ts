@@ -31,7 +31,8 @@ export default class Web3Helper {
     if (web3 === null) {
       return '';
     }
-    return web3.version.network;
+    return '5777';
+    // return web3.version.network;
   }
 
   public static getCurrentNetworkName(web3: any): string {

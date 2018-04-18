@@ -1,18 +1,18 @@
 import { call, put, take } from 'redux-saga/effects';
 
-import { fetchInfo } from '../../lib/soar-service';
+import { fetchInfo, eventListingUploaded } from '../../lib/soar-service';
 import { waitTxConfirmed } from '../../lib/web3-service';
 import { actionTypes as at } from './constants';
-import { fetchSoarInfoSuccess } from './actions';
+import { fetchSoarInfoSuccessAction, eventListingUploadedSuccessAction } from './actions';
 import { progressMessageAction, progressMessageDoneAction } from '../ProgressBar/actions';
-import { alertSuccessAction, alertErorrAction  } from '../Alert/actions';
-import { SoarInfo } from '../../lib/model';
+import { alertSuccessAction, alertErorrAction } from '../Alert/actions';
+import { SoarInfo, EventListingUploaded } from '../../lib/model';
 
-export function* fetchSoarInfo(web3: any) {
+export function* fetchSoarInfoSaga(web3: any) {
     try {
         yield put(progressMessageAction('Updating soar information'));
         const info: SoarInfo = yield call(fetchInfo, web3);
-        yield put(fetchSoarInfoSuccess(info));
+        yield put(fetchSoarInfoSuccessAction(info));
     } catch (err) {
         yield put(alertErorrAction(err.message));
     } finally {
@@ -20,21 +20,29 @@ export function* fetchSoarInfo(web3: any) {
     }
 }
 
-export function* watchSoarListings(web3: any) {
+export function* eventListingUploadedSaga(web3: any) {
     try {
-        yield put(progressMessageAction('Updating soar information'));
-        const info: SoarInfo = yield call(fetchInfo, web3);
-        yield put(fetchSoarInfoSuccess(info));
+        let blockFrom: number = 0;
+        while (true) {
+            let value: EventListingUploaded = yield call(eventListingUploaded, web3, blockFrom);
+            blockFrom = value.blockNumber + 1;
+            yield put(eventListingUploadedSuccessAction(value));
+        }
     } catch (err) {
         yield put(alertErorrAction(err.message));
-    } finally {
-        yield put(progressMessageDoneAction());
     }
 }
 
 export function* soarInfoWatcher() {
     while (true) {
         const { web3 } = yield take(at.LISTINGS_SOAR_INFO_FETCH);
-        yield call(fetchSoarInfo, web3);
+        yield call(fetchSoarInfoSaga, web3);
+    }
+}
+
+export function* soarEventListingUploadedWatcher() {
+    while (true) {
+        const { web3 } = yield take(at.LISTINGS_EVENT_UPLOADED);
+        yield call(eventListingUploadedSaga, web3);
     }
 }

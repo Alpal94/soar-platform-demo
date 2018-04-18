@@ -1,14 +1,20 @@
 import { createSelector } from 'reselect';
 
-const getSoarDomain = () => (state: any) => state.get('listingsDomain');
+const getListingsDomain = () => (state: any) => state.get('listingsDomain');
 
 const selectInfo = () => createSelector(
-    getSoarDomain(),
+    getListingsDomain(),
     listingsState => listingsState.get('info').toJS()
 );
 
+const selectListings = () => createSelector(
+    getListingsDomain(),
+    listingsState => listingsState.get('listings')
+);
+
 export {
-    selectInfo
+    selectInfo,
+    selectListings
 };
 
-export default getSoarDomain;
+export default getListingsDomain;

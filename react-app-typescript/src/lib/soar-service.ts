@@ -1,5 +1,5 @@
 import Web3Helper from './web3-helper';
-import { SoarInfo, UploadListing } from './model';
+import { SoarInfo, UploadListing, EventListingUploaded } from './model';
 
 export function fetchInfo(web3: any): Promise<SoarInfo> {
     let soarPromise = Web3Helper.getSoarContractPromise(web3);
@@ -15,10 +15,9 @@ export function fetchInfo(web3: any): Promise<SoarInfo> {
     });
 }
 
-export function uploadListing(web3: any, upload: UploadListing) {
+export function uploadListing(web3: any, upload: UploadListing): Promise<string> {
     let userAddress = Web3Helper.getCurrentAddress(web3);
     let soarPromise = Web3Helper.getSoarContractPromise(web3);
-    console.log(upload)
     return Promise.resolve(soarPromise).then(soarContract => {
         let uploadPromise = soarContract.uploadListing(
             upload.previewUrl, upload.url, upload.pointWKT,
@@ -30,12 +29,29 @@ export function uploadListing(web3: any, upload: UploadListing) {
     });
 }
 
-export function eventsListingsUploaded(web3: any) {
+export function eventListingUploaded(web3: any, fromBlock: number): Promise<EventListingUploaded> {
     let soarPromise = Web3Helper.getSoarContractPromise(web3);
-    Promise.resolve(soarPromise).then(soarContract => {
-        let listingUploadedEvent = soarContract.ListingUploaded({}, { fromBlock: 0, toBlock: 'latest' });
-        listingUploadedEvent.watch((err, res) => {
-            console.log(res);
+    return new Promise((resolve, reject) => {
+        Promise.resolve(soarPromise).then(soarContract => {
+            let listingUploadedEvent = soarContract.ListingUploaded({}, { fromBlock: fromBlock, toBlock: 'latest' });
+            //TODO temporary solution
+            listingUploadedEvent.watch((err, res) => {
+                if (res) {
+                    let value: EventListingUploaded = {
+                        fileHash: web3.toUtf8(res.args.fileHash),
+                        geohash: web3.toUtf8(res.args.geoHash),
+                        metadata: res.args.metadata,
+                        owner: res.args.owner,
+                        pointWKT: res.args.pointWKT,
+                        previewUrl: res.args.previewUrl,
+                        url: res.args.url,
+                        blockNumber: res.blockNumber
+                    };
+                    resolve(value);
+                    listingUploadedEvent.stopWatching();
+                }
+            });
         });
     });
+
 }

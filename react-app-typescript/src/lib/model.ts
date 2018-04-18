@@ -25,3 +25,14 @@ export interface UploadListing {
     fileHash: string, 
     geohash: string
 }
+
+export interface EventListingUploaded {
+    blockNumber: number,
+    previewUrl: string,
+    url: string, 
+    pointWKT: string, 
+    metadata: string, 
+    fileHash: string, 
+    geohash: string,
+    owner: string
+}
