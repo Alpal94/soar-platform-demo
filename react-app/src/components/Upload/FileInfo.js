@@ -1,7 +1,10 @@
 import React from 'react';
-import { Control, LocalForm, actions } from 'react-redux-form';
+import { Field, Control, LocalForm, actions } from 'react-redux-form';
+import { Grid, Row, Col } from 'react-bootstrap';
 import { TextField } from 'redux-form-material-ui';
 import moment from 'moment';
+import Aux from '../../hoc/Aux';
+import './Upload.css';
 
 class FileInfo extends React.Component {
 
@@ -10,105 +13,152 @@ class FileInfo extends React.Component {
         this.state = {
             exif: {}
         };
+        this.handleSubmit.bind(this);
+        this.handleUpdate.bind(this);
     }
 
-    attachDispatch(dispatch) {
-        this.formDispatch = dispatch;
+    handleSubmit(values) {
+        this.props.onFileInfoConfirmed(values);
     }
 
-    componentWillReceiveProps(props){
-        let exif = props.exifdata || {};
-
-        console.log(JSON.stringify(this.state.exif));
-
-        if(this.state.exif !== exif){
-            let date;
-            if(exif.DateTime){
-                let momentDate = moment(exif.DateTime, 'YYYY:MM:DD HH:mm:ss');
-                date = momentDate.toDate().toISOString();
-            }
-            this.setState({exif: exif});
-            this.formDispatch(actions.change('info.title', date || ''));
-            this.formDispatch(actions.change('info.description', date || ''));
-            this.formDispatch(actions.change('info.manufacturer', date || ''));
-            this.formDispatch(actions.change('info.model', date || ''));
-            this.formDispatch(actions.change('info.shutterSpeed', date || ''));
-            this.formDispatch(actions.change('info.apertureValue', date || ''));
-            this.formDispatch(actions.change('info.focalLength', date || ''));
-            this.formDispatch(actions.change('info.bearing', date || ''));
-            this.formDispatch(actions.change('info.angle', date || ''));
-            this.formDispatch(actions.change('info.height', date || ''));
-        }
+    handleUpdate(form) { 
+        console.log(form);
     }
 
     render() {
 
+       
+        if (this.props.exifdata) {
+            var make = this.props.exifdata["Make"].toString() || '';
+            var model = this.props.exifdata["Model"].toString() || '';
+            var focalLength = this.props.exifdata["FocalLength"].toString() || '';
+            var fNumber = this.props.exifdata["FNumber"].toString() || '';
+            var shutterSpeed = this.props.exifdata["ShutterSpeedValue"].toString() || '';
+            var apertureValue = this.props.exifdata["ApertureValue"].toString() || '';
+            var lightSource = this.props.exifdata["LightSource"].toString() || '';
+            var height = this.props.exifdata["GPSAltitude"].toString() || '';
+        }
+    
+
         return (
 
-            <LocalForm 
-                model="info"
-                className="form-group upload-summary-form"
-                onChange={(values) => this.props.onFileInfoChange(values)}
-                getDispatch={(dispatch) => this.attachDispatch(dispatch)}>
+            this.props.visible ? (
 
-                    <h3>File Info</h3>
-                    <label>Title</label>
-                    <Control.text className="form-control" model=".title" />
+                <Grid className="wizard-card">
+                    <Row>
+                        <Col md={6} mdOffset={3} sm={12} smOffset={0}>
+                            <h2>Step 3 - File Details</h2>
+                            <LocalForm 
+                                model="info"
+                                className="form-group upload-summary-form"
+                                onUpdate={(form) => this.handleUpdate(form)}
+                                onSubmit={(values) => this.handleSubmit(values)}
+                                initialState={{
+                                    make: this.props.exifdata["Make"].toString() || '',
+                                    model: this.props.exifdata["Model"].toString() || '',
+                                    focalLength: this.props.exifdata["FocalLength"].toString() || '',
+                                    fNumber: this.props.exifdata["FNumber"].toString() || '',
+                                    shutterSpeed: this.props.exifdata["ShutterSpeedValue"].toString() || '',
+                                    apertureValue: this.props.exifdata["ApertureValue"].toString() || '',
+                                    lightSource: this.props.exifdata["LightSource"].toString() || '',
+                                    height: this.props.exifdata["GPSAltitude"].toString() || ''
+                                }}
+                                
+                                >
+                                    
+                                    <Control 
+                                        floatingLabelText="Title" 
+                                        hintText="Enter a title for the content" 
+                                        component={TextField} 
+                                        model=".title" 
+                                        fullWidth />
 
-                    <label>Description</label>
-                    <Control.text className="form-control" model=".description" />
+                                    <Control
+                                        floatingLabelText="Description" 
+                                        hintText="Enter a description for the content" 
+                                        component={TextField} 
+                                        multiLine 
+                                        model=".description" 
+                                        rows={3} 
+                                        fullWidth />
+                                    
+                                    <h3>Drone and Camera info</h3>
 
-                    <h3>Drone and Camera info</h3>
-                    <label>Drone Manufacturer</label>
-                    <Control.text className="form-control" model=".manufacturer" />
+                                    <Control 
+                                        floatingLabelText="Drone Manufacturer" 
+                                        hintText="Enter the manufacturer of your drone" 
+                                        component={TextField} 
+                                        model=".make"
+                                        fullWidth />
 
-                    <label>Drone Model</label>
-                    <Control.text className="form-control" model=".model" />
+                                    <Control 
+                                        floatingLabelText="Drone Model" 
+                                        hintText="Enter the model of your drone" 
+                                        component={TextField} 
+                                        model=".model" 
+                                        fullWidth />
 
-                    <label>Shutter Speed</label>
-                    <Control.text className="form-control" model=".shutterSpeed" />
+                                    <Control 
+                                        floatingLabelText="Shutter Speed" 
+                                        hintText="Shutter speed of the camera (if known)" 
+                                        component={TextField} 
+                                        model=".shutterSpeed" 
+                                        fullWidth />
 
-                    <label>Aperture</label>
-                    <Control.text className="form-control" model=".apertureValue" />
+                                    <Control 
+                                        floatingLabelText="Aperture Value" 
+                                        hintText="Aperture of the camera (if known)" 
+                                        component={TextField} 
+                                        model=".apertureValue" 
+                                        value={apertureValue} 
+                                        fullWidth />
 
-                    <label>Focal Length</label>
-                    <Control.text className="form-control" model=".focalLength" />
-                    
-                    <h3>Extra location info</h3>
-                    <label>Altitude</label>
-                    <Control.text className="form-control" model=".altitude" />
+                                    <Control 
+                                        floatingLabelText="Focal Length" 
+                                        hintText="Focal length of camera (if known)" 
+                                        component={TextField} 
+                                        model=".focalLength" 
+                                        fullWidth />
 
-                    <label>Bearing</label>
-                    <Control.text className="form-control" model=".bearing" />
+                                    <Control 
+                                        floatingLabelText="F-Stop Value" 
+                                        hintText="F-Stop value of camera (if known)" 
+                                        component={TextField} 
+                                        model=".fstop" 
+                                        value={fNumber}
+                                        fullWidth/>
 
-                    <label>Angle from horizon</label>
-                    <Control.text className="form-control" model=".angle" />
+                                    <h3>Extra location info</h3>
 
-            </LocalForm>
+                                    <Control 
+                                        floatingLabelText="Height" 
+                                        hintText="Enter height the photo was taken at" 
+                                        component={TextField} 
+                                        model=".height" 
+                                        fullWidth />
 
-            // <LocalForm 
-            //     model="info"
-            //     className="form-group upload-summary-form"
-            //     onChange={(values) => this.props.onFileInfoChange(values)}
-            //     getDispatch={(dispatch) => this.attachDispatch(dispatch)}>
-            //         <h3>File info</h3>
-            //         <Field floatingLabelText="Title" hintText="Enter a title for the content" component={TextField} model=".title" name="Title" validate={required} /><br />
-            //         <Field floatingLabelText="Description" hintText="Enter a description for the content" component={TextField} multiLine model=".description" /><br />
+                                    <Control 
+                                        floatingLabelText="Bearing" 
+                                        hintText="Enter the compass bearing the drone was facing " 
+                                        component={TextField} 
+                                        model=".bearing" 
+                                        fullWidth />
 
-            //         <h3>Drone and Camera info</h3>
-            //         <Field floatingLabelText="Drone Manufacturer" hintText="Enter the manufacturer of your drone" component={TextField} model=".manufacturer" /><br />
-            //         <Field floatingLabelText="Drone Model" hintText="Enter the model of your drone" component={TextField} model=".model" /><br />
-            //         <Field floatingLabelText="Shutter Speed" hintText="Enter shutter speed of the camera (if known)" component={TextField} model=".shutterSpeed" /><br />
-            //         <Field floatingLabelText="Aperture Value" hintText="Enter aperture of the camera (if known)" component={TextField} model=".apertureValue" /><br />
-            //         <Field floatingLabelText="Focal Length" hintText="Enter focal length of camera (if known)" component={TextField} model=".focalLength" /><br />
-
-            //         <h3>Extra location info</h3>
-            //         <Field floatingLabelText="Height" hintText="Enter height the photo was taken at" component={TextField} model=".height" /><br />
-            //         <Field floatingLabelText="Bearing" hintText="Enter the compass bearing the drone was facing " component={TextField} model=".bearing" /><br />
-            //         <Field floatingLabelText="Angle of incidence" hintText="Enter angle in degrees from the horizon the photo was taken an" component={TextField} model=".angle" /><br />
-            // </LocalForm>
+                                    <Control 
+                                        floatingLabelText="Angle of incidence" 
+                                        hintText="Enter angle in degrees from the horizon the photo was taken an" 
+                                        component={TextField} 
+                                        model=".angle" 
+                                        fullWidth />
+                                
+                                    <button type="submit" className="btn btn-primary">Upload</button>
+                                </LocalForm>
+                        </Col>
+                    </Row>
+                </Grid>
+            ) : null
         );
-  }
+    }
 }
 
 export default FileInfo;

@@ -1,7 +1,12 @@
 import React from 'react';
 import toDecimal from '../../helpers/ExifHelper';
+import { Grid, Row, Col } from 'react-bootstrap';
 import { Map, TileLayer, Marker } from 'react-leaflet';
-import '../../styles/leaflet.css'
+import '../../styles/leaflet.css';
+import './ChooseLocation.css';
+import Aux from '../../hoc/Aux';
+import './Upload.css';
+
 
 class ChooseLocation extends React.Component {
 
@@ -16,6 +21,7 @@ class ChooseLocation extends React.Component {
             exifdata: {}
         };
         this.handleChange = this.handleChange.bind(this);
+        this.handleLocationCofirmed = this.handleLocationCofirmed.bind(this);
     }
 
     handleChange(event) {
@@ -26,6 +32,10 @@ class ChooseLocation extends React.Component {
             zoom: map._zoom
         });
         this.props.onLocationChange(latlng);
+    }
+
+    handleLocationCofirmed(event) {
+        this.props.onConfirmLocation();
     }
 
     componentWillReceiveProps(props){
@@ -67,25 +77,44 @@ class ChooseLocation extends React.Component {
     render() {
         let position = this.state.latlng;
         return (
-            <div className="upload-map-container">
-                <Map center={position} zoom={this.state.zoom}>
-                    <TileLayer
-                        attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-                        url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
-                    />
-                    <Marker 
-                        draggable={true}
-                        position={position}
-                        ondragend={this.handleChange} 
-                    >
-            
-                    </Marker>
-                </Map>
-                <div>Latitude: {this.state.latlng.lat}</div>
-                <div>Latitude: {this.state.latlng.lng}</div>
+            this.props.visible ? (
+                <Aux>
+                    <Grid className="wizard-card wizard-card-map upload-map-container">
+                        <Row>
+                            <Col sm={12}>
+                            <h2>Step 2 - Choose Location</h2>
+                
+                            <Map center={position} zoom={this.state.zoom} className="map">
+                                <TileLayer
+                                    attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                                    url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+                                />
+                                <Marker 
+                                    draggable={true}
+                                    position={position}
+                                    ondragend={this.handleChange} 
+                                >
+                        
+                                </Marker>
+                            </Map>
+                            <div className="gps-string">{this.state.latlng.lat.toString().substring(0, 9)}, {this.state.latlng.lng.toString().substring(0, 9)}</div>
 
-            </div>
+                            {
+                            this.props.showNoLocationWarning ? (
+                                <p>This file does not have any location meta data.  There are a number of reasons this can occur but most frequently it is because the image was edited with another program like photoshop.  You will need to select the location for the file.  Please be as accurate as possible.</p>
+                            ) : null
+                            }
+
+                            </Col>
+                        </Row>
+                    </Grid>
+                    
+                    <a onClick={this.handleLocationCofirmed} className="btn btn-primary btn-confirm-location">Confirm Location</a>
+
+                </Aux>
+            ) : null
         );
+
   }
 }
 

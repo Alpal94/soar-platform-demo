@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 
 
-const fileExif = (props) => {
+const exifField = (props) => {
     console.log(props.exifKey + ": " + props.exifValue)
 
     const isString = (typeof props.exifValue === 'string' || props.exifValue instanceof String)
@@ -18,4 +18,4 @@ const fileExif = (props) => {
 }
 
 
-export default fileExif;
+export default exifField;

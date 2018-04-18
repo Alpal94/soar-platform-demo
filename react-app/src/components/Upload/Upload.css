@@ -36,7 +36,10 @@
 }
 
 .choose-file-form {
+    margin: 0 auto;
     width: 100%;
+    padding: 40px;
+    border: 1px dashed #333;
 }
 
 .choose-file-form label {
@@ -54,4 +57,34 @@
 .choose-file-form input {
 
     display: none;
+}
+
+
+.wizard-card {
+    background-color: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 1px;
+    box-shadow: 2px 2px 2px #aaa;
+    margin-top: 40px;
+    padding-bottom: 40px;
+}
+
+.wizard-card-map {
+    min-height: 600px;
+}
+
+.wizard-card .map {
+    position: absolute;
+    min-height: 500px;
+    width: 98%;
+    display: block;
+}
+
+.btn-confirm-location a {
+    text-align: center;
+}
+
+.wizard-card h2 {
+    text-align: center;
+    padding-bottom: 30px;
 }

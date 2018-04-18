@@ -1,5 +1,8 @@
 import React from 'react';
 import { Control, LocalForm } from 'react-redux-form';
+import { Grid, Row, Col } from 'react-bootstrap';
+import './Upload.css';
+import Aux from '../../hoc/Aux';
 
 class ChooseFile extends React.Component {
 
@@ -9,19 +12,11 @@ class ChooseFile extends React.Component {
             imagePreviewUrl: null,
             file: null
         }
-        this.handleChange = this.handleChange.bind(this);
+        this.handleFileConfirmed = this.handleFileConfirmed.bind(this);
+        this.handleFileSelected = this.handleFileSelected.bind(this);
     }
 
-    componentWillReceiveProps(props) {
-        if(!props.file){
-            this.setState({
-                imagePreviewUrl: null,
-                file: null
-            });
-        }
-    }
-
-    handleChange(values) {
+    handleFileSelected(values) {
         if(values.file.length > 0){
             let file = values.file[0];
             let reader = new FileReader();
@@ -29,32 +24,43 @@ class ChooseFile extends React.Component {
                 this.setState({imagePreviewUrl: reader.result});
             }
             reader.readAsDataURL(file);
-            this.props.onFileChosen(file);
+            this.setState({file: file});
         }
     }
-    render() {
-        let imagePreviewUrl = this.state.imagePreviewUrl;
-        let element;
-        if(imagePreviewUrl){
-            element = (<img alt="preview" className="img-responsive" src={imagePreviewUrl}/>);
-        } else {
-            element = (
-                <LocalForm className="choose-file-form" 
-                    onChange={(values) => this.handleChange(values)}>
-                        <label htmlFor="file-input">
-                            <img alt="choose file to upload" src="assets/placeholder_upload.png"/>
-                        </label>
-                        <Control.file id="file-input" model=".file" />
-                </LocalForm>
-            );
 
-        }
+    handleFileConfirmed() {
+        this.props.onFileChosen(this.state.file);
+    }
+
+    render() {
         return (
-            <div className="row preview-image">
-                {element}
-            </div>
+            this.props.visible ? (
+                <Grid className="wizard-card row preview-image">
+                    <Row>
+                        <Col md={6} mdOffset={3} sm={12} smOffset={0}>
+                            <h2>Step 1 - Choose File</h2> 
+
+                            {
+                                this.state.imagePreviewUrl ? ( 
+                                    <Aux>
+                                        <Row><img src={this.state.imagePreviewUrl} /></Row>
+                                        <Row><button className="btn btn-primary" onClick={this.handleFileConfirmed}>Next</button></Row>
+                                    </Aux>
+                                ) : (
+                                    <LocalForm className="choose-file-form" onChange={(values) => this.handleFileSelected(values)}>
+                                        <label htmlFor="file-input">
+                                            <img alt="choose file to upload" src="assets/placeholder_upload.png"/>
+                                        </label>
+                                        <Control.file id="file-input" model=".file" />
+                                    </LocalForm>
+                                )
+                            }
+                        </Col>
+                    </Row>
+                </Grid>
+            ) : null
         );
-  }
+    }
 }
 
 export default ChooseFile;
