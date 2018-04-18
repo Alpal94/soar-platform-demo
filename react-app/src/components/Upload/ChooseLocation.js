@@ -98,6 +98,10 @@ class ChooseLocation extends React.Component {
                                 </Marker>
                             </Map>
                             <div className="gps-string">{this.state.latlng.lat.toString().substring(0, 9)}, {this.state.latlng.lng.toString().substring(0, 9)}</div>
+                            
+                            <Row className="button-row">
+                                <a onClick={this.handleLocationCofirmed} className="btn btn-primary btn-confirm-location">Confirm Location</a>
+                            </Row>
 
                             {
                             this.props.showNoLocationWarning ? (
@@ -109,7 +113,7 @@ class ChooseLocation extends React.Component {
                         </Row>
                     </Grid>
                     
-                    <a onClick={this.handleLocationCofirmed} className="btn btn-primary btn-confirm-location">Confirm Location</a>
+                    
 
                 </Aux>
             ) : null

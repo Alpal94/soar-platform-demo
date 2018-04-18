@@ -49,8 +49,8 @@ class ChooseFile extends React.Component {
     render() {
      
         const activeDragStyle = {
-            backgroundColor: '#00ff00',
-            border: '1px dashed #00ff00'
+            backgroundColor: 'rgba(3, 14, 24, 1.0)',
+            fontWeight: 'bolder'
         };
      
         return (
@@ -64,7 +64,7 @@ class ChooseFile extends React.Component {
                                 this.state.imagePreviewUrl ? ( 
                                     <Aux>
                                         <Row><img src={this.state.imagePreviewUrl} className="choose-file-preview"/></Row>
-                                        <Row className="choose-file-button-row">
+                                        <Row className="button-row">
                                             <button className="btn btn-danger btn-clear-file" onClick={this.handleFileClear}>Clear</button>
                                             <button className="btn btn-primary btn-select-file" onClick={this.handleFileConfirmed}>Next</button>
                                         </Row>

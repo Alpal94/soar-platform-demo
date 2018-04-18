@@ -1,5 +1,6 @@
 body {
-  min-width: 360px; }
+  min-width: 360px;
+  background: url("/assets/soar-globe.jpg"); }
 
 .soar-bg-yellow {
   background-color: #eed926; }

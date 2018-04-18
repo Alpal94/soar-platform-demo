@@ -1,3 +1,4 @@
+
 .upload {
     max-width: 960px;
 }
@@ -61,30 +62,38 @@
 
 
 .wizard-card {
-    background-color: #fafafa;
-    border: 1px solid #eee;
-    border-radius: 1px;
-    box-shadow: 2px 2px 2px #aaa;
+    -webkit-border-radius: 2px;
+    padding: 30px;
+    background-color: rgba(8, 27, 44, 0.98);
+    border: 1px solid black;
+    border-radius: 2px;
     margin-top: 40px;
     padding-bottom: 40px;
+    color: white;
+    min-height: 85vh;
 }
 
 .wizard-card-map {
-    min-height: 600px;
+ 
 }
 
 .wizard-card .map {
-    position: absolute;
-    min-height: 500px;
-    width: 98%;
+    position: block;
+    min-height: 60vh;
     display: block;
 }
 
-.btn-confirm-location a {
+.btn-confirm-location {
     text-align: center;
 }
 
 .wizard-card h2 {
     text-align: center;
-    padding-bottom: 30px;
+    border-bottom: 1px solid rgba(238,217,38, 0.25);
+    width: 100%;
+    display: block;
+    font-size: 2.5rem;
+    line-height: 1.3em !important;
+    text-transform: uppercase;
+    margin-bottom: 1.75rem;
 }

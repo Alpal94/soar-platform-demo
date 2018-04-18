@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {orange500} from 'material-ui/styles/colors';
+import {cyan500, cyan700,
+  pinkA200,
+  grey100, grey300, grey400, grey500,
+  white, darkBlack, fullBlack,} from 'material-ui/styles/colors';
+import {fade} from 'material-ui/utils/colorManipulator';
+
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {MetaMask} from './MetaMask/MetaMask';
 import { Message } from './Message/Message';
@@ -56,7 +61,16 @@ class App extends Component {
 
     const muiTheme = getMuiTheme({
       palette: {
-        primary1Color: orange500
+        primary1Color: '#eed926',
+        secondaryTextColor: '#081b2c',
+        textColor: white,
+        alternateTextColor: white,
+        canvasColor: white,
+        borderColor: grey300,
+        disabledColor: fade(white, 0.3),
+        pickerHeaderColor: cyan500,
+        clockCircleColor: fade(white, 0.07),
+        shadowColor: fullBlack,
       },
       appBar: {
         height: 50,
