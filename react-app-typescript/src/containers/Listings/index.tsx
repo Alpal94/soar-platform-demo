@@ -7,10 +7,16 @@ const connect = require('react-redux').connect;
 import {
     fetchSoarInfoAction,
     eventListingUploadedAction,
-    priceUpdateAction
+    priceUpdateAction,
+    eventUserPurchaseAction
 } from './actions';
-import { selectInfo, selectListings, selectPrices } from './selectors';
-import { ListingsInfo, EventListingUploaded } from '../../lib/model';
+import { 
+    selectInfo, 
+    selectListings, 
+    selectPrices,
+    selectPurchases
+} from './selectors';
+import { ListingsInfo, EventListingUploaded, EventSale } from '../../lib/model';
 import { Button } from 'reactstrap';
 import { soarEventListingUploadedWatcher } from './saga';
 
@@ -20,9 +26,11 @@ interface ListingsProps extends React.Props<Listings> {
     info: ListingsInfo;
     listings: List<EventListingUploaded>;
     prices: Map<string, number>;
+    purchases: Map<string, EventSale>;
     soarInfoFetch: (web3: any) => void;
     soarEventListingUploaded: (web3: any) => void;
     soarPriceUpdate: (web3: any, geohash: string) => void;
+    soarEventUserPurchase: (web3: any) => void;
 }
 
 interface ListingsState {
@@ -38,6 +46,7 @@ class Listings extends React.Component<ListingsProps, ListingsState> {
     componentDidMount() {
         this.props.soarInfoFetch(this.context.web3.instance);
         this.props.soarEventListingUploaded(this.context.web3.instance);
+        this.props.soarEventUserPurchase(this.context.web3.instance);
     }
 
     priceUpdate(geohash: string) {
@@ -46,15 +55,15 @@ class Listings extends React.Component<ListingsProps, ListingsState> {
     }
 
     public render(): React.ReactElement<{}> {
-        const { info, listings, prices } = this.props;
+        const { info, listings, prices, purchases } = this.props;
         const web3 = this.context.web3.instance;
-        // console.log(prices)
         return (
             <div>
                 <MapView
                     info={info}
                     listings={listings.toArray()}
                     prices={prices}
+                    purchases={purchases}
                     priceUpdate={(geohash: string) => this.priceUpdate(geohash)}
                 />
             </div>
@@ -66,7 +75,8 @@ function mapStateToProps() {
     return createStructuredSelector({
         info: selectInfo(),
         listings: selectListings(),
-        prices: selectPrices()
+        prices: selectPrices(),
+        purchases: selectPurchases()
     });
 }
 
@@ -80,7 +90,10 @@ function mapDispatchToProps(dispatch: any) {
         },
         soarPriceUpdate: (web3: any, geohash: string): void => {
             dispatch(priceUpdateAction(web3, geohash));
-        }
+        },
+        soarEventUserPurchase: (web3: any): void => {
+            dispatch(eventUserPurchaseAction(web3));
+        },
     };
 }
 

@@ -12,7 +12,8 @@ import {
 import { 
   soarInfoWatcher, 
   soarEventListingUploadedWatcher,
-  soarPriceUpdateWatcher
+  soarPriceUpdateWatcher,
+  soarEventUserPurchaseWatcher
 } from './containers/Listings/saga';
 import { uploadListingWatcher } from './containers/Upload/saga';
 
@@ -26,6 +27,7 @@ export default function* rootSaga() {
     soarInfoWatcher(),
     soarEventListingUploadedWatcher(),
     uploadListingWatcher(),
-    soarPriceUpdateWatcher()
+    soarPriceUpdateWatcher(),
+    soarEventUserPurchaseWatcher()
   ]);
 }

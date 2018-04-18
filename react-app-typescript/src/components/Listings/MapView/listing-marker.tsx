@@ -2,41 +2,40 @@ import * as React from 'react';
 import * as Wellknown from 'wellknown';
 import { Marker, Popup } from 'react-leaflet';
 import DotsText from '../../DotsText/';
-import { EventListingUploaded, ListingsInfo } from '../../../lib/model';
+import { EventListingUploaded, ListingsInfo, EventSale } from '../../../lib/model';
 import './index.css';
+import { Button } from 'reactstrap';
 
 interface ListingMarkerProps {
     listing: EventListingUploaded;
     info: ListingsInfo;
-    prices: Map<string, number>;
+    price?: number;
+    purchase?: EventSale;
     priceUpdate: (geohash: string) => void;
 }
 
 const ListingMarker: React.SFC<ListingMarkerProps> = (props) => {
-    let listing = props.listing;
-    // let purchase = props.soar.myPurchases[upload.fileHash];
+    const { listing, price, purchase } = props;
+    let isOwner: boolean = props.info.userAddress === listing.owner;
+    // tslint:disable-next-line
+    let onButtonClick: () => void = () => { };
+    let buttonText: string = '';
+    let disabled: boolean = true;
+    if (!isOwner && !purchase) {
+        buttonText = 'Buy';
+        disabled = price ? false : true;
 
-    let isOwner = props.info.userAddress === listing.owner;
-
-    // let onBuyButtonClicked = (() => {
-    //     if(upload.price){
-    //         props.handleSoarFilePurchase(props.web3, upload.fileHash, upload.price, upload.url)
-    //     }
-    // });
-    // let onDownloadButtonClicked = (() => props.handleSoarFileDownload(props.web3, upload.fileHash, upload.url));
-    // const buttonBuy = !owner && !purchase && (<button  className="btn btn-primary" onClick={onBuyButtonClicked}>Buy</button>);
-    // const buttonDownload = !owner && purchase && (<button className="btn btn-primary" onClick={onDownloadButtonClicked}>Download</button>);
+    } else if (!isOwner && purchase) {
+        buttonText = 'Download';
+        disabled = false;
+    }
     let p: any = Wellknown.parse(listing.pointWKT);
     let position = [p.coordinates[1], p.coordinates[0]];
     let info = JSON.parse(listing.metadata);
     let droneCamera = info.make + ' / ' + info.model;
     let date = new Date(info.date);
-    let onPopUpOpen = (() => {
-        props.priceUpdate(listing.geohash)
-    });
-    let price = props.prices.get(listing.geohash);
     return (
-        <Marker onpopupopen={onPopUpOpen} position={position} >
+        <Marker onpopupopen={() => props.priceUpdate(listing.geohash)} position={position} >
             <Popup>
                 <div className="listings-map-popup">
                     <img src={listing.previewUrl} alt="image preview" />
@@ -47,11 +46,17 @@ const ListingMarker: React.SFC<ListingMarkerProps> = (props) => {
                         <div><label>Latitude:</label>{position[1]}</div>
                         <div><label>Longitude:</label>{position[0]}</div>
                         <div><label>Geohash:</label>{listing.geohash}</div>
-                        <div><label>Price:</label>{price || <DotsText text="loading"/>} SKYM </div>
+                        <div><label>Price:</label>{price || <DotsText text="loading" />} SKYM </div>
                     </div>
-                    {/* {buttonBuy} */}
-                    {/* {buttonDownload} */}
-
+                    {buttonText &&
+                        <Button
+                            color="primary"
+                            disabled={disabled}
+                            onClick={onButtonClick}
+                        >
+                            {buttonText}
+                        </Button>
+                    }
                 </div>
             </Popup>
         </Marker>

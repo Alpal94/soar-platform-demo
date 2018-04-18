@@ -3,18 +3,20 @@ import { call, put, take } from 'redux-saga/effects';
 import {
     fetchInfo,
     eventListingUploaded,
-    getListingPriceByGeohash
+    getListingPriceByGeohash,
+    eventUserPurchases
 } from '../../lib/soar-service';
 import { waitTxConfirmed } from '../../lib/web3-service';
 import { actionTypes as at } from './constants';
-import { 
-    fetchSoarInfoSuccessAction, 
+import {
+    fetchSoarInfoSuccessAction,
     eventListingUploadedSuccessAction,
-    priceUpdateSuccessAction
+    priceUpdateSuccessAction,
+    eventUserPurchaseSuccessAction
 } from './actions';
 import { progressMessageAction, progressMessageDoneAction } from '../ProgressBar/actions';
 import { alertSuccessAction, alertErorrAction } from '../Alert/actions';
-import { ListingsInfo, EventListingUploaded } from '../../lib/model';
+import { ListingsInfo, EventListingUploaded, EventSale } from '../../lib/model';
 import { PriceUpdate } from './model';
 
 export function* fetchSoarInfoSaga(web3: any) {
@@ -45,11 +47,24 @@ export function* eventListingUploadedSaga(web3: any) {
 export function* priceUpdateSaga(web3: any, geohash: string) {
     try {
         const price: number = yield call(getListingPriceByGeohash, web3, geohash);
-        let update : PriceUpdate = {
+        let update: PriceUpdate = {
             price: price,
             geohash: geohash
         };
         yield put(priceUpdateSuccessAction(update));
+    } catch (err) {
+        yield put(alertErorrAction(err.message));
+    }
+}
+
+export function* eventUserPurchasesSaga(web3: any) {
+    try {
+        let blockFrom: number = 0;
+        while (true) {
+            let value: EventSale = yield call(eventUserPurchases, web3, blockFrom);
+            blockFrom = value.blockNumber + 1;
+            yield put(eventUserPurchaseSuccessAction(value));
+        }
     } catch (err) {
         yield put(alertErorrAction(err.message));
     }
@@ -73,5 +88,12 @@ export function* soarPriceUpdateWatcher() {
     while (true) {
         const { web3, geohash } = yield take(at.LISTINGS_PRICE_UPDATE);
         yield call(priceUpdateSaga, web3, geohash);
+    }
+}
+
+export function* soarEventUserPurchaseWatcher() {
+    while (true) {
+        const { web3 } = yield take(at.LISTINGS_EVENT_USER_PURCHASE);
+        yield call(eventUserPurchasesSaga, web3);
     }
 }

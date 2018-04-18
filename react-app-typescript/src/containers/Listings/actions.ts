@@ -1,5 +1,5 @@
 import { actionTypes as at } from './constants';
-import { ListingsInfo, EventListingUploaded } from '../../lib/model';
+import { ListingsInfo, EventListingUploaded, EventSale } from '../../lib/model';
 import { PriceUpdate } from './model';
 
 export const fetchSoarInfoAction = (web3: any) => {
@@ -41,6 +41,20 @@ export const priceUpdateAction = (web3: any, geohash: string) => {
 export const priceUpdateSuccessAction = (value: PriceUpdate) => {
     return {
         type: at.LISTINGS_PRICE_UPDATE_SUCCESS,
+        payload: value
+    };
+};
+
+export const eventUserPurchaseAction = (web3: any) => {
+    return {
+        type: at.LISTINGS_EVENT_USER_PURCHASE,
+        web3: web3
+    };
+};
+
+export const eventUserPurchaseSuccessAction = (value: EventSale) => {
+    return {
+        type: at.LISTINGS_EVENT_USER_PURCHASE_SUCCESS,
         payload: value
     };
 };

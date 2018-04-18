@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { TileLayer, Map } from 'react-leaflet';
 import './index.css';
-import { EventListingUploaded, ListingsInfo } from '../../../lib/model';
+import { EventListingUploaded, ListingsInfo, EventSale } from '../../../lib/model';
 import ListingMarker from './listing-marker';
 
 interface MapViewProps {
     listings: EventListingUploaded[];
     prices: Map<string, number>;
+    purchases: Map<string, EventSale>;
     info: ListingsInfo;
     priceUpdate: (geohash: string) => void;
 }
@@ -22,12 +23,14 @@ const MapView: React.SFC<MapViewProps> = (props) => {
                     attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                     url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
                 />
-                {props.listings.map(l =>
-                    <ListingMarker key={l.fileHash}
-                        listing={l}
+                {props.listings.map(listing =>
+                    <ListingMarker
+                        key={listing.filehash}
+                        listing={listing}
                         info={props.info}
-                        prices={props.prices}
+                        price={props.prices.get(listing.geohash)}
                         priceUpdate={props.priceUpdate}
+                        purchase={props.purchases.get(listing.filehash)}
                     />
                 )}
             </Map>

@@ -1,5 +1,5 @@
 import Web3Helper from './web3-helper';
-import { ListingsInfo, UploadListing, EventListingUploaded } from './model';
+import { ListingsInfo, UploadListing, EventListingUploaded, EventSale } from './model';
 
 export function fetchInfo(web3: any): Promise<ListingsInfo> {
     let userAddress = Web3Helper.getCurrentAddress(web3);
@@ -40,7 +40,7 @@ export function eventListingUploaded(web3: any, fromBlock: number): Promise<Even
             listingUploadedEvent.watch((err, res) => {
                 if (res) {
                     let value: EventListingUploaded = {
-                        fileHash: web3.toUtf8(res.args.fileHash),
+                        filehash: web3.toUtf8(res.args.fileHash),
                         geohash: web3.toUtf8(res.args.geoHash),
                         metadata: res.args.metadata,
                         owner: res.args.owner,
@@ -64,5 +64,29 @@ export function getListingPriceByGeohash(web3: any, geoHash: string): Promise<nu
         return pricePromise;
     }).then(res => {
         return Web3Helper.toSkymap(web3, res);
+    });
+}
+
+export function eventUserPurchases(web3: any, fromBlock: number): Promise<EventSale> {
+    let userAddress = Web3Helper.getCurrentAddress(web3);
+    let soarPromise = Web3Helper.getSoarContractPromise(web3);
+    return new Promise((resolve, reject) => {
+        Promise.resolve(soarPromise).then(soarContract => {
+            let saleEvent = soarContract.Sale({}, { fromBlock: fromBlock, toBlock: 'latest' });
+            //TODO temporary solution
+            saleEvent.watch((err, res) => {
+                if (res) {
+                    let value: EventSale = {
+                        filehash: web3.toUtf8(res.args.fileHash),
+                        owner: res.args.owner,
+                        buyer: res.args.buyer,
+                        price: Web3Helper.toSkymap(web3, res.args.price),
+                        blockNumber: res.blockNumber
+                    };
+                    resolve(value);
+                    saleEvent.stopWatching();
+                }
+            });
+        });
     });
 }

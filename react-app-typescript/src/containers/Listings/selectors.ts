@@ -17,10 +17,15 @@ const selectPrices = () => createSelector(
     listingsState => listingsState.get('prices')
 );
 
+const selectPurchases = () => createSelector(
+    getListingsDomain(),
+    listingsState => listingsState.get('purchases')
+);
 export {
     selectInfo,
     selectListings,
-    selectPrices
+    selectPrices,
+    selectPurchases
 };
 
 export default getListingsDomain;

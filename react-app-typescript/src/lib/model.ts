@@ -33,7 +33,15 @@ export interface EventListingUploaded {
     url: string;
     pointWKT: string; 
     metadata: string; 
-    fileHash: string; 
+    filehash: string; 
     geohash: string;
     owner: string;
+}
+
+export interface EventSale {
+    blockNumber: number;
+    buyer: string;
+    owner: string;
+    filehash: string;
+    price: number;
 }
