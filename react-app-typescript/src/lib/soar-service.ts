@@ -1,15 +1,17 @@
 import Web3Helper from './web3-helper';
-import { SoarInfo, UploadListing, EventListingUploaded } from './model';
+import { ListingsInfo, UploadListing, EventListingUploaded } from './model';
 
-export function fetchInfo(web3: any): Promise<SoarInfo> {
+export function fetchInfo(web3: any): Promise<ListingsInfo> {
+    let userAddress = Web3Helper.getCurrentAddress(web3);
     let soarPromise = Web3Helper.getSoarContractPromise(web3);
     return Promise.all([soarPromise]).then(results => {
         let soarContract = results[0];
         let filesCount = soarContract.listingsCount();
         return Promise.all([filesCount]);
     }).then(results => {
-        let res: SoarInfo = {
-            listingsCount: results[0].toNumber()
+        let res: ListingsInfo = {
+            listingsCount: results[0].toNumber(),
+            userAddress: userAddress
         };
         return res;
     });

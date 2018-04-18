@@ -6,12 +6,14 @@ const connect = require('react-redux').connect;
 
 import { fetchSoarInfoAction, eventListingUploadedAction } from './actions';
 import { selectInfo, selectListings } from './selectors';
-import { SoarInfo, EventListingUploaded } from '../../lib/model';
+import { ListingsInfo, EventListingUploaded } from '../../lib/model';
 import { Button } from 'reactstrap';
 import { soarEventListingUploadedWatcher } from './saga';
 
+import MapView from '../../components/Listings/MapView/';
+
 interface ListingsProps extends React.Props<Listings> {
-    info: SoarInfo;
+    info: ListingsInfo;
     listings: List<EventListingUploaded>;
     soarInfoFetch: (web3: any) => void;
     soarEventListingUploaded: (web3: any) => void;
@@ -37,8 +39,7 @@ class Listings extends React.Component<ListingsProps, ListingsState> {
         const web3 = this.context.web3.instance;
         return (
             <div>
-                <p>Total: {info.listingsCount}</p>
-                {listings.toArray().map(l => <div key={l.fileHash}>{l.fileHash + ' - ' + l.geohash}</div>)}
+                <MapView info={info} listings={listings.toArray()}/>
             </div>
         );
     }

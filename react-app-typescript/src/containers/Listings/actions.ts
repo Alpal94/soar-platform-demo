@@ -1,5 +1,5 @@
 import { actionTypes as at } from './constants';
-import { SoarInfo, EventListingUploaded } from '../../lib/model';
+import { ListingsInfo, EventListingUploaded } from '../../lib/model';
 
 export const fetchSoarInfoAction = (web3: any) => {
     return {
@@ -8,7 +8,7 @@ export const fetchSoarInfoAction = (web3: any) => {
     };
 };
 
-export const fetchSoarInfoSuccessAction = (result: SoarInfo) => {
+export const fetchSoarInfoSuccessAction = (result: ListingsInfo) => {
     return {
         type: at.LISTINGS_SOAR_INFO_FETCH_SUCCESS,
         payload: result

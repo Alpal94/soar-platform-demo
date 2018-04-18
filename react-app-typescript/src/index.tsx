@@ -9,14 +9,13 @@ import ContextProvider from './context-provider';
 import { BrowserRouter } from 'react-router-dom';
 import { Redirect, Route, Switch } from 'react-router';
 
-import { Container } from 'reactstrap';
-
 import NavigationBar from './components/NavigationBar';
 import Metamask from './containers/Metamask';
 import ProgressBar from './containers/ProgressBar';
 import Alert from './containers/Alert';
 
-import './index.css';
+import './styles/index.css';
+import './styles/leaflet.css';
 // Import default Bootstrap 4 CSS
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -29,9 +28,7 @@ const Root = (
         <ProgressBar />
         <Alert/>
         <BrowserRouter>
-          <Container>
             <RouteMap/>
-          </Container>
         </BrowserRouter>
       </div>
     </Provider>

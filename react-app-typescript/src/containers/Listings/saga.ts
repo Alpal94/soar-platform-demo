@@ -6,12 +6,12 @@ import { actionTypes as at } from './constants';
 import { fetchSoarInfoSuccessAction, eventListingUploadedSuccessAction } from './actions';
 import { progressMessageAction, progressMessageDoneAction } from '../ProgressBar/actions';
 import { alertSuccessAction, alertErorrAction } from '../Alert/actions';
-import { SoarInfo, EventListingUploaded } from '../../lib/model';
+import { ListingsInfo, EventListingUploaded } from '../../lib/model';
 
 export function* fetchSoarInfoSaga(web3: any) {
     try {
         yield put(progressMessageAction('Updating soar information'));
-        const info: SoarInfo = yield call(fetchInfo, web3);
+        const info: ListingsInfo = yield call(fetchInfo, web3);
         yield put(fetchSoarInfoSuccessAction(info));
     } catch (err) {
         yield put(alertErorrAction(err.message));
