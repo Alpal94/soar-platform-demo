@@ -108,4 +108,20 @@ export default class Web3Helper {
       });
     });
   }
+
+  public static getSponsorApiUrl(web3) : string {
+    let networkId = this.getCurrentNetwork(web3);
+    switch (networkId) {
+      //mainnet
+      case '1':
+        return '';
+      //rinkeby
+      case '4':
+        return 'https://f3cmroo3se.execute-api.ap-southeast-1.amazonaws.com/rinkeby/upload/details';
+      case '5777':
+        return 'https://f3cmroo3se.execute-api.ap-southeast-1.amazonaws.com/dev/upload/details';
+      default:
+        return '';
+    }
+  }
 }

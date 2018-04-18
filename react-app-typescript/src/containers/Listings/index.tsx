@@ -8,7 +8,8 @@ import {
     fetchSoarInfoAction,
     eventListingUploadedAction,
     priceUpdateAction,
-    eventUserPurchaseAction
+    eventUserPurchaseAction,
+    buyAction
 } from './actions';
 import { 
     selectInfo, 
@@ -16,7 +17,7 @@ import {
     selectPrices,
     selectPurchases
 } from './selectors';
-import { ListingsInfo, EventListingUploaded, EventSale } from '../../lib/model';
+import { ListingsInfo, Listing, Sale } from '../../lib/model';
 import { Button } from 'reactstrap';
 import { soarEventListingUploadedWatcher } from './saga';
 
@@ -24,13 +25,14 @@ import MapView from '../../components/Listings/MapView/';
 
 interface ListingsProps extends React.Props<Listings> {
     info: ListingsInfo;
-    listings: List<EventListingUploaded>;
+    listings: List<Listing>;
     prices: Map<string, number>;
-    purchases: Map<string, EventSale>;
+    purchases: Map<string, Sale>;
     soarInfoFetch: (web3: any) => void;
     soarEventListingUploaded: (web3: any) => void;
     soarPriceUpdate: (web3: any, geohash: string) => void;
     soarEventUserPurchase: (web3: any) => void;
+    soarBuy: (web3: any, listing: Listing, price: number) => void;
 }
 
 interface ListingsState {
@@ -54,6 +56,11 @@ class Listings extends React.Component<ListingsProps, ListingsState> {
         this.props.soarPriceUpdate(web3, geohash);
     }
 
+    buy(listing: Listing, price: number){
+        const web3 = this.context.web3.instance;
+        this.props.soarBuy(web3, listing, price);        
+    }
+
     public render(): React.ReactElement<{}> {
         const { info, listings, prices, purchases } = this.props;
         const web3 = this.context.web3.instance;
@@ -65,6 +72,7 @@ class Listings extends React.Component<ListingsProps, ListingsState> {
                     prices={prices}
                     purchases={purchases}
                     priceUpdate={(geohash: string) => this.priceUpdate(geohash)}
+                    buy={(listing: Listing, price: number) => this.buy(listing, price)}
                 />
             </div>
         );
@@ -94,6 +102,9 @@ function mapDispatchToProps(dispatch: any) {
         soarEventUserPurchase: (web3: any): void => {
             dispatch(eventUserPurchaseAction(web3));
         },
+        soarBuy: (web3: any, listing: Listing, price: number): void => {
+            dispatch(buyAction(web3, listing, price));
+        }
     };
 }
 

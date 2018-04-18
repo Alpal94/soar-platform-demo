@@ -2,13 +2,13 @@ import { fromJS, List, Map } from 'immutable';
 
 import { actionTypes as at } from './constants';
 import { ListingsAction, PriceUpdate } from './model';
-import { EventListingUploaded, EventSale } from '../../lib/model';
+import { Listing, Sale } from '../../lib/model';
 import { stat } from 'fs';
 
 const initialState = fromJS({
-    listings: List<EventListingUploaded>(),
+    listings: List<Listing>(),
     prices: Map<string, number>(),
-    purchases: Map<string, EventSale>(),
+    purchases: Map<string, Sale>(),
     info: { listingsCount: 0 }
 });
 
@@ -30,7 +30,7 @@ export default (state = initialState, action: ListingsAction) => {
             return state
                 .set('prices', prices);
         case at.LISTINGS_EVENT_USER_PURCHASE_SUCCESS:
-            let sale: EventSale = action.payload;
+            let sale: Sale = action.payload;
             let purchases = state.get('purchases').set(sale.filehash, sale);
             return state
                 .set('purchases', purchases);

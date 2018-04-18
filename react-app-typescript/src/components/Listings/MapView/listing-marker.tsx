@@ -2,16 +2,17 @@ import * as React from 'react';
 import * as Wellknown from 'wellknown';
 import { Marker, Popup } from 'react-leaflet';
 import DotsText from '../../DotsText/';
-import { EventListingUploaded, ListingsInfo, EventSale } from '../../../lib/model';
+import { Listing, ListingsInfo, Sale } from '../../../lib/model';
 import './index.css';
 import { Button } from 'reactstrap';
 
 interface ListingMarkerProps {
-    listing: EventListingUploaded;
+    listing: Listing;
     info: ListingsInfo;
     price?: number;
-    purchase?: EventSale;
+    purchase?: Sale;
     priceUpdate: (geohash: string) => void;
+    buy: (listing: Listing, price: number) => void;
 }
 
 const ListingMarker: React.SFC<ListingMarkerProps> = (props) => {
@@ -23,8 +24,10 @@ const ListingMarker: React.SFC<ListingMarkerProps> = (props) => {
     let disabled: boolean = true;
     if (!isOwner && !purchase) {
         buttonText = 'Buy';
-        disabled = price ? false : true;
-
+        if(price){
+            disabled = false;
+            onButtonClick = () => props.buy(listing, price);
+        }
     } else if (!isOwner && purchase) {
         buttonText = 'Download';
         disabled = false;

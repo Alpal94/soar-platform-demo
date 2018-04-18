@@ -24,8 +24,8 @@ const Root = (
     <Provider store={store}>
       <div>
         <Metamask />
-        <NavigationBar />
         <ProgressBar />
+        <NavigationBar />
         <Alert/>
         <BrowserRouter>
             <RouteMap/>

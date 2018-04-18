@@ -1,5 +1,5 @@
 import Web3Helper from './web3-helper';
-import { ListingsInfo, UploadListing, EventListingUploaded, EventSale } from './model';
+import { ListingsInfo, UploadListing, Listing, Sale } from './model';
 
 export function fetchInfo(web3: any): Promise<ListingsInfo> {
     let userAddress = Web3Helper.getCurrentAddress(web3);
@@ -31,7 +31,7 @@ export function uploadListing(web3: any, upload: UploadListing): Promise<string>
     });
 }
 
-export function eventListingUploaded(web3: any, fromBlock: number): Promise<EventListingUploaded> {
+export function eventListingUploaded(web3: any, fromBlock: number): Promise<Listing> {
     let soarPromise = Web3Helper.getSoarContractPromise(web3);
     return new Promise((resolve, reject) => {
         Promise.resolve(soarPromise).then(soarContract => {
@@ -39,7 +39,7 @@ export function eventListingUploaded(web3: any, fromBlock: number): Promise<Even
             //TODO temporary solution
             listingUploadedEvent.watch((err, res) => {
                 if (res) {
-                    let value: EventListingUploaded = {
+                    let value: Listing = {
                         filehash: web3.toUtf8(res.args.fileHash),
                         geohash: web3.toUtf8(res.args.geoHash),
                         metadata: res.args.metadata,
@@ -67,7 +67,7 @@ export function getListingPriceByGeohash(web3: any, geoHash: string): Promise<nu
     });
 }
 
-export function eventUserPurchases(web3: any, fromBlock: number): Promise<EventSale> {
+export function eventUserPurchases(web3: any, fromBlock: number): Promise<Sale> {
     let userAddress = Web3Helper.getCurrentAddress(web3);
     let soarPromise = Web3Helper.getSoarContractPromise(web3);
     return new Promise((resolve, reject) => {
@@ -76,7 +76,7 @@ export function eventUserPurchases(web3: any, fromBlock: number): Promise<EventS
             //TODO temporary solution
             saleEvent.watch((err, res) => {
                 if (res) {
-                    let value: EventSale = {
+                    let value: Sale = {
                         filehash: web3.toUtf8(res.args.fileHash),
                         owner: res.args.owner,
                         buyer: res.args.buyer,
@@ -89,4 +89,14 @@ export function eventUserPurchases(web3: any, fromBlock: number): Promise<EventS
             });
         });
     });
+}
+
+export function buyListing(web3: any, filehash: string, challenge: string): Promise<string> {
+    let soarPromise = Web3Helper.getSoarContractPromise(web3);
+    let userAddress = Web3Helper.getCurrentAddress(web3);
+    return soarPromise.then(soarContract => {
+        return soarContract.buyListing(filehash, challenge, { from: userAddress });
+    }).then(result => {
+        return result.tx;
+    })
 }

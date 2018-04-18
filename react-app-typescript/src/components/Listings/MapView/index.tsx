@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { TileLayer, Map } from 'react-leaflet';
 import './index.css';
-import { EventListingUploaded, ListingsInfo, EventSale } from '../../../lib/model';
+import { Listing, ListingsInfo, Sale } from '../../../lib/model';
 import ListingMarker from './listing-marker';
 
 interface MapViewProps {
-    listings: EventListingUploaded[];
+    listings: Listing[];
     prices: Map<string, number>;
-    purchases: Map<string, EventSale>;
+    purchases: Map<string, Sale>;
     info: ListingsInfo;
     priceUpdate: (geohash: string) => void;
+    buy: (listing: Listing, price: number) => void;
 }
 
 const MapView: React.SFC<MapViewProps> = (props) => {
@@ -31,6 +32,7 @@ const MapView: React.SFC<MapViewProps> = (props) => {
                         price={props.prices.get(listing.geohash)}
                         priceUpdate={props.priceUpdate}
                         purchase={props.purchases.get(listing.filehash)}
+                        buy={props.buy}
                     />
                 )}
             </Map>

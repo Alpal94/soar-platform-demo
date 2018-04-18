@@ -27,7 +27,7 @@ export interface UploadListing {
     geohash: string;
 }
 
-export interface EventListingUploaded {
+export interface Listing {
     blockNumber: number;
     previewUrl: string;
     url: string;
@@ -38,10 +38,17 @@ export interface EventListingUploaded {
     owner: string;
 }
 
-export interface EventSale {
+export interface Sale {
     blockNumber: number;
     buyer: string;
     owner: string;
     filehash: string;
     price: number;
 }
+
+export interface DownloadDetails {
+    challenge: string;
+    secret: string;
+}
+
+
