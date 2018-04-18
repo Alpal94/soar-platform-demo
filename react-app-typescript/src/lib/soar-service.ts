@@ -55,5 +55,14 @@ export function eventListingUploaded(web3: any, fromBlock: number): Promise<Even
             });
         });
     });
+}
 
+export function getListingPriceByGeohash(web3: any, geoHash: string): Promise<number> {
+    let soarPromise = Web3Helper.getSoarContractPromise(web3);
+    return soarPromise.then(soarContract => {
+        let pricePromise = soarContract.getPrice(geoHash);
+        return pricePromise;
+    }).then(res => {
+        return Web3Helper.toSkymap(web3, res);
+    });
 }

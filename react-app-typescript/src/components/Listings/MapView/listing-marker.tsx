@@ -8,7 +8,8 @@ import './index.css';
 interface ListingMarkerProps {
     listing: EventListingUploaded;
     info: ListingsInfo;
-    price?: number;
+    prices: Map<string, number>;
+    priceUpdate: (geohash: string) => void;
 }
 
 const ListingMarker: React.SFC<ListingMarkerProps> = (props) => {
@@ -31,8 +32,9 @@ const ListingMarker: React.SFC<ListingMarkerProps> = (props) => {
     let droneCamera = info.make + ' / ' + info.model;
     let date = new Date(info.date);
     let onPopUpOpen = (() => {
-        // props.handleSoarFilePriceCount(props.web3, upload.fileHash)
+        props.priceUpdate(listing.geohash)
     });
+    let price = props.prices.get(listing.geohash);
     return (
         <Marker onpopupopen={onPopUpOpen} position={position} >
             <Popup>
@@ -45,7 +47,7 @@ const ListingMarker: React.SFC<ListingMarkerProps> = (props) => {
                         <div><label>Latitude:</label>{position[1]}</div>
                         <div><label>Longitude:</label>{position[0]}</div>
                         <div><label>Geohash:</label>{listing.geohash}</div>
-                        <div><label>Price:</label>{props.price || <DotsText text="loading"/>} SKYM </div>
+                        <div><label>Price:</label>{price || <DotsText text="loading"/>} SKYM </div>
                     </div>
                     {/* {buttonBuy} */}
                     {/* {buttonDownload} */}

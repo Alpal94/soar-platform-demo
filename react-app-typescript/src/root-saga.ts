@@ -1,8 +1,19 @@
 import { all } from 'redux-saga/effects';
 
-import { tokenInfoWatcher, getSKYMWatcher } from './containers/Faucet/saga';
-import { infoAdminWatcher, setTokenContractWatcher, setAllowanceWatcher } from './containers/FaucetAdmin/saga';
-import { soarInfoWatcher, soarEventListingUploadedWatcher } from './containers/Listings/saga';
+import {
+  tokenInfoWatcher,
+  getSKYMWatcher
+} from './containers/Faucet/saga';
+import { 
+  infoAdminWatcher, 
+  setTokenContractWatcher, 
+  setAllowanceWatcher 
+} from './containers/FaucetAdmin/saga';
+import { 
+  soarInfoWatcher, 
+  soarEventListingUploadedWatcher,
+  soarPriceUpdateWatcher
+} from './containers/Listings/saga';
 import { uploadListingWatcher } from './containers/Upload/saga';
 
 export default function* rootSaga() {
@@ -14,6 +25,7 @@ export default function* rootSaga() {
     setAllowanceWatcher(),
     soarInfoWatcher(),
     soarEventListingUploadedWatcher(),
-    uploadListingWatcher()
+    uploadListingWatcher(),
+    soarPriceUpdateWatcher()
   ]);
 }

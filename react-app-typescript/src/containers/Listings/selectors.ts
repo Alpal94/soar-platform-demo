@@ -12,9 +12,15 @@ const selectListings = () => createSelector(
     listingsState => listingsState.get('listings')
 );
 
+const selectPrices = () => createSelector(
+    getListingsDomain(),
+    listingsState => listingsState.get('prices')
+);
+
 export {
     selectInfo,
-    selectListings
+    selectListings,
+    selectPrices
 };
 
 export default getListingsDomain;
