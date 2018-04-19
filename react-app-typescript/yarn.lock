@@ -1845,6 +1845,10 @@ execa@^0.7.0:
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
 
+exif-js@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/exif-js/-/exif-js-2.3.0.tgz#9d10819bf571f873813e7640241255ab9ce1a814"
+
 expand-brackets@^0.1.4:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/expand-brackets/-/expand-brackets-0.1.5.tgz#df07284e342a807cd733ac5af72411e581d1177b"
@@ -2221,6 +2225,12 @@ gauge@~2.7.3:
     string-width "^1.0.1"
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
+
+geo-hash@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/geo-hash/-/geo-hash-0.0.2.tgz#b43a81770c998f69da3b8d69a4106a4a8eb1e147"
+  dependencies:
+    sortable-hash "0.0.0"
 
 get-caller-file@^1.0.1:
   version "1.0.2"
@@ -5628,6 +5638,10 @@ sort-keys@^1.0.0:
   dependencies:
     is-plain-obj "^1.0.0"
 
+sortable-hash@0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/sortable-hash/-/sortable-hash-0.0.0.tgz#7a567aa021d37e6abdcd9e3c949d5d81b16b0cdf"
+
 source-list-map@^0.1.7, source-list-map@~0.1.7:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/source-list-map/-/source-list-map-0.1.8.tgz#c550b2ab5427f6b3f21f5afead88c4f5587b2106"
@@ -5681,6 +5695,10 @@ source-map@^0.4.4:
 source-map@^0.6.1, source-map@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
+
+spark-md5@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/spark-md5/-/spark-md5-3.0.0.tgz#3722227c54e2faf24b1dc6d933cc144e6f71bfef"
 
 spdx-correct@^3.0.0:
   version "3.0.0"

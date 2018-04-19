@@ -27,6 +27,15 @@ export interface UploadListing {
     geohash: string;
 }
 
+export interface LatLng {
+    lat: string;
+    lng: string;
+}
+
+export interface Metadata {
+
+}
+
 export interface Listing {
     blockNumber: number;
     previewUrl: string;
@@ -51,4 +60,10 @@ export interface DownloadDetails {
     secret: string;
 }
 
-
+export interface UploadDetails {
+    challenge: string;
+    secret: string;
+    downloadUrl: string;
+    uploadUrl: string;
+    previewUrl: string;
+}

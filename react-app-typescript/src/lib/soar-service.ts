@@ -110,3 +110,13 @@ export function verifySale(web3: any, filehash: string, challenge: string): Prom
         return result.tx;
     });
 }
+
+export function verifyUpload(web3: any, filehash: string, challenge: string): Promise<string> {
+    let soarPromise = Web3Helper.getSoarContractPromise(web3);
+    let userAddress = Web3Helper.getCurrentAddress(web3);
+    return soarPromise.then(soarContract => {
+        return soarContract.verifyUpload(filehash, challenge, { from: userAddress });
+    }).then(result => {
+        return result.tx;
+    });
+}
