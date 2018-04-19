@@ -9,11 +9,12 @@ import {
     eventListingUploadedAction,
     priceUpdateAction,
     eventUserPurchaseAction,
-    buyAction
+    buyAction,
+    downloadAction
 } from './actions';
-import { 
-    selectInfo, 
-    selectListings, 
+import {
+    selectInfo,
+    selectListings,
     selectPrices,
     selectPurchases
 } from './selectors';
@@ -33,6 +34,7 @@ interface ListingsProps extends React.Props<Listings> {
     soarPriceUpdate: (web3: any, geohash: string) => void;
     soarEventUserPurchase: (web3: any) => void;
     soarBuy: (web3: any, listing: Listing, price: number) => void;
+    soarDownload: (web3: any, listing: Listing) => void;
 }
 
 interface ListingsState {
@@ -56,9 +58,14 @@ class Listings extends React.Component<ListingsProps, ListingsState> {
         this.props.soarPriceUpdate(web3, geohash);
     }
 
-    buy(listing: Listing, price: number){
+    buy(listing: Listing, price: number) {
         const web3 = this.context.web3.instance;
-        this.props.soarBuy(web3, listing, price);        
+        this.props.soarBuy(web3, listing, price);
+    }
+
+    download(listing: Listing) {
+        const web3 = this.context.web3.instance;
+        this.props.soarDownload(web3, listing);
     }
 
     public render(): React.ReactElement<{}> {
@@ -73,6 +80,7 @@ class Listings extends React.Component<ListingsProps, ListingsState> {
                     purchases={purchases}
                     priceUpdate={(geohash: string) => this.priceUpdate(geohash)}
                     buy={(listing: Listing, price: number) => this.buy(listing, price)}
+                    download={(listing: Listing) => this.download(listing)}
                 />
             </div>
         );
@@ -104,6 +112,9 @@ function mapDispatchToProps(dispatch: any) {
         },
         soarBuy: (web3: any, listing: Listing, price: number): void => {
             dispatch(buyAction(web3, listing, price));
+        },
+        soarDownload: (web3: any, listing: Listing): void => {
+            dispatch(downloadAction(web3, listing));
         }
     };
 }

@@ -63,12 +63,12 @@ contract Soar is Ownable, Pausable {
         price_ = pricingContract.getPrice(listings[_fileHash].geoHash);
     }
 
-    function verificationSale(bytes32 _challenge, bytes32 _fileHash) whenNotPaused public {
+    function verifySale(bytes32 _fileHash, bytes32 _challenge) whenNotPaused public {
         require(listings[_fileHash].sales[msg.sender] > 0);
         VerificationSale(msg.sender, _challenge, _fileHash);
     }
 
-    function verificationUpload(bytes32 _challenge, bytes32 _fileHash) whenNotPaused public {
+    function verifyUpload(bytes32 _fileHash, bytes32 _challenge) whenNotPaused public {
         require(listings[_fileHash].owner == address(0));
         VerificationUpload(msg.sender, _challenge, _fileHash);
     }

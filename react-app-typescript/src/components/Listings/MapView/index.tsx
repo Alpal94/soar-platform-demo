@@ -11,6 +11,7 @@ interface MapViewProps {
     info: ListingsInfo;
     priceUpdate: (geohash: string) => void;
     buy: (listing: Listing, price: number) => void;
+    download: (listing: Listing) => void;
 }
 
 const MapView: React.SFC<MapViewProps> = (props) => {
@@ -33,6 +34,7 @@ const MapView: React.SFC<MapViewProps> = (props) => {
                         priceUpdate={props.priceUpdate}
                         purchase={props.purchases.get(listing.filehash)}
                         buy={props.buy}
+                        download={props.download}
                     />
                 )}
             </Map>

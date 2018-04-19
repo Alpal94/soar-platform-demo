@@ -109,7 +109,7 @@ export default class Web3Helper {
     });
   }
 
-  public static getSponsorApiUrl(web3) : string {
+  public static getSponsorApiUrl(web3: any): string {
     let networkId = this.getCurrentNetwork(web3);
     switch (networkId) {
       //mainnet

@@ -98,5 +98,15 @@ export function buyListing(web3: any, filehash: string, challenge: string): Prom
         return soarContract.buyListing(filehash, challenge, { from: userAddress });
     }).then(result => {
         return result.tx;
-    })
+    });
+}
+
+export function verifySale(web3: any, filehash: string, challenge: string): Promise<string> {
+    let soarPromise = Web3Helper.getSoarContractPromise(web3);
+    let userAddress = Web3Helper.getCurrentAddress(web3);
+    return soarPromise.then(soarContract => {
+        return soarContract.verifySale(filehash, challenge, { from: userAddress });
+    }).then(result => {
+        return result.tx;
+    });
 }

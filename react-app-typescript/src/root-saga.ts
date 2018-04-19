@@ -4,17 +4,18 @@ import {
   tokenInfoWatcher,
   getSKYMWatcher
 } from './containers/Faucet/saga';
-import { 
-  infoAdminWatcher, 
-  setTokenContractWatcher, 
-  setAllowanceWatcher 
+import {
+  infoAdminWatcher,
+  setTokenContractWatcher,
+  setAllowanceWatcher
 } from './containers/FaucetAdmin/saga';
-import { 
-  soarInfoWatcher, 
+import {
+  soarInfoWatcher,
   soarEventListingUploadedWatcher,
   soarPriceUpdateWatcher,
   soarEventUserPurchaseWatcher,
-  soarBuyWatcher
+  soarBuyWatcher,
+  soarDownloadWatcher
 } from './containers/Listings/saga';
 import { uploadListingWatcher } from './containers/Upload/saga';
 
@@ -29,7 +30,8 @@ export default function* rootSaga() {
     soarEventListingUploadedWatcher(),
     uploadListingWatcher(),
     soarPriceUpdateWatcher(),
-    soarEventUserPurchaseWatcher(),,
-    soarBuyWatcher()
+    soarEventUserPurchaseWatcher(),
+    soarBuyWatcher(),
+    soarDownloadWatcher()
   ]);
 }

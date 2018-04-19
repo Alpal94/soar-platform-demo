@@ -59,12 +59,19 @@ export const eventUserPurchaseSuccessAction = (value: Sale) => {
     };
 };
 
-
 export const buyAction = (web3: any, listing: Listing, price: number) => {
     return {
         type: at.LISTINGS_BUY,
         web3: web3,
         listing: listing,
         price: price
+    };
+};
+
+export const downloadAction = (web3: any, listing: Listing) => {
+    return {
+        type: at.LISTINGS_DOWNLOAD,
+        web3: web3,
+        listing: listing
     };
 };

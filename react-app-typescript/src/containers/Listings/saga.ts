@@ -10,13 +10,14 @@ import { progressMessageAction, progressMessageDoneAction } from '../ProgressBar
 import { alertSuccessAction, alertErorrAction } from '../Alert/actions';
 import {
     fetchInfo, eventListingUploaded, getListingPriceByGeohash,
-    eventUserPurchases, buyListing
+    eventUserPurchases, buyListing, verifySale
 } from '../../lib/soar-service';
 import {
     approveTokens
 } from '../../lib/skymap-service';
 import { waitTxConfirmed } from '../../lib/web3-service';
-import { getDownloadDetails } from '../../lib/soar-sponsor-service';
+import { getDownloadDetails, downloadFile } from '../../lib/soar-sponsor-service';
+import * as fileDownload from 'react-file-download';
 
 export function* fetchSoarInfoSaga(web3: any) {
     try {
@@ -71,31 +72,61 @@ export function* eventUserPurchasesSaga(web3: any) {
 
 export function* buySaga(web3: any, listing: Listing, price: number) {
     try {
+        let filehash = listing.filehash;
+        let url = listing.url;
+
         yield put(progressMessageAction('Preparing purchase'));
-        console.log('BuySaga:Start: ', listing, ' ', price)
-        
-        let downloadDetails : DownloadDetails = yield call(getDownloadDetails, web3, listing.url, listing.filehash)
-        console.log('BuySaga:DownloadDetails: ', downloadDetails)
-        
+        let downloadDetails: DownloadDetails = yield call(getDownloadDetails, web3, listing.url, listing.filehash);
+
         yield put(progressMessageAction('Please confirm transaction using metamask'));
         let approveTxHash = yield call(approveTokens, web3, price);
-        console.log('BuySaga:ApproveTxHash: ', approveTxHash)
-        
+
         yield put(progressMessageAction('Waiting for transaction to be confirmed by network'));
         const approveConfirmed: boolean = yield call(waitTxConfirmed, web3, approveTxHash);
-        console.log('BuySaga:ApproveConfirmed: ', approveConfirmed)
 
         yield put(progressMessageAction('Please confirm transaction using metamask'));
-        const buyTxHash: string = yield call(buyListing, web3, listing.filehash, downloadDetails.challenge);
-        
+        const buyTxHash: string = yield call(buyListing, web3, filehash, downloadDetails.challenge);
+
         yield put(progressMessageAction('Waiting for transaction to be confirmed by network'));
         const buyConfirmed: boolean = yield call(waitTxConfirmed, web3, buyTxHash);
-        console.log('BuySaga:BuyConfirmed: ', buyConfirmed)
 
-
+        if (buyConfirmed) {
+            yield put(progressMessageAction('Downloading file'));
+            const file = yield call(downloadFile, web3, url, downloadDetails.secret, buyTxHash);
+            fileDownload(file, url.split('/').pop());
+        } else {
+            throw new Error('Error during buying an listing');
+        }
 
     } catch (err) {
-        console.log(err);
+        yield put(alertErorrAction(err.message));
+    } finally {
+        yield put(progressMessageDoneAction());
+    }
+}
+
+export function* downloadSaga(web3: any, listing: Listing) {
+    try {
+        let filehash = listing.filehash;
+        let url = listing.url;
+
+        yield put(progressMessageAction('Preparing download'));
+        let downloadDetails: DownloadDetails = yield call(getDownloadDetails, web3, listing.url, listing.filehash);
+
+        yield put(progressMessageAction('Please confirm transaction using metamask'));
+        let verificationTxHash = yield call(verifySale, web3, filehash, downloadDetails.challenge);
+
+        yield put(progressMessageAction('Waiting for transaction to be confirmed by network'));
+        const verificationConfirmed: boolean = yield call(waitTxConfirmed, web3, verificationTxHash);
+
+        if (verificationConfirmed) {
+            yield put(progressMessageAction('Downloading file'));
+            const file = yield call(downloadFile, web3, url, downloadDetails.secret, verificationTxHash);
+            fileDownload(file, url.split('/').pop());
+        } else {
+            throw new Error('Error during sale confirmation an listing');
+        }
+    } catch (err) {
         yield put(alertErorrAction(err.message));
     } finally {
         yield put(progressMessageDoneAction());
@@ -135,5 +166,12 @@ export function* soarBuyWatcher() {
     while (true) {
         const { web3, listing, price } = yield take(at.LISTINGS_BUY);
         yield call(buySaga, web3, listing, price);
+    }
+}
+
+export function* soarDownloadWatcher() {
+    while (true) {
+        const { web3, listing } = yield take(at.LISTINGS_DOWNLOAD);
+        yield call(downloadSaga, web3, listing);
     }
 }

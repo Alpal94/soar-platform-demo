@@ -13,6 +13,7 @@ interface ListingMarkerProps {
     purchase?: Sale;
     priceUpdate: (geohash: string) => void;
     buy: (listing: Listing, price: number) => void;
+    download: (listing: Listing) => void;
 }
 
 const ListingMarker: React.SFC<ListingMarkerProps> = (props) => {
@@ -24,13 +25,14 @@ const ListingMarker: React.SFC<ListingMarkerProps> = (props) => {
     let disabled: boolean = true;
     if (!isOwner && !purchase) {
         buttonText = 'Buy';
-        if(price){
+        if (price) {
             disabled = false;
             onButtonClick = () => props.buy(listing, price);
         }
     } else if (!isOwner && purchase) {
         buttonText = 'Download';
         disabled = false;
+        onButtonClick = () => props.download(listing);
     }
     let p: any = Wellknown.parse(listing.pointWKT);
     let position = [p.coordinates[1], p.coordinates[0]];

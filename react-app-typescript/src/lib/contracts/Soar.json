@@ -24,24 +24,6 @@
       "constant": false,
       "inputs": [
         {
-          "name": "_challenge",
-          "type": "bytes32"
-        },
-        {
-          "name": "_fileHash",
-          "type": "bytes32"
-        }
-      ],
-      "name": "verificationSale",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
           "name": "_fileHash",
           "type": "bytes32"
         },
@@ -212,6 +194,24 @@
       "type": "function"
     },
     {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_fileHash",
+          "type": "bytes32"
+        },
+        {
+          "name": "_challenge",
+          "type": "bytes32"
+        }
+      ],
+      "name": "verifyUpload",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "constant": true,
       "inputs": [
         {
@@ -234,15 +234,15 @@
       "constant": false,
       "inputs": [
         {
-          "name": "_challenge",
+          "name": "_fileHash",
           "type": "bytes32"
         },
         {
-          "name": "_fileHash",
+          "name": "_challenge",
           "type": "bytes32"
         }
       ],
-      "name": "verificationUpload",
+      "name": "verifySale",
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
