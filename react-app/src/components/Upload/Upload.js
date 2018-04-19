@@ -116,7 +116,10 @@ class Upload extends Component {
     render() {
         return (
             <Aux>
-                <ChooseFile file={this.state.file} onFileChosen={this.onFileChosen} visible={!(this.hasFile())} />
+                <ChooseFile 
+                    file={this.state.file} 
+                    onFileChosen={this.onFileChosen} 
+                    visible={!(this.hasFile())} />
 
                 <ChooseLocation
                     exifdata={this.state.exifdata}
@@ -134,14 +137,6 @@ class Upload extends Component {
                     visible={this.hasFile() && this.hasConfirmedLocation()}/>
 
             </Aux>
-
-            //     <div className="col-sm-12">
-            //         <div className="button-panel">
-            //             <button className="btn btn-danger" onClick={this.reset}>Reset</button>
-            //             <button className="btn btn-success" onClick={this.upload} >Upload</button>
-            //         </div>
-            //     </div>
-            // </div>
         );
   }
 }

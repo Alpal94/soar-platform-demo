@@ -14,15 +14,25 @@ class ChooseFile extends React.Component {
             imagePreviewUrl: null,
             file: null,
             fileSize: null,
-            imageResolution: null
+            imageResolution: null,
+            error: null
 
         }
         this.handleFileConfirmed = this.handleFileConfirmed.bind(this);
         this.handleFileDropped = this.handleFileDropped.bind(this);
         this.handleFileClear = this.handleFileClear.bind(this);
+        this.handleFileLoadError = this.handleFileLoadError.bind(this);
+    }
+
+    handleFileLoadError(errorMessage) {
+        this.setState({error: errorMessage});
     }
 
     handleFileDropped(files) {
+        if (files.length < 1) {
+            this.handleFileLoadError("File format not recognized.  We currently only support .PNG and .JPG");
+            return;
+        }
         let file = files[0];
         this.setState({file: file});
         let reader = new FileReader();
@@ -55,7 +65,8 @@ class ChooseFile extends React.Component {
             imagePreviewUrl: null, 
             file: null,
             fileSize: null,
-            imageResolution: null});
+            imageResolution: null,
+            error: null});
     }
 
     
@@ -81,6 +92,7 @@ class ChooseFile extends React.Component {
                                         <Row>
                                             <p>File size: {this.state.fileSize}</p>
                                             <p>Image resolution: {this.state.imageResolution}</p>
+                                            
                                         </Row>
 
                                         <Row className="button-row">
@@ -97,6 +109,7 @@ class ChooseFile extends React.Component {
                                         <div>
                                             <img alt="choose file to upload" src="assets/placeholder_upload.png"/>
                                             <p><strong>Choose a file</strong> or drag it here</p>
+                                            { this.state.error ? <p className="error">{this.state.error}</p> : null}
                                         </div>
                                     </Dropzone>
                                 )
