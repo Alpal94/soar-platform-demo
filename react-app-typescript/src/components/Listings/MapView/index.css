@@ -1,0 +1,26 @@
+.listings-map-container {
+    position: absolute;
+    top: 83px;
+    bottom: 0px;
+    width: 100%;
+}
+
+.listings-map-info {
+    position: absolute;
+    bottom: 0px;
+    z-index: 1000;
+}
+
+.listings-map-popup img{
+    width: 100%;
+}
+
+.listings-map-popup .info-panel {
+    margin-top: 10px;
+}
+
+.listings-map-popup .info-panel label {
+    width: 100px;
+}
+
+

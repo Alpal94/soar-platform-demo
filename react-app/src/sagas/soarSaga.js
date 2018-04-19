@@ -39,7 +39,7 @@ export function* soarUploadFileSaga({web3, file, metadata, latlng}) {
     const contentType = file.type;
     let pointWKT = 'POINT(' + latlng.lng + ' ' + latlng.lat + ')';
     const geohash = Geohash.encode(latlng.lat, latlng.lng, 12);
-    console.log('File: ', pointWKT, ' ', metadata, ' ', file, ' ', fileHash, ' ', contentType);
+    console.log('File: ', pointWKT, ' ', metadata, ' ', fileHash, ' ', geohash);
     yield put({ type: types.PROGRESS_TEXT, value: "Preparing for upload"}); 
     const details = yield call(getUploadDetails, web3, fileHash, contentType);
     console.log('FileUploadDetails: ', details);

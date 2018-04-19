@@ -1,0 +1,45 @@
+{
+  "name": "faucet-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "4.0.0",
+    "immutable": "^3.8.2",
+    "prop-types": "^15.6.1",
+    "react": "^16.3.1",
+    "react-addons-css-transition-group": "15.6.2",
+    "react-addons-transition-group": "15.6.2",
+    "react-dom": "^16.3.1",
+    "react-redux": "^5.0.7",
+    "react-redux-form": "^1.16.8",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "reactstrap": "5.0.0",
+    "redux": "^3.7.2",
+    "redux-immutable": "^4.0.0",
+    "redux-saga": "^0.16.0",
+    "reselect": "^3.0.1",
+    "styled-components": "^3.2.5",
+    "web3": "0.20.6",
+    "truffle-contract": "3.0.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.2.2",
+    "@types/node": "^7.0.60",
+    "@types/prop-types": "15.5.2",
+    "@types/react": "16.3.6",
+    "@types/react-dom": "16.0.4",
+    "@types/react-redux": "^5.0.15",
+    "@types/react-router": "4.0.23",
+    "@types/react-router-dom": "^4.2.6",
+    "@types/reactstrap": "5.0.21",
+    "@types/redux-immutable": "^3.0.38",
+    "react-scripts-ts": "2.4.0"
+  },
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
+  }
+}
