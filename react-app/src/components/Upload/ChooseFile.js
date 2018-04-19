@@ -12,7 +12,10 @@ class ChooseFile extends React.Component {
         super(props);
         this.state = {
             imagePreviewUrl: null,
-            file: null
+            file: null,
+            fileSize: null,
+            imageResolution: null
+
         }
         this.handleFileConfirmed = this.handleFileConfirmed.bind(this);
         this.handleFileDropped = this.handleFileDropped.bind(this);
@@ -24,16 +27,23 @@ class ChooseFile extends React.Component {
         this.setState({file: file});
         let reader = new FileReader();
         reader.onload = () => {
-            console.log("Typeof file dropeed: " + typeof reader.result);
             this.setState({imagePreviewUrl: reader.result});
+            var image = new Image();
+            image.src = reader.result;
+            image.onload = () => {
+                var imageResolution = image.width + " x " + image.height;
+                console.log("Image resolution: " + imageResolution);
+                this.setState({imageResolution: imageResolution});
+            }
 
-            const binaryFileAsString = reader.result;
         }
         reader.onabort = () => console.log("File reading aborted");
         reader.onerror = () => console.log("File reader error");
 
         reader.readAsDataURL(file);
-        this.setState({file: file});
+        let fileSize = (file.size / 1000000).toString().slice(0, 4) + "mb";
+        console.log("FileSize: " + fileSize);
+        this.setState({file: file, fileSize: fileSize});
     }
 
     handleFileConfirmed() {
@@ -41,7 +51,11 @@ class ChooseFile extends React.Component {
     }
 
     handleFileClear() {
-        this.setState({imagePreviewUrl: null, file: null});
+        this.setState({
+            imagePreviewUrl: null, 
+            file: null,
+            fileSize: null,
+            imageResolution: null});
     }
 
     
@@ -64,6 +78,11 @@ class ChooseFile extends React.Component {
                                 this.state.imagePreviewUrl ? ( 
                                     <Aux>
                                         <Row><img src={this.state.imagePreviewUrl} className="choose-file-preview"/></Row>
+                                        <Row>
+                                            <p>File size: {this.state.fileSize}</p>
+                                            <p>Image resolution: {this.state.imageResolution}</p>
+                                        </Row>
+
                                         <Row className="button-row">
                                             <button className="btn btn-danger btn-clear-file" onClick={this.handleFileClear}>Clear</button>
                                             <button className="btn btn-primary btn-select-file" onClick={this.handleFileConfirmed}>Next</button>

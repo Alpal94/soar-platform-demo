@@ -28,14 +28,14 @@ class FileInfo extends React.Component {
     render() {
 
         if (this.props.exifdata) {
-            var make = this.props.exifdata["Make"].toString() || '';
-            var model = this.props.exifdata["Model"].toString() || '';
-            var focalLength = this.props.exifdata["FocalLength"].toString() || '';
-            var fNumber = this.props.exifdata["FNumber"].toString() || '';
-            var shutterSpeed = this.props.exifdata["ShutterSpeedValue"].toString() || '';
-            var apertureValue = this.props.exifdata["ApertureValue"].toString() || '';
-            var lightSource = this.props.exifdata["LightSource"].toString() || '';
-            var height = this.props.exifdata["GPSAltitude"].toString() || '';
+            var make = (this.props.exifdata["Make"] || '').toString() || '';
+            var model = (this.props.exifdata["Model"] || '').toString() || '';
+            var focalLength = (this.props.exifdata["FocalLength"] || '').toString() || '';
+            var fNumber = (this.props.exifdata["FNumber"] || '').toString() || '';
+            var shutterSpeed = (this.props.exifdata["ShutterSpeedValue"] || '').toString() || '';
+            var apertureValue = (this.props.exifdata["ApertureValue"] || '').toString() || '';
+            var lightSource = (this.props.exifdata["LightSource"] || '').toString() || '';
+            var height = (this.props.exifdata["GPSAltitude"] || '').toString() || '';
         }
     
 
@@ -53,14 +53,14 @@ class FileInfo extends React.Component {
                                 onUpdate={(form) => this.handleUpdate(form)}
                                 onSubmit={(values) => this.handleSubmit(values)}
                                 initialState={{
-                                    make: this.props.exifdata["Make"].toString() || '',
-                                    model: this.props.exifdata["Model"].toString() || '',
-                                    focalLength: this.props.exifdata["FocalLength"].toString() || '',
-                                    fNumber: this.props.exifdata["FNumber"].toString() || '',
-                                    shutterSpeed: this.props.exifdata["ShutterSpeedValue"].toString() || '',
-                                    apertureValue: this.props.exifdata["ApertureValue"].toString() || '',
-                                    lightSource: this.props.exifdata["LightSource"].toString() || '',
-                                    height: this.props.exifdata["GPSAltitude"].toString() || ''
+                                    make: (this.props.exifdata["Make"] || '').toString() || '',
+                                    model: (this.props.exifdata["Model"] || '').toString() || '',
+                                    focalLength: (this.props.exifdata["FocalLength"] || '').toString() || '',
+                                    fNumber: (this.props.exifdata["FNumber"] || '').toString() || '',
+                                    shutterSpeed: (this.props.exifdata["ShutterSpeedValue"] || '').toString() || '',
+                                    apertureValue: (this.props.exifdata["ApertureValue"] || '').toString() || '',
+                                    lightSource: (this.props.exifdata["LightSource"] || '').toString() || '',
+                                    height: (this.props.exifdata["GPSAltitude"] || '').toString() || ''
                                 }}
                                 
                                 >
