@@ -1,9 +1,7 @@
 import React from 'react';
-import { Field, Control, LocalForm, actions } from 'react-redux-form';
+import { Control, LocalForm } from 'react-redux-form';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { TextField } from 'redux-form-material-ui';
-import moment from 'moment';
-import Aux from '../../hoc/Aux';
 import './Upload.css';
 
 class FileInfo extends React.Component {
@@ -22,16 +20,16 @@ class FileInfo extends React.Component {
 
     render() {
 
-        if (this.props.exifdata) {
-            var make = (this.props.exifdata["Make"] || '').toString() || '';
-            var model = (this.props.exifdata["Model"] || '').toString() || '';
-            var focalLength = (this.props.exifdata["FocalLength"] || '').toString() || '';
-            var fNumber = (this.props.exifdata["FNumber"] || '').toString() || '';
-            var shutterSpeed = (this.props.exifdata["ShutterSpeedValue"] || '').toString() || '';
-            var apertureValue = (this.props.exifdata["ApertureValue"] || '').toString() || '';
-            var lightSource = (this.props.exifdata["LightSource"] || '').toString() || '';
-            var height = (this.props.exifdata["GPSAltitude"] || '').toString() || '';
-        }
+        // if (this.props.exifdata) {
+        //     var make = (this.props.exifdata["Make"] || '').toString() || '';
+        //     var model = (this.props.exifdata["Model"] || '').toString() || '';
+        //     var focalLength = (this.props.exifdata["FocalLength"] || '').toString() || '';
+        //     var fNumber = (this.props.exifdata["FNumber"] || '').toString() || '';
+        //     var shutterSpeed = (this.props.exifdata["ShutterSpeedValue"] || '').toString() || '';
+        //     var apertureValue = (this.props.exifdata["ApertureValue"] || '').toString() || '';
+        //     var lightSource = (this.props.exifdata["LightSource"] || '').toString() || '';
+        //     var height = (this.props.exifdata["GPSAltitude"] || '').toString() || '';
+        // }
     
 
         return (
@@ -103,7 +101,6 @@ class FileInfo extends React.Component {
                                         hintText="Aperture of the camera (if known)" 
                                         component={TextField} 
                                         model=".apertureValue" 
-                                        value={apertureValue} 
                                         fullWidth />
 
                                     <Control 
@@ -118,7 +115,6 @@ class FileInfo extends React.Component {
                                         hintText="F-Stop value of camera (if known)" 
                                         component={TextField} 
                                         model=".fstop" 
-                                        value={fNumber}
                                         fullWidth/>
 
                                     <h3>Extra location info</h3>

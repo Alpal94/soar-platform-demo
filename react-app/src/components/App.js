@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {cyan500, cyan700,
-  pinkA200,
-  grey100, grey300, grey400, grey500,
-  white, darkBlack, fullBlack,} from 'material-ui/styles/colors';
+import {grey300, white, fullBlack,} from 'material-ui/styles/colors';
 import {fade} from 'material-ui/utils/colorManipulator';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -68,7 +64,6 @@ class App extends Component {
         canvasColor: white,
         borderColor: grey300,
         disabledColor: fade(white, 0.3),
-        pickerHeaderColor: cyan500,
         clockCircleColor: fade(white, 0.07),
         shadowColor: fullBlack,
       },

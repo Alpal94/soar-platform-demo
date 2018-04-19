@@ -1,5 +1,4 @@
 import React from 'react';
-import { Control, LocalForm } from 'react-redux-form';
 import { Grid, Row, Col } from 'react-bootstrap';
 import Dropzone from 'react-dropzone';
 import './Upload.css';
@@ -86,7 +85,7 @@ class ChooseFile extends React.Component {
                             {
                                 this.state.imagePreviewUrl ? ( 
                                     <Aux>
-                                        <Row><img src={this.state.imagePreviewUrl} className="choose-file-preview"/></Row>
+                                        <Row><img src={this.state.imagePreviewUrl} className="choose-file-preview" alt="Choose or drag file here"/></Row>
                                         <Row>
                                             <p>File size: {this.state.fileSize}</p>
                                             <p>Image resolution: {this.state.imageResolution}</p>

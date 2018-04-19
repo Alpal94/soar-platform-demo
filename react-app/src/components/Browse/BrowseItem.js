@@ -2,7 +2,7 @@ import React from 'react';
 import parse from 'wellknown';
 import Geocode from 'react-geocode';
 import Async from 'react-promise';
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import BrowseDetailRow from './BrowseDetailRow';
 import './BrowseItem.css'
 
@@ -13,9 +13,10 @@ const browseItem = (props) => {
 
 
     let upload = props.soar.uploads[props.fileHash];
-    let purchase = props.soar.myPurchases[upload.fileHash];
-    let currentAddress = props.web3.eth.accounts[0];
-    let owner = currentAddress === upload.owner;
+    // let purchase = props.soar.myPurchases[upload.fileHash];  // Has the person already purchased this file?
+    // let owner = currentAddress === upload.owner;  // Is the person the owner of this file?
+    // let currentAddress = props.web3.eth.accounts[0];  // Current address of users web3 wallet
+
     let p = parse(upload.pointWKT);
     let position = [p.coordinates[1], p.coordinates[0]];
     let info = JSON.parse(upload.metadata);
