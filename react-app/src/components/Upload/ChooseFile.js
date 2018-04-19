@@ -3,7 +3,6 @@ import { Control, LocalForm } from 'react-redux-form';
 import { Grid, Row, Col } from 'react-bootstrap';
 import Dropzone from 'react-dropzone';
 import './Upload.css';
-import './ChooseFile.css';
 import Aux from '../../hoc/Aux';
 
 class ChooseFile extends React.Component {
@@ -52,7 +51,6 @@ class ChooseFile extends React.Component {
 
         reader.readAsDataURL(file);
         let fileSize = (file.size / 1000000).toString().slice(0, 4) + "mb";
-        console.log("FileSize: " + fileSize);
         this.setState({file: file, fileSize: fileSize});
     }
 

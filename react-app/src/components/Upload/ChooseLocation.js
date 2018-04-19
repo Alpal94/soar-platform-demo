@@ -3,7 +3,6 @@ import toDecimal from '../../helpers/ExifHelper';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import '../../styles/leaflet.css';
-import './ChooseLocation.css';
 import Aux from '../../hoc/Aux';
 import './Upload.css';
 

@@ -1,9 +1,0 @@
-.gps-string { color: #444; font-size: 0.9em; }
-
-.no-location-warning {
-    background-color:rgba(238,217,38, 1.0);
-    color: black;
-    border: 1px dashed black;
-    margin: 30px;
-    padding: 15px;
-}

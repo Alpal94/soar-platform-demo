@@ -4,7 +4,6 @@ import EXIF from 'exif-js';
 import ChooseFile from './ChooseFile';
 import FileInfo from './FileInfo';
 import ChooseLocation from './ChooseLocation';
-import ExifDetails from './ExifDetails';
 import './Upload.css';
 import Aux from '../../hoc/Aux';
 
@@ -60,21 +59,14 @@ class Upload extends Component {
     }
 
     onFileInfoChange(values){
-        console.log("OnFileInfoChanged: " + values);
         this.setState({metadata: values});
     }
 
     onLocationChange(loc){
         this.setState({location: loc})
-        if (this.state.location) {
-            console.log("Has location: " + this.state.location);
-        } else {
-            console.log("Has no location");
-        }
     }
 
     onConfirmLocation() {
-        console.log("Confirmed Location");
         this.setState({
             fileLocationConfirmed: true
         })

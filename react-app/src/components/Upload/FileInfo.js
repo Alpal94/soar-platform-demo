@@ -14,15 +14,10 @@ class FileInfo extends React.Component {
             exif: {}
         };
         this.handleSubmit.bind(this);
-        this.handleUpdate.bind(this);
     }
 
     handleSubmit(values) {
         this.props.onFileInfoConfirmed(values);
-    }
-
-    handleUpdate(form) { 
-        console.log(form);
     }
 
     render() {
@@ -50,7 +45,6 @@ class FileInfo extends React.Component {
                             <LocalForm 
                                 model="info"
                                 className="form-group upload-summary-form"
-                                onUpdate={(form) => this.handleUpdate(form)}
                                 onSubmit={(values) => this.handleSubmit(values)}
                                 initialState={{
                                     make: (this.props.exifdata["Make"] || '').toString() || '',
