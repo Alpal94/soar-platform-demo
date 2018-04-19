@@ -1,62 +1,10 @@
-import { 
-  getSoarAddress, 
-  getCurrentNetwork, 
-  getCurrentAddress,
-  getSkymapTokenAddress
-} from './web3Service';
+import { getSoarAddress, getCurrentNetwork, getCurrentAddress } from './web3Service';
 import Soar from './soar';
-import SkymapToken from './skymap';
-
 
 let soarAddress = '0x0';
-let skymapTokenAddress = '0x0';
 
 const setContractAddress = (web3) => {
-  let networkId = getCurrentNetwork(web3);
-  soarAddress = getSoarAddress(networkId);
-  skymapTokenAddress = getSkymapTokenAddress(networkId);
-}
-
-export const getBuyFileData = (web3, fileHash, price, challenge) => {
-  try {
-    setContractAddress(web3);
-    let currentAddress = getCurrentAddress(web3);
-    const soar = new Soar(web3, soarAddress);
-    return soar.buyFileData(fileHash, price, challenge, currentAddress);
-
-  } catch (err) {
-    console.log('buyFileSkymap: ', err)
-    return null;
-  }
-}
-
-export const approve = (web3, price) => {
-  try {
-    setContractAddress(web3);
-    let currentAddress = getCurrentAddress(web3);
-    let skymapToken = new SkymapToken(web3, skymapTokenAddress, getCurrentNetwork(web3));
-    return skymapToken.approve(soarAddress, web3.toWei(price), currentAddress);
-    
-  } catch (err) {
-    console.log('buyFileSkymap: ', err)
-    return null;
-  }
-}
-
-export const approveAndBuy = (web3, price, data) => {
-  try {
-    setContractAddress(web3);
-    let currentAddress = getCurrentAddress(web3);
-    let skymapToken = new SkymapToken(web3, skymapTokenAddress, getCurrentNetwork(web3));
-    return skymapToken.approveAndBuy(soarAddress, web3.toWei(price), data, currentAddress);
-    
-    // console.log("BuyFileData: ", data);
-
-    // return result;
-  } catch (err) {
-    console.log('buyFileSkymap: ', err)
-    return null;
-  }
+  soarAddress = getSoarAddress(getCurrentNetwork(web3));
 }
 
 export const getFilesCount = (web3) => {
@@ -110,12 +58,12 @@ export const uploadFile = (web3, previewUrl, url, pointWKT, metadata, fileHash, 
   }
 }
 
-export const buyFile = (web3, fileHash, challenge) => {
+export const buyFile = (web3, fileHash, price, challenge) => {
   try {
     setContractAddress(web3);
     let currentAddress = getCurrentAddress(web3);
     const soar = new Soar(web3, soarAddress);
-    const result = soar.buyFile(fileHash, challenge, currentAddress);
+    const result = soar.buyFile(fileHash, price, challenge, currentAddress);
     return result;
   } catch (err) {
     console.log('buyFile: ', err)

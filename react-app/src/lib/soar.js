@@ -42,6 +42,8 @@ Soar.prototype.verificationUpload = function(challenge, fileHash, address) {
       console.log(res)
       
       return res;
+    }).catch(err => {
+      console.log(err)
     });
 }
 
@@ -54,19 +56,10 @@ Soar.prototype.uploadFile = function(previewUrl, url, pointWKT, metadata, fileHa
     });
 }
 
-Soar.prototype.buyFileData = function(fileHash, challenge) {
+Soar.prototype.buyFile = function(fileHash, price, challenge, address) {
   return this.soarPromise
     .then((soar) => {
-      return soar.buyFile.getData(fileHash, challenge);
-    }).then(res => {
-      return res;
-    });
-}
-
-Soar.prototype.buyFile = function(fileHash, challenge, address) {
-  return this.soarPromise
-    .then((soar) => {
-      return soar.buyFileAsync(fileHash, challenge, { from: address })
+      return soar.buyFileAsync(fileHash, challenge, { from: address, value: this.web3.toWei(price) })
     }).then(res => {
       return res;
     });

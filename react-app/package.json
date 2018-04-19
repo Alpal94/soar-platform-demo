@@ -38,7 +38,7 @@
     "spark-md5": "3.0.0",
     "truffle-contract": "^1.1.8",
     "truffle-hdwallet-provider": "0.0.3",
-    "web3": "0.20.6",
+    "web3": "^0.20.2",
     "wellknown": "0.5.0"
   },
   "scripts": {
