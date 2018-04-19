@@ -105,7 +105,13 @@ class ChooseLocation extends React.Component {
 
                             {
                             this.props.showNoLocationWarning ? (
-                                <p>This file does not have any location meta data.  There are a number of reasons this can occur but most frequently it is because the image was edited with another program like photoshop.  You will need to select the location for the file.  Please be as accurate as possible.</p>
+                                <Row className="no-location-warning">
+                                    <p>
+                                        This file does not have any location meta data.  
+                                        There are a number of reasons this can occur but most frequently it is because the image was edited with another program like photoshop.  
+                                        You will need to select the location for the file by dragging the marker to the position the drone was when it captured the photo.  
+                                        Please be as accurate as possible.</p>
+                                </Row>
                             ) : null
                             }
 

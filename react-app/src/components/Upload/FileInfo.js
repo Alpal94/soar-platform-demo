@@ -149,8 +149,11 @@ class FileInfo extends React.Component {
                                         component={TextField} 
                                         model=".angle" 
                                         fullWidth />
+
+                                    <Row className="button-row">
+                                        <button type="submit" className="btn btn-primary">Upload</button>
+                                    </Row>
                                 
-                                    <button type="submit" className="btn btn-primary">Upload</button>
                                 </LocalForm>
                         </Col>
                     </Row>
