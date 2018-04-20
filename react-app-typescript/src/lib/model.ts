@@ -67,3 +67,9 @@ export interface UploadDetails {
     uploadUrl: string;
     previewUrl: string;
 }
+
+export interface UserInfo {
+    wallet: string;
+    balance: number;
+    network: string;
+}

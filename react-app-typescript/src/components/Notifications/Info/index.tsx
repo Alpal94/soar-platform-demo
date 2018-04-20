@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { LocalForm, Control } from 'react-redux-form';
 import { Form, FormGroup, Label, Input, Button, Row, Col, Container } from 'reactstrap';
+import ViewHelper from '../../../lib/view-helper';
 import './index.css';
 
 interface InfoProps {
@@ -14,16 +15,15 @@ const Info: React.SFC<InfoProps> = (props) => {
     return (
         <Container className="notifications-info">
             <Row>
-            <Col sm='12' md='10'>
-                <img className='logo' src="/assets/wallet.png" alt="ethereum logo" />
-                <span>: {props.wallet} </span>
-                <span>{props.balance}{props.symbol}</span>
-
-            </Col>
-            <Col sm='12' md='2'>
-                <img className='logo' src="/assets/ethereum-logo.png" alt="ethereum logo" />
-                <span>: {props.network}</span>
-            </Col>
+                <Col className="inline" xs="8" sm="9">
+                    <img className="logo" src="/assets/wallet.png" alt="ethereum logo" />
+                    <span className="wallet-address"> {ViewHelper.truncateMiddle(props.wallet, 15)} </span>
+                    <span>{props.balance}{props.symbol}</span>
+                </Col>
+                <Col className="inline" xs="4" sm="3">
+                    <img className="logo" src="/assets/ethereum-logo.png" alt="ethereum logo" />
+                    <span> {props.network}</span>
+                </Col>
             </Row>
 
         </Container>

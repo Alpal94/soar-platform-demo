@@ -18,6 +18,7 @@ import {
   soarDownloadWatcher
 } from './containers/Listings/saga';
 import { uploadListingWatcher } from './containers/Upload/saga';
+import { userInfoWatcher } from './containers/Notifications/saga';
 
 export default function* rootSaga() {
   yield all([
@@ -32,6 +33,7 @@ export default function* rootSaga() {
     soarPriceUpdateWatcher(),
     soarEventUserPurchaseWatcher(),
     soarBuyWatcher(),
-    soarDownloadWatcher()
+    soarDownloadWatcher(),
+    userInfoWatcher()
   ]);
 }

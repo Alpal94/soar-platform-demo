@@ -7,8 +7,14 @@ const selectMessage = () => createSelector(
     notificationsState => notificationsState.get('message')
 );
 
+const selectUserInfo = () => createSelector(
+    getNotificationsDomain(),
+    notificationsState => notificationsState.get('info')
+);
+
 export {
-    selectMessage
+    selectMessage,
+    selectUserInfo
 };
 
 export default getNotificationsDomain;

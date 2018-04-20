@@ -3,15 +3,19 @@ import * as PropTypes from 'prop-types';
 import Web3Helper from '../../lib/web3-helper';
 import { createStructuredSelector } from 'reselect';
 const connect = require('react-redux').connect;
-import { selectMessage } from './selectors';
+import { selectMessage, selectUserInfo } from './selectors';
 import { Prompt } from 'react-router';
 import { Progress } from 'reactstrap';
 import DotsText from '../../components/DotsText';
 import Info from '../../components/Notifications/Info';
+import { fetchUserInfoAction } from './actions';
 import './index.css';
+import { UserInfo } from '../../lib/model';
 
 interface NotificationsProps extends React.Props<Notifications> {
     message?: string;
+    info: UserInfo;
+    userInfoFetch: (web3: any) => void;
 }
 
 interface NotificationsState {
@@ -34,6 +38,11 @@ class Notifications extends React.Component<NotificationsProps, NotificationsSta
         }
     }
 
+    componentDidMount() {
+        let web3 = this.context.web3.instance;
+        this.props.userInfoFetch(web3);
+    }
+
     componentDidUpdate() {
         if (this.props.message) {
             window.onbeforeunload = () => true;
@@ -43,28 +52,20 @@ class Notifications extends React.Component<NotificationsProps, NotificationsSta
     }
 
     public render(): React.ReactElement<{}> {
-        let message = this.props.message;
-
-        let network = 'undefined';
-        let setWeb3Button;
-        if (this.context.web3.instance) {
-            network = Web3Helper.getCurrentNetworkName(this.context.web3.instance);
-        } else {
-            setWeb3Button = (<button onClick={() => this.setWeb3()}>Set default</button>);
-        }
+        const { message, info  } = this.props;
         let content: any;
         if (message) {
             content = (
                 <Progress animated value="100">
                     <DotsText text={message} />
                 </Progress>
-            )
+            );
         } else {
             content = (
                 <Info
-                    network={network}
-                    wallet={'0xBe5529aBa9a464B848f78a823cBae2F2420d53A8'}
-                    balance={150}
+                    network={info.network}
+                    wallet={info.wallet}
+                    balance={info.balance}
                     symbol={'SKYM'}
                 />
             );
@@ -81,12 +82,16 @@ class Notifications extends React.Component<NotificationsProps, NotificationsSta
 
 function mapStateToProps() {
     return createStructuredSelector({
-        message: selectMessage()
+        message: selectMessage(),
+        info: selectUserInfo()
     });
 }
 
 function mapDispatchToProps(dispatch: any) {
     return {
+        userInfoFetch: (web3: any): void => {
+            dispatch(fetchUserInfoAction(web3));
+        },
     };
 }
 
