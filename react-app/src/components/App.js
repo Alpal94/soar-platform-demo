@@ -85,7 +85,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" render={() => (<Overview {...this.props} {...this.state}/>)}/>
                 <Route exact path="/upload" render={() => (
-                  <div className="container"><Upload {...this.props} {...this.state}/></div>)
+                  <div className="container"><Upload {...this.props} {...this.state} progress={this.props.progress}/></div>)
                 }/>
                 <Route exact path="/browse" render={() => (<Browse {...this.props} {...this.state} /> ) }/>
                 

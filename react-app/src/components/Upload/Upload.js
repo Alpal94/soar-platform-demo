@@ -128,6 +128,16 @@ class Upload extends Component {
                     onFileInfoConfirmed={this.handleUpload}
                     visible={this.hasFile() && this.hasConfirmedLocation()}/>
 
+                {
+                    this.props.progress ? (
+                        console.log("Has progress: " + this.props.progress)
+                    ) : (
+                        console.log("No progress")
+                    )
+                }
+
+                <h1>{this.props.progress && this.props.progress.text}</h1>
+
             </Aux>
         );
   }
