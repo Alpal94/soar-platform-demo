@@ -10,8 +10,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Redirect, Route, Switch } from 'react-router';
 
 import NavigationBar from './components/NavigationBar';
-import Metamask from './containers/Metamask';
-import ProgressBar from './containers/ProgressBar';
+import Notifications from './containers/Notifications';
 import Alert from './containers/Alert';
 
 import './styles/index.css';
@@ -23,8 +22,7 @@ const Root = (
   <ContextProvider>
     <Provider store={store}>
       <div>
-        <Metamask />
-        <ProgressBar />
+        <Notifications />
         <NavigationBar />
         <Alert/>
         <BrowserRouter>

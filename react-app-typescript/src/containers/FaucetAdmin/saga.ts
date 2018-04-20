@@ -4,7 +4,7 @@ import { fetchInfoAdmin, setAllowance, setTokenAddress } from '../../lib/faucet-
 import { waitTxConfirmed } from '../../lib/web3-service';
 import { actionTypes as at } from './constants';
 import { fetchInfoSuccess, fetchInfoError } from './actions';
-import { progressMessageAction, progressMessageDoneAction } from '../ProgressBar/actions';
+import { progressMessageAction, progressMessageDoneAction } from '../Notifications/actions';
 import { alertSuccessAction, alertErorrAction  } from '../Alert/actions';
 
 import { FaucetInfo } from '../../lib/model';
