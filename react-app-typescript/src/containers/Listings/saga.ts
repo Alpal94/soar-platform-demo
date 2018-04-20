@@ -6,7 +6,7 @@ import {
     fetchSoarInfoSuccessAction, eventListingUploadedSuccessAction,
     priceUpdateSuccessAction, eventUserPurchaseSuccessAction
 } from './actions';
-import { progressMessageAction, progressMessageDoneAction } from '../ProgressBar/actions';
+import { progressMessageAction, progressMessageDoneAction } from '../Notifications/actions';
 import { alertSuccessAction, alertErorrAction } from '../Alert/actions';
 import {
     fetchInfo, eventListingUploaded, getListingPriceByGeohash,

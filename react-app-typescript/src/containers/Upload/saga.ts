@@ -4,7 +4,7 @@ import { verifyUpload, uploadListing } from '../../lib/soar-service';
 import { getUploadDetails, uploadFileToStorage } from '../../lib/soar-sponsor-service';
 import { waitTxConfirmed } from '../../lib/web3-service';
 import { actionTypes as at } from './constants';
-import { progressMessageAction, progressMessageDoneAction } from '../ProgressBar/actions';
+import { progressMessageAction, progressMessageDoneAction } from '../Notifications/actions';
 import { alertSuccessAction, alertErorrAction } from '../Alert/actions';
 import { FaucetInfo, UploadListing, LatLng, Metadata, UploadDetails } from '../../lib/model';
 import UploadHelper from '../../lib/upload-helper';

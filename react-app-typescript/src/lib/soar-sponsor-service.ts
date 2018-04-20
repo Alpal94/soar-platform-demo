@@ -33,7 +33,7 @@ export function downloadFile(web3: any, url: string, secret: string, txnHash: st
 
 }
 
-export function uploadFileToStorage(file: File, url: string, secret: string, txnHash: string) : Promise<any> {
+export function uploadFileToStorage(file: File, url: string, secret: string, txnHash: string): Promise<any> {
     let params = {
         'soarSecret': secret,
         'txnHash': txnHash
@@ -43,7 +43,7 @@ export function uploadFileToStorage(file: File, url: string, secret: string, txn
             'content-type': file.type
         },
         params: params
-    }
+    };
     return Axios.post(url, file, config).then(res => {
         return res;
     });
