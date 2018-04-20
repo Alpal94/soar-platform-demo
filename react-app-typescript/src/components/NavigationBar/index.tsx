@@ -10,7 +10,8 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Container
 } from 'reactstrap';
 import './index.css';
 
@@ -40,8 +41,10 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
 
   public render(): React.ReactElement<{}> {
     return (
-      <div>
+
         <Navbar dark color="dark" expand="md">
+      <Container>
+          
           <NavbarBrand href="/"><img src="/assets/soar_logo.png" alt="brand logo" /></NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
@@ -57,8 +60,8 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
               </NavItem>
             </Nav>
           </Collapse>
+          </Container>
         </Navbar>
-      </div>
     );
   }
 }

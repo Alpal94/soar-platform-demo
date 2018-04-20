@@ -7,6 +7,7 @@ import { selectMessage } from './selectors';
 import { Prompt } from 'react-router';
 import { Progress } from 'reactstrap';
 import DotsText from '../../components/DotsText';
+import Info from '../../components/Notifications/Info';
 import './index.css';
 
 interface NotificationsProps extends React.Props<Notifications> {
@@ -59,7 +60,14 @@ class Notifications extends React.Component<NotificationsProps, NotificationsSta
                 </Progress>
             )
         } else {
-            content = (<div>Your network: {network}{setWeb3Button}</div>);
+            content = (
+                <Info
+                    network={network}
+                    wallet={'0xBe5529aBa9a464B848f78a823cBae2F2420d53A8'}
+                    balance={150}
+                    symbol={'SKYM'}
+                />
+            );
         }
 
         return (

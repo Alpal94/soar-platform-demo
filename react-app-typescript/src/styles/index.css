@@ -3,6 +3,7 @@ body {
   padding: 0;
   font-family: Ubuntu, sans-serif;
   background: #eee;
+  min-width: 500px;
 }
 
 .soar-bg-yellow {
