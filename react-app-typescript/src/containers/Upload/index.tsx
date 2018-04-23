@@ -11,12 +11,15 @@ import { Container, Button } from 'reactstrap';
 
 import ExampleForm from '../../components/Upload/ExampleForm';
 
+import ChooseFile from '../../components/Upload/ChooseFile';
+
 interface UploadProps extends React.Props<Upload> {
     uploadListing: (web3: any, file: File, latLng: LatLng, metadata: Metadata) => void;
+
 }
 
 interface UploadState {
-
+    file?: File;
 }
 
 class Upload extends React.Component<UploadProps, UploadState> {
@@ -24,6 +27,13 @@ class Upload extends React.Component<UploadProps, UploadState> {
     static contextTypes = {
         web3: PropTypes.object
     };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            file: undefined,
+        }
+    }
     
     upload(file: File) {
         const web3 = this.context.web3.instance;
@@ -33,11 +43,16 @@ class Upload extends React.Component<UploadProps, UploadState> {
         });
     }
 
+    selectFile(file: File) {
+        this.setState({
+            file: file
+        })
+    }
+
     public render(): React.ReactElement<{}> {
         return (
             <Container>
-                <h1>Upload</h1>
-                <ExampleForm submitForm={(file) => this.upload(file)} />
+                <ChooseFile selectFile={(file => this.selectFile(file))} visible={this.state.file == undefined} />
             </Container>
         );
     }
