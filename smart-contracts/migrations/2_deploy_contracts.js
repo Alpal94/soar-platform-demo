@@ -7,7 +7,6 @@ module.exports = function (deployer) {
   let networkId = web3.version.network;
   switch (networkId) {
     case '5777':
-    console.log(ganache)  
     Promise.resolve(ganache(web3, deployer, artifacts)).then(res => {
         console.log('Deployed on network: ', networkId);
       });
