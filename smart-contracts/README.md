@@ -1,6 +1,6 @@
 # Soar Platform - ethereum smart contracts
 
-This is project for smart contracts used in Soar platform
+This is project for smart contracts used in Soar platform and also for Soar platform demo.
 
 ## Technical stack
 
@@ -12,13 +12,18 @@ In order to run the Soar platform, you will need [Node.js](https://nodejs.org) (
 
 ## Installation and Building
 
-1. Install truffle and an ethereum client. For local development, try Ganache CLI.
-    ```javascript
+1. Install truffle.
+    ```javascript    
     npm install -g truffle
-    npm install -g ganache-cli
     ```
 
-2. Install yarn.
+
+2. Download and install ethereum client for local development - Ganache Client. This client is recomended because migration script is customised for this setup to compile smart contracts, deploye them to network and in the end to udpate smart contracts defifinition abi and config file in react-app-typescript.
+    ```javascript    
+    http://truffleframework.com/ganache/
+    ```
+
+3. Install yarn.
 
     ```javascript
     ## MacOS
@@ -28,24 +33,20 @@ In order to run the Soar platform, you will need [Node.js](https://nodejs.org) (
     https://yarnpkg.com/en/docs/install#windows-tab
     ```
 
-3. Download or clone repository.
+4. Download or clone repository.
 
-4. Install the node dependencies.
+5. Install the node dependencies.
     ```javascript
     yarn install
     ```
 
-5. Run Ganache CLI.
-    ```javascript
-    ganache-cli
-    ```
+6. Launch Ganache client
 
-6. Compile and migrate the contracts.
+7. Compile and migrate the contracts. This command compile all smart contracts and redeploy them on the network
     ```javascript
-    truffle compile
-    truffle migrate
+    truffle migrate --compile-all --reset
     ```
-7. Truffle's own suite is included for smart contracts. Be sure you've compile your contracts before running jest, or you'll receive some file not found errors.
+8. Truffle's own suite is included for smart contracts. Be sure you've compile your contracts before running jest, or you'll receive some file not found errors.
     ```javascript
     // Runs Truffle's test suite for smart contract tests.
     truffle test
