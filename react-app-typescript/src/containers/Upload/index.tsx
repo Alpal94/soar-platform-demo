@@ -25,11 +25,11 @@ class Upload extends React.Component<UploadProps, UploadState> {
         web3: PropTypes.object
     };
 
-    constructor(props) {
+    constructor(props: any) {
         super(props);
         this.state = {
             file: undefined,
-        }
+        };
     }
     
     upload(file: File) {
@@ -43,7 +43,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
     selectFile(file: File) {
         this.setState({
             file: file
-        })
+        });
     }
 
     public render(): React.ReactElement<{}> {
