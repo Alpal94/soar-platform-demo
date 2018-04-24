@@ -9,13 +9,10 @@ import { uploadListingAction } from './actions';
 import { FaucetInfo, UploadListing, LatLng, Metadata } from '../../lib/model';
 import { Container, Button } from 'reactstrap';
 
-import ExampleForm from '../../components/Upload/ExampleForm';
-
-import ChooseFile from '../../components/Upload/ChooseFile';
+import ChooseFile from './ChooseFile/index';
 
 interface UploadProps extends React.Props<Upload> {
     uploadListing: (web3: any, file: File, latLng: LatLng, metadata: Metadata) => void;
-
 }
 
 interface UploadState {
