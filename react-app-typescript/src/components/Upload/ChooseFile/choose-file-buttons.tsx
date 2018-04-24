@@ -13,7 +13,7 @@ const ChooseFileConfirmClearButtons: React.SFC<Props> = (props) => {
     return (
         <Aux>
             { props.visible && (
-                <Row>
+                <Row className="choose-file-buttons-row">
                     <Button color="danger" onClick={props.onClear}>Clear</Button>
                     <Button color="primary" onClick={props.onConfirm}>Confirm</Button>
                 </Row>

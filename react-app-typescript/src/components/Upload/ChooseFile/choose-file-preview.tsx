@@ -16,15 +16,13 @@ const ChooseFileImagePreview: React.SFC<ChooseFileImagePreviewProps> = (props) =
             {
                 props.visible && (
                     <Container>
-                        <Row>
-                            <img src={props.imagePreviewUrl} className="choose-file-preview" />
+                        <Row className="image-preview-row">
+                            <img src={props.imagePreviewUrl} />
                         </Row>
                         <Row>
-                            <Col md={6}>
-                                <span className="choose-file-info">{props.imageFileSize}</span>
-                            </Col>
-                            <Col md={6}>
-                                <span className="choose-file-info">{props.imageResolution}</span>
+                            <Col sm={6}>
+                                <p className="choose-file-info">File size: {props.imageFileSize}</p>
+                                <p className="choose-file-info">Resolution: {props.imageResolution}</p>
                             </Col>
                         </Row>
                     </Container>

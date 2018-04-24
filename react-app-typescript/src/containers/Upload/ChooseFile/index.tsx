@@ -4,7 +4,7 @@ import Dropzone from 'react-dropzone';
 import Aux from '../../../hoc/Aux';
 import ChooseFileImagePreview from '../../../components/Upload/ChooseFile/choose-file-preview';
 import ChooseFileConfirmClearButtons from '../../../components/Upload/ChooseFile/choose-file-buttons';
-import './ChooseFile.css';
+import './index.css';
 
 interface ChooseFileProps extends React.Props<ChooseFile> {
     visible: Boolean;
@@ -48,38 +48,43 @@ class ChooseFile extends React.Component<ChooseFileProps, ChooseFileState> {
             <Aux>
                 {
                     this.props.visible ?
-                        <Container>
-                            <h2>Step 1 - Choose File</h2>
+                        <Container className="wizard-card">
+                            <Row>
+                                <Col md={{ size: 6, offset: 3 }}>
+    
+                                    <h2>Step 1 - Choose File</h2>
 
-                            {this.state.error !== undefined && 
-                                <p className="error-message">{this.state.error}</p>
-                            }
+                                    {this.state.error !== undefined && 
+                                        <p className="error-message">{this.state.error}</p>
+                                    }
 
-                            {this.state.file === undefined && 
-                                <Dropzone
-                                    onDrop={this.handleFileDropped}
-                                    accept="image/jpeg, image/png"
-                                    className="choose-file"
-                                    activeStyle={activeDragStyle}
-                                >
-                                    <img alt="choose file to upload" src="assets/upload-icon.png"/>
-                                    <p>Drop file here</p>
-                                </Dropzone>
-                            }
+                                    {this.state.file === undefined && 
+                                        <Dropzone
+                                            onDrop={this.handleFileDropped}
+                                            accept="image/jpeg, image/png"
+                                            className="choose-file"
+                                            activeStyle={activeDragStyle}
+                                        >
+                                            <img alt="choose file to upload" src="assets/upload-icon.png"/>
+                                            <p>Drop file here</p>
+                                        </Dropzone>
+                                    }
 
-                            <ChooseFileImagePreview 
-                                visible={this.state.imagePreviewUrl !== undefined}
-                                imagePreviewUrl={this.state.imagePreviewUrl} 
-                                imageFileSize={this.state.fileSize} 
-                                imageResolution={this.state.imageResolution} 
-                            />
+                                    <ChooseFileImagePreview 
+                                        visible={this.state.imagePreviewUrl !== undefined}
+                                        imagePreviewUrl={this.state.imagePreviewUrl} 
+                                        imageFileSize={this.state.fileSize} 
+                                        imageResolution={this.state.imageResolution} 
+                                    />
 
-                            <ChooseFileConfirmClearButtons 
-                                visible={this.state.imagePreviewUrl !== undefined}
-                                onConfirm={this.handleFileConfirmed} 
-                                onClear={this.handleFileCleared} 
-                            />
+                                    <ChooseFileConfirmClearButtons 
+                                        visible={this.state.imagePreviewUrl !== undefined}
+                                        onConfirm={this.handleFileConfirmed} 
+                                        onClear={this.handleFileCleared} 
+                                    />
 
+                                </Col>
+                            </Row>
                         </Container>
                     
                     : null
