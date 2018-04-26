@@ -77,3 +77,12 @@ export interface UserInfo {
     balance: number;
     network: string;
 }
+
+export interface AdminInfo {
+    ownerAddress: string;
+    pricingContractAddress: string;
+    skymapTokenAddress: string;
+    walletAddress: string;
+    listingsCount: number;
+    isOwner: boolean;
+}

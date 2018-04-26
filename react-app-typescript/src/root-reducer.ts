@@ -6,6 +6,7 @@ import notificationsReducer from './containers/Notifications/reducer';
 import alertReducer from './containers/Alert/reducer';
 import listingsReducer from './containers/Listings/reducer';
 import uploadReducer from './containers/Upload/reducer';
+import adminReducer from './containers/Admin/reducer';
 
 export interface State {
   faucetDomain: any;
@@ -14,6 +15,7 @@ export interface State {
   alertDomain: any;
   listingsDomain: any;
   uploadDomain: any;
+  adminDomain: any;
 }
 
 export const state = combineReducers({
@@ -22,5 +24,6 @@ export const state = combineReducers({
   notificationsDomain: notificationsReducer,
   alertDomain: alertReducer,
   listingsDomain: listingsReducer,
-  uploadDomain: uploadReducer
+  uploadDomain: uploadReducer,
+  adminDomain: adminReducer
 });

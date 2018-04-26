@@ -21,6 +21,9 @@ import {
 } from './containers/Listings/saga';
 import { uploadListingWatcher } from './containers/Upload/saga';
 import { userInfoWatcher } from './containers/Notifications/saga';
+import {
+  adminInfoWatcher
+} from './containers/Admin/saga';
 
 export default function* rootSaga() {
   yield all([
@@ -38,6 +41,7 @@ export default function* rootSaga() {
     soarDownloadWatcher(),
     userInfoWatcher(),
     setIndividualCapWatcher(),
-    setWaitingPeriodWatcher()
+    setWaitingPeriodWatcher(),
+    adminInfoWatcher()
   ]);
 }

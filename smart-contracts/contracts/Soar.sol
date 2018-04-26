@@ -26,7 +26,9 @@ contract Soar is Ownable, Pausable {
     // attributes
     uint public listingsCount = 0;
     mapping (bytes32 => Listing) internal listings;
-    address wallet;
+    address public wallet;
+    address public pricingAddress;
+    address public skymapTokenAddress;
 
     // event definitions
     event ListingUploaded(address indexed owner, string previewUrl, string url, string pointWKT, bytes12 geoHash, string metadata, bytes32 fileHash);
@@ -44,10 +46,13 @@ contract Soar is Ownable, Pausable {
 
     function setPricingContract(address _pricingAddress) onlyOwner public {
         pricingContract = IPricing(_pricingAddress);
+        pricingAddress = _pricingAddress;
     }
 
     function setSkymapTokenContract(address _skymapTokenAddress) onlyOwner public {
         skymapTokenContract = ERC20(_skymapTokenAddress);
+        skymapTokenAddress = _skymapTokenAddress;
+        
     }
 
     function getPrice(bytes12 _geoHash) whenNotPaused public view returns (

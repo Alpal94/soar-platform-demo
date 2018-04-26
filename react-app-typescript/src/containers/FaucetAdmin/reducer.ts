@@ -11,17 +11,17 @@ const initialState = fromJS({
 
 export default (state = initialState, action: FaucetAdminAction) => {
     switch (action.type) {
-        case at.ADMIN_INFO_FETCH:
+        case at.FAUCET_ADMIN_INFO_FETCH:
             return state
                 .set('isLoading', true)
                 .set('isFetched', false)
                 .set('info', initialState.get('info'));
-        case at.ADMIN_INFO_FETCH_SUCCESS:
+        case at.FAUCET_ADMIN_INFO_FETCH_SUCCESS:
             return state
                 .set('isLoading', false)
                 .set('isFetched', true)
                 .set('info', fromJS(action.payload));
-        case at.ADMIN_INFO_FETCH_ERROR:
+        case at.FAUCET_ADMIN_INFO_FETCH_ERROR:
             return state
                 .set('isLoading', false)
                 .set('isFetched', false)
