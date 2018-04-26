@@ -17,7 +17,8 @@ contract FaucetDemo is Ownable, Pausable {
     address public skymapTokenAddress;
 
     uint256 public INDIVIDUAL_CAP = 1000 * (uint(10) ** 18);
-    uint256 public WAITING_PERIOD = 24 * 60 * 60 * 1000;
+    //block.timestamp is in seconds and waiting period is 1 day
+    uint256 public WAITING_PERIOD = 24 * 60 * 60;
 
     mapping(address => uint256) public distributions;
 
