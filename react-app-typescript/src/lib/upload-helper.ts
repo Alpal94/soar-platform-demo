@@ -1,9 +1,7 @@
 import * as SparkMD5 from 'spark-md5';
 import * as Geohash from 'geo-hash';
 const EXIF = require('exif-js');
-
-
-import { LatLng } from "./model";
+import { LatLng } from './model';
 
 //TODO check the implementation of all methods in this class
 export default class UploadHelper {
@@ -17,6 +15,16 @@ export default class UploadHelper {
     }
 
     public static parseLocation(exif: any): LatLng {
+        if (exif.GPSLatitude === undefined || 
+            exif.GPSLongitude ===  undefined ||
+            exif.GPSLatitudeRef === undefined ||
+            exif.GPSLongitudeRef === undefined) {
+                return {
+                    lat: '0',
+                    lng: '0'
+                };
+        }
+
         let lat = this.toDecimal(exif.GPSLatitude);
         if (exif.GPSLatitudeRef === 'S') {
             lat = -lat;
