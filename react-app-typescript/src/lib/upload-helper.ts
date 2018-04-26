@@ -14,6 +14,10 @@ export default class UploadHelper {
         });
     }
 
+    public static isPositionValid(latLng: LatLng): boolean {
+        return (latLng.lat !== '0' && latLng.lng !== '0');
+    }
+
     public static parseLocation(exif: any): LatLng {
         if (exif.GPSLatitude === undefined || 
             exif.GPSLongitude ===  undefined ||

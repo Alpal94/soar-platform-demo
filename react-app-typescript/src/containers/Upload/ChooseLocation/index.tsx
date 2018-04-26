@@ -62,7 +62,7 @@ class ChooseLocation extends React.Component<ChooseLocationProps, ChooseLocation
             display: 'block'
         };
 
-        var invalidLocation: boolean = (this.props.initalPosition.lat === '0' || this.props.initalPosition.lng === '0');
+        var invalidLocation: boolean = this.props.initalPosition ? (this.props.initalPosition.lat === '0' || this.props.initalPosition.lng === '0') : false;
 
         return (
             <Aux>
@@ -70,7 +70,7 @@ class ChooseLocation extends React.Component<ChooseLocationProps, ChooseLocation
                     <Aux>
                         <Row className="wizard-card">
                         <h2>Step 2 - Choose Location</h2>
-                            {invalidLocation && <p>No valid location</p>}
+                            {invalidLocation && <p>No valid location in this files exif</p>}
                             <Map center={this.state.position} zoom={this.state.zoom} style={mapStyle}>
                                 <TileLayer
                                     attribution={attribution}
@@ -82,11 +82,9 @@ class ChooseLocation extends React.Component<ChooseLocationProps, ChooseLocation
                                     ondragend={this.handleMapUpdate}
                                 />
                             </Map>
-                        </Row>
-                        <Row>
-                            <Button color="primary" onClick={this.handleConfirm}>
-                                Confirm
-                            </Button>
+                            <Row>
+                                <Button color="primary" onClick={this.handleConfirm}>Confirm</Button>
+                            </Row>
                         </Row>
                     </Aux>
                 }

@@ -11,6 +11,7 @@ import { Container, Button } from 'reactstrap';
 
 import ChooseFile from './ChooseFile/index';
 import ChooseLocation from './ChooseLocation/index';
+import ChooseMetadata from './ChooseMetadata';
 
 interface UploadProps extends React.Props<Upload> {
     uploadListing: (web3: any, file: File, latLng: LatLng, metadata: Metadata) => void;
@@ -31,7 +32,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
         super(props);
         this.state = {
             file: undefined,
-            latLng: { lat: '0', lng: '0'}
+            latLng: undefined
         };
 
         this.selectFileLocation = this.selectFileLocation.bind(this);
@@ -56,21 +57,28 @@ class Upload extends React.Component<UploadProps, UploadState> {
     }
 
     selectFileLocation(latLng: LatLng) {
-        console.log("Setting new position for file: " + latLng);
         this.setState({
             latLng: latLng
         });
     }
 
     public render(): React.ReactElement<{}> {
+
+        let chooseFileVisible = this.state.file === undefined;
+        let hasValidPosition = this.state.latLng ? UploadHelper.isPositionValid(this.state.latLng) : false;
+        let chooseLocationVisible = (this.state.file !== undefined && !hasValidPosition);
+        let chooseMetadataVisible = (this.state.file !== undefined && hasValidPosition);
+
         return (
             <Container>
-                <ChooseFile selectFile={(file => this.selectFile(file))} visible={this.state.file === undefined} />
+                <ChooseFile selectFile={(file => this.selectFile(file))} visible={chooseFileVisible} />
                 <ChooseLocation 
                     initalPosition={this.state.latLng !!} 
-                    visible={this.state.file !== undefined}
+                    visible={chooseLocationVisible}
                     handleFilePositionConfirmed={this.selectFileLocation}
                 />
+                <ChooseMetadata visible={chooseMetadataVisible} />
+
             </Container>
         );
     }
