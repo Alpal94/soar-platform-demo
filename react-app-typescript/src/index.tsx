@@ -9,6 +9,9 @@ import ContextProvider from './context-provider';
 import { BrowserRouter } from 'react-router-dom';
 import { Redirect, Route, Switch } from 'react-router';
 
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { MuiThemeProvider, lightBaseTheme } from 'material-ui/styles';
+
 import NavigationBar from './components/NavigationBar';
 import Notifications from './containers/Notifications';
 import Alert from './containers/Alert';
@@ -18,19 +21,23 @@ import './styles/leaflet.css';
 // Import default Bootstrap 4 CSS
 import 'bootstrap/dist/css/bootstrap.css';
 
+const lightMuiTheme = getMuiTheme(lightBaseTheme);
+
 const Root = (
-  <ContextProvider>
-    <Provider store={store}>
-      <div>
-        <Notifications />
-        <NavigationBar />
-        <Alert/>
-        <BrowserRouter>
-            <RouteMap/>
-        </BrowserRouter>
-      </div>
-    </Provider>
-  </ContextProvider>
+  <MuiThemeProvider muiTheme={lightMuiTheme}>
+    <ContextProvider>
+      <Provider store={store}>
+        <div>
+          <Notifications />
+          <NavigationBar />
+          <Alert/>
+          <BrowserRouter>
+              <RouteMap/>
+          </BrowserRouter>
+        </div>
+      </Provider>
+    </ContextProvider>
+  </MuiThemeProvider>
 );
 
 render(

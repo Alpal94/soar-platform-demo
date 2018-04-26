@@ -77,7 +77,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
                     visible={chooseLocationVisible}
                     handleFilePositionConfirmed={this.selectFileLocation}
                 />
-                <ChooseMetadata visible={chooseMetadataVisible} />
+                <ChooseMetadata visible={chooseMetadataVisible} exif={{ title: "Title" }} />
 
             </Container>
         );

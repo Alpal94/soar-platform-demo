@@ -15,6 +15,7 @@ export default class UploadHelper {
     }
 
     public static isPositionValid(latLng: LatLng): boolean {
+        // TODO: Check lat: -85..85, lng: -180..180 
         return (latLng.lat !== '0' && latLng.lng !== '0');
     }
 
