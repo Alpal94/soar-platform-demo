@@ -33,7 +33,13 @@ export interface LatLng {
 }
 
 export interface Metadata {
-
+    make: string;
+    model: string;
+    focalLength?: string;
+    apertureValue?: string;
+    fNumber?: string;
+    shutterSpeed?: string;
+    lightSource?: string;
 }
 
 export interface Listing {

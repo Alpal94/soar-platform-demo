@@ -11,6 +11,8 @@ import { Redirect, Route, Switch } from 'react-router';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { MuiThemeProvider, lightBaseTheme } from 'material-ui/styles';
+import { grey300, white, fullBlack } from 'material-ui/styles/colors';
+import { fade } from 'material-ui/utils/colorManipulator';
 
 import NavigationBar from './components/NavigationBar';
 import Notifications from './containers/Notifications';
@@ -23,8 +25,25 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 const lightMuiTheme = getMuiTheme(lightBaseTheme);
 
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: '#eed926',
+    secondaryTextColor: '#081b2c',
+    textColor: white,
+    alternateTextColor: white,
+    canvasColor: white,
+    borderColor: grey300,
+    disabledColor: fade(white, 0.3),
+    clockCircleColor: fade(white, 0.07),
+    shadowColor: fullBlack,
+  },
+  appBar: {
+    height: 50,
+  },
+});
+
 const Root = (
-  <MuiThemeProvider muiTheme={lightMuiTheme}>
+  <MuiThemeProvider muiTheme={muiTheme}>
     <ContextProvider>
       <Provider store={store}>
         <div>

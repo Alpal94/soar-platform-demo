@@ -20,6 +20,9 @@ interface UploadProps extends React.Props<Upload> {
 interface UploadState {
     file?: File;
     latLng?: LatLng;
+    latLngConfirmed: boolean;
+    exif?: any;
+    metadata?: Metadata;
 }
 
 class Upload extends React.Component<UploadProps, UploadState> {
@@ -32,17 +35,20 @@ class Upload extends React.Component<UploadProps, UploadState> {
         super(props);
         this.state = {
             file: undefined,
-            latLng: undefined
+            latLng: undefined,
+            latLngConfirmed: false,
+            metadata: undefined
         };
 
         this.selectFileLocation = this.selectFileLocation.bind(this);
+        this.selectMetadata = this.selectMetadata.bind(this);
     }
     
     upload(file: File) {
         const web3 = this.context.web3.instance;
         UploadHelper.readExifData(file).then(result => {
             let latLng = UploadHelper.parseLocation(result);
-            this.props.uploadListing(web3, file, latLng, {});
+            //this.props.uploadListing(web3, file, latLng, {});
         });
     }
 
@@ -51,6 +57,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
         UploadHelper.readExifData(file).then(result => {
             this.setState({
                 file: file,
+                exif: result,
                 latLng: UploadHelper.parseLocation(result)
             });
         });
@@ -58,16 +65,27 @@ class Upload extends React.Component<UploadProps, UploadState> {
 
     selectFileLocation(latLng: LatLng) {
         this.setState({
-            latLng: latLng
+            latLng: latLng,
+            latLngConfirmed: true
         });
+    }
+
+    selectMetadata(metadata: Metadata) {
+        this.setState({
+            metadata: metadata
+        });
+
+        const web3 = this.context.web3.instance;
+        this.props.uploadListing(web3, this.state.file!!, this.state.latLng!!, this.state.metadata!!);
     }
 
     public render(): React.ReactElement<{}> {
 
         let chooseFileVisible = this.state.file === undefined;
         let hasValidPosition = this.state.latLng ? UploadHelper.isPositionValid(this.state.latLng) : false;
-        let chooseLocationVisible = (this.state.file !== undefined && !hasValidPosition);
-        let chooseMetadataVisible = (this.state.file !== undefined && hasValidPosition);
+        let chooseLocationVisible = (this.state.file !== undefined && !this.state.latLngConfirmed);
+        let chooseMetadataVisible = (this.state.file !== undefined && this.state.latLngConfirmed);
+        let allDataReady = (this.state.file !== undefined && this.state.latLngConfirmed && this.state.metadata);
 
         return (
             <Container>
@@ -77,7 +95,13 @@ class Upload extends React.Component<UploadProps, UploadState> {
                     visible={chooseLocationVisible}
                     handleFilePositionConfirmed={this.selectFileLocation}
                 />
-                <ChooseMetadata visible={chooseMetadataVisible} exif={{ title: "Title" }} />
+                <ChooseMetadata 
+                    visible={chooseMetadataVisible} 
+                    exif={this.state.exif} 
+                    handleSubmitMetadata={this.selectMetadata}
+                />
+
+                {allDataReady ? <p>Ready to submit</p> : null}
 
             </Container>
         );
