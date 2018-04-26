@@ -15,7 +15,6 @@ export function fetchInfoAdmin(web3: any): Promise<FaucetInfoAdmin> {
         faucetContract = results[1];
         return faucetContract.wallet();
     }).then(result => {
-        console.log(faucetContract)
         walletAddress = result;
         let symbol = tokenContract.symbol();
         let faucetAllowance = tokenContract.allowance(walletAddress, faucetAddress);
@@ -24,7 +23,10 @@ export function fetchInfoAdmin(web3: any): Promise<FaucetInfoAdmin> {
         let tokenAddress = faucetContract.skymapTokenAddress();
         let individualCap = faucetContract.individualCap();
         let waitingPeriod = faucetContract.waitingPeriod();
-        return Promise.all([symbol, faucetAllowance, walletBalance, faucetOwner, tokenAddress, individualCap, waitingPeriod]);
+        return Promise.all([
+            symbol, faucetAllowance, walletBalance, faucetOwner, tokenAddress, 
+            individualCap, waitingPeriod
+            ]);
     }).then(results => {
         faucetOwnerAddress = results[3];
         let isOwner = faucetOwnerAddress.toUpperCase() === userAddress.toUpperCase();

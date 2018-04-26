@@ -55,7 +55,6 @@ export function* setAllowanceSaga(web3: any, value: number) {
     }
 }
 
-
 export function* setIndividualCapSaga(web3: any, value: number) {
     try {
         yield put(progressMessageAction('Please confirm transaction and wait to be confirmed by network'));
@@ -71,7 +70,6 @@ export function* setIndividualCapSaga(web3: any, value: number) {
         yield put(progressMessageDoneAction());
     }
 }
-
 
 export function* setWaitingPeriodSaga(web3: any, value: number) {
     try {
