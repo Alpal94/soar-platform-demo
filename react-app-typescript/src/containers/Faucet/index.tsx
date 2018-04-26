@@ -6,7 +6,7 @@ const connect = require('react-redux').connect;
 import { fetchInfo, getSKYMTokens } from './actions';
 import { selectInfo, selectIsLoading, selectIsFetched } from './selectors';
 import { FaucetInfo } from '../../lib/model';
-import { Button } from 'reactstrap';
+import { Button, Container } from 'reactstrap';
 
 interface FaucetProps extends React.Props<Faucet> {
     info: FaucetInfo;
@@ -34,13 +34,13 @@ class Faucet extends React.Component<FaucetProps, FaucetState> {
         const { info, isLoading, isFetched } = this.props;
         const web3 = this.context.web3.instance;
         return (
-            <div>
+            <Container>
                 <h1>Faucet</h1>
                 <p>Your Balance: {info.balance} {info.symbol}</p>
                 <Button onClick={() => this.props.getSKYMTokens(web3)}>
                     Get {info.individualCap + ' ' + info.symbol}
                 </Button>
-            </div>
+            </Container>
         );
     }
 }

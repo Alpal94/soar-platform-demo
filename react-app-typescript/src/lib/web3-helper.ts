@@ -8,6 +8,7 @@ const FaucetContract = require('./contracts/FaucetDemo.json');
 const SoarContract = require('./contracts/Soar.json');
 
 const Config = require('./config.json');
+const ConfigRinkeby = require('./config.rinkeby.json');
 const ConfigLocal = require('./config.local.json');
 
 export default class Web3Helper {
@@ -31,8 +32,7 @@ export default class Web3Helper {
     if (web3 === null) {
       return '';
     }
-    return '5777';
-    // return web3.version.network;
+    return web3.version.network;
   }
 
   public static getCurrentNetworkName(web3: any): string {
@@ -61,7 +61,7 @@ export default class Web3Helper {
 
   public static getFaucetContractAddress(web3: any): string {
     // merge object the right-most (last) object's value wins out:
-    let addresses = { ...Config.Faucet, ...ConfigLocal.Faucet };
+    let addresses = { ...Config.Faucet,  ...ConfigRinkeby.Faucet, ...ConfigLocal.Faucet };
     let networkId = this.getCurrentNetwork(web3);
     return addresses[networkId];
   }
@@ -75,7 +75,7 @@ export default class Web3Helper {
 
   public static getSoarContractAddress(web3: any): string {
     // merge object the right-most (last) object's value wins out:
-    let addresses = { ...Config.Soar, ...ConfigLocal.Soar };
+    let addresses = { ...Config.Soar, ...ConfigRinkeby.Soar, ...ConfigLocal.Soar };
     let networkId = this.getCurrentNetwork(web3);
     return addresses[networkId];
   }

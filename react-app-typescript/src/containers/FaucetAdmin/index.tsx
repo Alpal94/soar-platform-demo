@@ -3,13 +3,18 @@ import * as PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 const connect = require('react-redux').connect;
 
-import { fetchInfoAction, setSkymapContractAction, setAllowanceAction } from './actions';
+import { 
+    fetchInfoAction, setSkymapContractAction, setAllowanceAction,
+    setIndividualCapAction, setWaitingPeriodAction
+} from './actions';
 import { selectInfo, selectIsLoading, selectIsFetched } from './selectors';
 import { FaucetInfoAdmin } from '../../lib/model';
 
 import AllowanceForm from '../../components/Admin/AllowanceForm';
 import TokenAddressForm from '../../components/Admin/TokenAddressForm';
-import { Row, Col } from 'reactstrap';
+import IndividualCapForm from '../../components/Admin/IndividualCapForm';
+import WaitingPeriodForm from '../../components/Admin/WaitingPeriodForm';
+import { Row, Col, Container } from 'reactstrap';
 
 interface FaucetAdminProps extends React.Props<FaucetAdmin> {
     info: FaucetInfoAdmin;
@@ -19,6 +24,8 @@ interface FaucetAdminProps extends React.Props<FaucetAdmin> {
     infoFetch: (web3: any) => void;
     setSkymapContract: (web3: any, address: string) => void;
     setAllowance: (web3: any, value: number) => void;
+    setIndividualCap: (web3: any, value: number) => void;
+    setWaitingPeriod: (web3: any, value: number) => void;
 }
 
 interface FaucetAdminState {
@@ -39,13 +46,16 @@ class FaucetAdmin extends React.Component<FaucetAdminProps, FaucetAdminState> {
         const { info, isLoading, isFetched } = this.props;
         let web3 = this.context.web3.instance;
         return (
-            <div>
+            <Container>
                 <h1>Administration SKYM Faucet</h1>
+                <p>Faucet Owner: {info.faucetOwnerAddress}</p>
                 <p>Skymap address: {info.tokenAddress}</p>
                 <p>Wallet Address: {info.walletAddress}</p>
                 <p>Allowance left: {info.faucetAllowance} {info.symbol}</p>
                 <p>Wallet Balance: {info.walletBalance} {info.symbol}</p>
-                {info.isOwner && (
+                <p>Individual Cap: {info.individualCap} {info.symbol}</p>
+                <p>Waiting Period: {info.waitingPeriod} seconds</p>
+                {info.isWalletOwner && (
                     <Row>
                         <Col md="6" xs="12">
                             <h2>Allowance</h2>
@@ -60,10 +70,27 @@ class FaucetAdmin extends React.Component<FaucetAdminProps, FaucetAdminState> {
                             />
                         </Col>
                     </Row>
+                )}
+                {info.isOwner && (
+                    <Row>
+                        <Col md="6" xs="12">
+                            <h2>Individual Cap</h2>
+                            <IndividualCapForm
+                                submitForm={(value) => this.props.setIndividualCap(web3, value)}
+                            />
+                        </Col>
+
+                        <Col md="6" xs="12">
+                            <h2>Waiting Period</h2>
+                            <WaitingPeriodForm
+                                submitForm={(value) => this.props.setWaitingPeriod(web3, value)}
+                            />
+                        </Col>
+                    </Row>
 
                 )}
 
-            </div>
+            </Container>
         );
     }
 }
@@ -86,7 +113,13 @@ function mapDispatchToProps(dispatch: any) {
         },
         setAllowance: (web3: any, value: number): void => {
             dispatch(setAllowanceAction(web3, value));
-        }
+        },
+        setIndividualCap: (web3: any, value: number): void => {
+            dispatch(setIndividualCapAction(web3, value));
+        },
+        setWaitingPeriod: (web3: any, value: number): void => {
+            dispatch(setWaitingPeriodAction(web3, value));
+        },
     };
 }
 

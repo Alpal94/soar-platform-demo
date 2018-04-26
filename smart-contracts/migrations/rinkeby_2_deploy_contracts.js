@@ -6,13 +6,14 @@ module.exports = function ganache(web3, deployer, artifacts){
     var SkymapTokenDemo = artifacts.require("./SkymapTokenDemo.sol");
     var FaucetDemo = artifacts.require("./FaucetDemo.sol");
 
-    const owner = web3.eth.accounts[0];
-    const wallet = web3.eth.accounts[9];
-    const allowance = web3.toWei(1000000);
+    // first account on the company trezor
+    const tokenOwner = '0x0B34Ba8E61d949D4c766DB70a8B9f646A9209865';
+    // second account on the company trezor
+    const soarWallet = '0x801040013a3Bd1EcE0Fc9993e2A5f28CC6B1F42C';
   
     let promises = [
-      deployer.deploy(SkymapTokenDemo, owner),
-      deployer.deploy(FaucetDemo, owner),
+      deployer.deploy(SkymapTokenDemo, tokenOwner),
+      deployer.deploy(FaucetDemo, tokenOwner),
       deployer.deploy(PricingManual),
       deployer.deploy(Soar)
     ];
@@ -31,10 +32,8 @@ module.exports = function ganache(web3, deployer, artifacts){
       promises = [
         soar.setPricingContract(PricingManual.address),
         soar.setSkymapTokenContract(SkymapTokenDemo.address),
-        soar.setWalletAddress(wallet),
-        faucet.setSkymapTokenContract(SkymapTokenDemo.address),
-        faucet.setWalletAddress(owner),
-        token.approve(FaucetDemo.address, allowance, {from: owner})
+        soar.setWalletAddress(soarWallet),
+        faucet.setSkymapTokenContract(SkymapTokenDemo.address)
       ];
       return Promise.all(promises);
     }).then(results => {
@@ -59,16 +58,16 @@ module.exports = function ganache(web3, deployer, artifacts){
   function updateLocalConfigFilePromise(soar, faucetDemo, skymapTokenDemo) {
     let configFile = {
       "Soar": {
-        "5777": soar.address
+        "4": soar.address
       },
       "Faucet": {
-        "5777": faucetDemo.address
+        "4": faucetDemo.address
       },
       "SkymapToken": {
-        "5777": skymapTokenDemo.address
+        "4": skymapTokenDemo.address
       }
     };
-    return writeObjectInFile(configFile, "../react-app-typescript/src/lib/config.local.json");
+    return writeObjectInFile(configFile, "../react-app-typescript/src/lib/config.rinkeby.json");
   }
   
   function writeObjectInFile(object, path) {

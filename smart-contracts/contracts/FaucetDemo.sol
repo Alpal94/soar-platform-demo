@@ -6,7 +6,7 @@ import "zeppelin-solidity/contracts/math/SafeMath.sol";
 import "zeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 
 /**
- * @title Standard ERC20 token
+ * @title Faucet contract for Soar demo platform
  *
  */
  
@@ -16,8 +16,9 @@ contract FaucetDemo is Ownable, Pausable {
     address public wallet;
     address public skymapTokenAddress;
 
-    uint256 public INDIVIDUAL_CAP = 1000 * (uint(10) ** 18);
-    uint256 public WAITING_PERIOD = 24 * 60 * 60 * 1000;
+    uint256 public individualCap;
+    //block.timestamp is in seconds
+    uint256 public waitingPeriod;
 
     mapping(address => uint256) public distributions;
 
@@ -25,9 +26,19 @@ contract FaucetDemo is Ownable, Pausable {
 
     function FaucetDemo(address _walletAddress) public {
         wallet = _walletAddress;
+        individualCap = 1000 * (uint(10) ** 18);
+        waitingPeriod = 24 * 60 * 60;
+    }
+
+    function setWaitingPeriod(uint256 _waitingPeriod) onlyOwner external {
+        waitingPeriod = _waitingPeriod;
+    }
+
+    function setIndividualCap(uint256 _individualCap) onlyOwner external {
+        individualCap = _individualCap;
     }
     
-    function setWalletAddress(address _walletAddress) onlyOwner public {
+    function setWalletAddress(address _walletAddress) onlyOwner external {
         wallet = _walletAddress;
     }
     
@@ -37,9 +48,9 @@ contract FaucetDemo is Ownable, Pausable {
     }
 
     function getSKYMTokens() external {
-        require(block.timestamp > (distributions[msg.sender] + WAITING_PERIOD));
+        require(block.timestamp > (distributions[msg.sender] + waitingPeriod));
         distributions[msg.sender] = block.timestamp;
-        skymapTokenContract.transferFrom(wallet, msg.sender, INDIVIDUAL_CAP);
-        Transfer(msg.sender, INDIVIDUAL_CAP);
+        skymapTokenContract.transferFrom(wallet, msg.sender, individualCap);
+        emit Transfer(msg.sender, individualCap);
     }
 }

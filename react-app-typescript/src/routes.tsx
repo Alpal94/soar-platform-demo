@@ -10,9 +10,9 @@ export const RouteMap: React.StatelessComponent<{}> = () => (
   <div>
     <Switch>
       <Route exact path="/" component={Listings} />
-      <Route path="/upload" component={Upload} />
-      <Route path="/faucet" component={Faucet} />
-      <Route path="/admin" component={FaucetAdmin} />
+      <Route exact path="/upload" component={Upload} />
+      <Route exact path="/faucet" component={Faucet} />
+      <Route exact path="/faucet/admin" component={FaucetAdmin} />
     </Switch>
   </div>
 );
