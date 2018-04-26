@@ -11,6 +11,8 @@ export interface FaucetInfoAdmin {
     walletBalance: number;
     tokenAddress: string;
     walletAddress: string;
+    faucetOwnerAddress: string;
+    soarOwnerAddress: string;
 }
 
 export interface ListingsInfo {

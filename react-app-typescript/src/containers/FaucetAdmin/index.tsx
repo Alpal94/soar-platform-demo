@@ -9,7 +9,7 @@ import { FaucetInfoAdmin } from '../../lib/model';
 
 import AllowanceForm from '../../components/Admin/AllowanceForm';
 import TokenAddressForm from '../../components/Admin/TokenAddressForm';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Container } from 'reactstrap';
 
 interface FaucetAdminProps extends React.Props<FaucetAdmin> {
     info: FaucetInfoAdmin;
@@ -39,12 +39,14 @@ class FaucetAdmin extends React.Component<FaucetAdminProps, FaucetAdminState> {
         const { info, isLoading, isFetched } = this.props;
         let web3 = this.context.web3.instance;
         return (
-            <div>
+            <Container>
                 <h1>Administration SKYM Faucet</h1>
                 <p>Skymap address: {info.tokenAddress}</p>
                 <p>Wallet Address: {info.walletAddress}</p>
                 <p>Allowance left: {info.faucetAllowance} {info.symbol}</p>
                 <p>Wallet Balance: {info.walletBalance} {info.symbol}</p>
+                <p>Faucet Owner: {info.faucetOwnerAddress}</p>
+                <p>Soar Owner: {info.soarOwnerAddress}</p>
                 {info.isOwner && (
                     <Row>
                         <Col md="6" xs="12">
@@ -63,7 +65,7 @@ class FaucetAdmin extends React.Component<FaucetAdminProps, FaucetAdminState> {
 
                 )}
 
-            </div>
+            </Container>
         );
     }
 }

@@ -9,6 +9,7 @@ export function fetchInfoAdmin(web3: any): Promise<FaucetInfoAdmin> {
     let tokenContract;
     let faucetContract;
     let walletAddress;
+    let faucetOwnerAddress;
     return Promise.all([tokenPromise, faucetPromise]).then(results => {
         tokenContract = results[0];    
         faucetContract = results[1];
@@ -18,17 +19,21 @@ export function fetchInfoAdmin(web3: any): Promise<FaucetInfoAdmin> {
         let symbol = tokenContract.symbol();
         let faucetAllowance = tokenContract.allowance(walletAddress, faucetAddress);
         let walletBalance = tokenContract.balanceOf(walletAddress);
-        let owner = faucetContract.owner();
+        let faucetOwner = faucetContract.owner();
         let tokenAddress = faucetContract.skymapTokenAddress();
-        return Promise.all([symbol, faucetAllowance, walletBalance, owner, tokenAddress]);
+        let soarOwner = faucetContract.owner();
+        return Promise.all([symbol, faucetAllowance, walletBalance, faucetOwner, tokenAddress, soarOwner]);
     }).then(results => {
+        faucetOwnerAddress = results[3];
         let infoRes: FaucetInfoAdmin = {
-            isOwner: results[3].toUpperCase() === userAddress.toUpperCase(),
+            isOwner: faucetOwnerAddress.toUpperCase() === userAddress.toUpperCase() === walletAddress,
             symbol: results[0],
             faucetAllowance: Web3Helper.toSkymap(web3, results[1]),
             walletBalance: Web3Helper.toSkymap(web3, results[2]),
             tokenAddress: results[4],
-            walletAddress: walletAddress
+            walletAddress: walletAddress,
+            faucetOwnerAddress: faucetOwnerAddress,
+            soarOwnerAddress: results[5]
         };
         return infoRes;
     });
