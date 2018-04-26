@@ -55,9 +55,6 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
               <NavItem>
                 <NavLink href="/faucet">Faucet</NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink href="/admin">Admin</NavLink>
-              </NavItem>
             </Nav>
           </Collapse>
           </Container>
