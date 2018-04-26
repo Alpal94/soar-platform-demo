@@ -29,5 +29,10 @@ contract PricingManual is Ownable, IPricing {
     function setPrice(bytes5 _geoHash, uint256 _price) onlyOwner public {
         prices[_geoHash] = _price;
     }
-
+    
+    function setPrices(bytes5[] _geoHashes, uint256 _price) onlyOwner public {
+        for (uint256 i = 0; i < _geoHashes.length; i++) {
+            prices[_geoHashes[i]] = _price;
+        }
+    }
 }

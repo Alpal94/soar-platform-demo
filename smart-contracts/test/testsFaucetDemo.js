@@ -72,7 +72,7 @@ contract('FaucetDemo', function ([owner, user1, user2]) {
   it("..getSKYMTokens: sender should get more SKYM after waiting period", async function () {
     await this.faucet.setWaitingPeriod(updatedWaitingPeriod, {from: owner});
     await this.faucet.getSKYMTokens({from: user1});
-    await sleep(1000 * updatedWaitingPeriod);
+    await sleep(2 * 1000 * updatedWaitingPeriod);
     await this.faucet.getSKYMTokens({from: user1});
     let userBalance = await this.skymapToken.balanceOf(user1);
     userBalance.should.be.bignumber.equal(2 * intialIndividualCap);
