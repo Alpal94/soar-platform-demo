@@ -33,6 +33,8 @@ class Upload extends React.Component<UploadProps, UploadState> {
             file: undefined,
             latLng: { lat: '0', lng: '0'}
         };
+
+        this.selectFileLocation = this.selectFileLocation.bind(this);
     }
     
     upload(file: File) {
@@ -53,11 +55,22 @@ class Upload extends React.Component<UploadProps, UploadState> {
         });
     }
 
+    selectFileLocation(latLng: LatLng) {
+        console.log("Setting new position for file: " + latLng);
+        this.setState({
+            latLng: latLng
+        });
+    }
+
     public render(): React.ReactElement<{}> {
         return (
             <Container>
                 <ChooseFile selectFile={(file => this.selectFile(file))} visible={this.state.file === undefined} />
-                <ChooseLocation position={this.state.latLng !!} visible={this.state.file !== undefined}/>
+                <ChooseLocation 
+                    initalPosition={this.state.latLng !!} 
+                    visible={this.state.file !== undefined}
+                    handleFilePositionConfirmed={this.selectFileLocation}
+                />
             </Container>
         );
     }

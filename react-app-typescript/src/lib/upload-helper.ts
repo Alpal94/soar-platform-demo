@@ -19,10 +19,11 @@ export default class UploadHelper {
             exif.GPSLongitude ===  undefined ||
             exif.GPSLatitudeRef === undefined ||
             exif.GPSLongitudeRef === undefined) {
-                return {
+                let latLng: LatLng = {
                     lat: '0',
                     lng: '0'
                 };
+                return latLng;
         }
 
         let lat = this.toDecimal(exif.GPSLatitude);

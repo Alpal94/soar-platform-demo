@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Button } from 'reactstrap';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { LatLng } from '../../../lib/model';
 import Aux from '../../../hoc/Aux';
@@ -7,23 +7,51 @@ import './index.css';
 
 interface ChooseLocationProps {
     visible: boolean;
-    position: LatLng;
+    initalPosition: LatLng;
+    handleFilePositionConfirmed: (latLng: LatLng) => void;
 }
 
 interface ChooseLocationState {
     zoom: number;
-    exifdata: {};
+    position: LatLng;
 }
 
 class ChooseLocation extends React.Component<ChooseLocationProps, ChooseLocationState> {
 
-    handlePositionChange(event: any) {
-        console.log(event);
+    constructor(props: any) {
+        super(props);
+        this.handleMapUpdate = this.handleMapUpdate.bind(this);
+        this.handleConfirm = this.handleConfirm.bind(this);
+    }
+
+    componentWillReceiveProps(props: any) {
+        let latLng: LatLng = props.initalPosition;
+        this.setState({
+            position: latLng,
+            zoom: 10
+        });
+    }
+
+    handleMapUpdate(event: any) {
+        let rawLatLng = event.target._latlng;
+        let zoom = event.target._zoom;
+        let latLng: LatLng = {
+            lat: rawLatLng.lat,
+            lng: rawLatLng.lng
+        };
+
+        this.setState({
+            zoom: zoom,
+            position: latLng
+        });
+    }
+
+    handleConfirm() {
+        this.props.handleFilePositionConfirmed(this.state.position);
     }
 
     public render(): React.ReactElement<{}> {
 
-        const position = [-31.9550404, 115.9303017];
         const zoom = 10;
         const attribution = '&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors';
         const tileLayerUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
@@ -34,23 +62,33 @@ class ChooseLocation extends React.Component<ChooseLocationProps, ChooseLocation
             display: 'block'
         };
 
+        var invalidLocation: boolean = (this.props.initalPosition.lat === '0' || this.props.initalPosition.lng === '0');
+
         return (
             <Aux>
                 {this.props.visible && 
-                    <Row className="wizard-card">
-                    <h2>Choose Location</h2>
-                        <Map center={position} zoom={zoom} style={mapStyle}>
-                            <TileLayer
-                                attribution={attribution}
-                                url={tileLayerUrl}
-                            />
-                            <Marker 
-                                position={this.props.position} 
-                                draggable={true}
-                                ondragend={this.handlePositionChange}
-                            />
-                        </Map>
-                    </Row>
+                    <Aux>
+                        <Row className="wizard-card">
+                        <h2>Step 2 - Choose Location</h2>
+                            {invalidLocation && <p>No valid location</p>}
+                            <Map center={this.state.position} zoom={this.state.zoom} style={mapStyle}>
+                                <TileLayer
+                                    attribution={attribution}
+                                    url={tileLayerUrl}
+                                />
+                                <Marker 
+                                    position={this.state.position} 
+                                    draggable={true}
+                                    ondragend={this.handleMapUpdate}
+                                />
+                            </Map>
+                        </Row>
+                        <Row>
+                            <Button color="primary" onClick={this.handleConfirm}>
+                                Confirm
+                            </Button>
+                        </Row>
+                    </Aux>
                 }
             </Aux>
         );
