@@ -72,7 +72,7 @@ export function eventUserPurchases(web3: any, fromBlock: number): Promise<Sale> 
     let soarPromise = Web3Helper.getSoarContractPromise(web3);
     return new Promise((resolve, reject) => {
         Promise.resolve(soarPromise).then(soarContract => {
-            let saleEvent = soarContract.Sale({}, { fromBlock: fromBlock, toBlock: 'latest' });
+            let saleEvent = soarContract.Sale({ buyer: userAddress }, { fromBlock: fromBlock, toBlock: 'latest' });
             //TODO temporary solution
             saleEvent.watch((err, res) => {
                 if (res) {
