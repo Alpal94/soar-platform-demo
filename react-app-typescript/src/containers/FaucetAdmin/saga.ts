@@ -1,6 +1,9 @@
 import { call, put, take } from 'redux-saga/effects';
 
-import { fetchInfoAdmin, setAllowance, setTokenAddress } from '../../lib/faucet-admin-service';
+import { 
+    fetchInfoAdmin, setAllowance, setTokenAddress,
+    setIndividualCap, setWaitingPeriod 
+} from '../../lib/faucet-admin-service';
 import { waitTxConfirmed } from '../../lib/web3-service';
 import { actionTypes as at } from './constants';
 import { fetchInfoSuccess, fetchInfoError } from './actions';
@@ -52,6 +55,40 @@ export function* setAllowanceSaga(web3: any, value: number) {
     }
 }
 
+
+export function* setIndividualCapSaga(web3: any, value: number) {
+    try {
+        yield put(progressMessageAction('Please confirm transaction and wait to be confirmed by network'));
+        const txHash: string = yield call(setIndividualCap, web3, value);
+        const confirmed: boolean = yield call(waitTxConfirmed, web3, txHash);
+        yield put(progressMessageAction('Updating admin information'));
+        const result: FaucetInfo = yield call(fetchInfoAdmin, web3);
+        yield put(fetchInfoSuccess(result));
+        yield put(alertSuccessAction('Allowance was successfully set'));
+    } catch (err) {
+        yield put(alertErorrAction(err));
+    } finally {
+        yield put(progressMessageDoneAction());
+    }
+}
+
+
+export function* setWaitingPeriodSaga(web3: any, value: number) {
+    try {
+        yield put(progressMessageAction('Please confirm transaction and wait to be confirmed by network'));
+        const txHash: string = yield call(setWaitingPeriod, web3, value);
+        const confirmed: boolean = yield call(waitTxConfirmed, web3, txHash);
+        yield put(progressMessageAction('Updating admin information'));
+        const result: FaucetInfo = yield call(fetchInfoAdmin, web3);
+        yield put(fetchInfoSuccess(result));
+        yield put(alertSuccessAction('Allowance was successfully set'));
+    } catch (err) {
+        yield put(alertErorrAction(err));
+    } finally {
+        yield put(progressMessageDoneAction());
+    }
+}
+
 export function* infoAdminWatcher() {
     while (true) {
         const { web3 } = yield take(at.ADMIN_INFO_FETCH);
@@ -70,5 +107,19 @@ export function* setAllowanceWatcher() {
     while (true) {
         const { web3, value } = yield take(at.FAUCET_SET_ALLOWANCE);
         yield call(setAllowanceSaga, web3, value);
+    }
+}
+
+export function* setIndividualCapWatcher() {
+    while (true) {
+        const { web3, value } = yield take(at.FAUCET_SET_INDIVIDUAL_CAP);
+        yield call(setIndividualCapSaga, web3, value);
+    }
+}
+
+export function* setWaitingPeriodWatcher() {
+    while (true) {
+        const { web3, value } = yield take(at.FAUCET_SET_WAITING_PERIOD);
+        yield call(setWaitingPeriodSaga, web3, value);
     }
 }

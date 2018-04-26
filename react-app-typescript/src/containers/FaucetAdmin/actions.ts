@@ -37,3 +37,19 @@ export const setAllowanceAction = (web3: any, value: number) => {
         value: value
     };
 };
+
+export const setIndividualCapAction = (web3: any, value: number) => {
+    return {
+        type: at.FAUCET_SET_INDIVIDUAL_CAP,
+        web3: web3,
+        value: value
+    };
+};
+
+export const setWaitingPeriodAction = (web3: any, value: number) => {
+    return {
+        type: at.FAUCET_SET_WAITING_PERIOD,
+        web3: web3,
+        value: value
+    };
+};

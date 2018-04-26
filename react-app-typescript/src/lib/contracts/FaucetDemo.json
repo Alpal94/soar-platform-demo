@@ -2,6 +2,34 @@
     "contractName": "FaucetDemo",
     "abi": [
         {
+            "constant": true,
+            "inputs": [],
+            "name": "individualCap",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "waitingPeriod",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
             "constant": false,
             "inputs": [],
             "name": "unpause",
@@ -32,20 +60,6 @@
                 {
                     "name": "",
                     "type": "bool"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "WAITING_PERIOD",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "uint256"
                 }
             ],
             "payable": false,
@@ -84,20 +98,6 @@
                 }
             ],
             "name": "distributions",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "INDIVIDUAL_CAP",
             "outputs": [
                 {
                     "name": "",
@@ -192,6 +192,34 @@
             ],
             "name": "OwnershipTransferred",
             "type": "event"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_waitingPeriod",
+                    "type": "uint256"
+                }
+            ],
+            "name": "setWaitingPeriod",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_individualCap",
+                    "type": "uint256"
+                }
+            ],
+            "name": "setIndividualCap",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
         },
         {
             "constant": false,

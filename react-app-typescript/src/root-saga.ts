@@ -7,7 +7,9 @@ import {
 import {
   infoAdminWatcher,
   setTokenContractWatcher,
-  setAllowanceWatcher
+  setAllowanceWatcher,
+  setIndividualCapWatcher,
+  setWaitingPeriodWatcher
 } from './containers/FaucetAdmin/saga';
 import {
   soarInfoWatcher,
@@ -34,6 +36,8 @@ export default function* rootSaga() {
     soarEventUserPurchaseWatcher(),
     soarBuyWatcher(),
     soarDownloadWatcher(),
-    userInfoWatcher()
+    userInfoWatcher(),
+    setIndividualCapWatcher(),
+    setWaitingPeriodWatcher()
   ]);
 }

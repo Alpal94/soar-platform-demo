@@ -33,7 +33,8 @@ module.exports = function ganache(web3, deployer, artifacts){
         soar.setSkymapTokenContract(SkymapTokenDemo.address),
         soar.setWalletAddress(wallet),
         faucet.setSkymapTokenContract(SkymapTokenDemo.address),
-        token.approve(FaucetDemo.address, allowance)
+        faucet.setWalletAddress(owner),
+        token.approve(FaucetDemo.address, allowance, {from: owner})
       ];
       return Promise.all(promises);
     }).then(results => {

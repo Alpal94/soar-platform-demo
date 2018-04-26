@@ -15,25 +15,31 @@ export function fetchInfoAdmin(web3: any): Promise<FaucetInfoAdmin> {
         faucetContract = results[1];
         return faucetContract.wallet();
     }).then(result => {
+        console.log(faucetContract)
         walletAddress = result;
         let symbol = tokenContract.symbol();
         let faucetAllowance = tokenContract.allowance(walletAddress, faucetAddress);
         let walletBalance = tokenContract.balanceOf(walletAddress);
         let faucetOwner = faucetContract.owner();
         let tokenAddress = faucetContract.skymapTokenAddress();
-        let soarOwner = faucetContract.owner();
-        return Promise.all([symbol, faucetAllowance, walletBalance, faucetOwner, tokenAddress, soarOwner]);
+        let individualCap = faucetContract.individualCap();
+        let waitingPeriod = faucetContract.waitingPeriod();
+        return Promise.all([symbol, faucetAllowance, walletBalance, faucetOwner, tokenAddress, individualCap, waitingPeriod]);
     }).then(results => {
         faucetOwnerAddress = results[3];
+        let isOwner = faucetOwnerAddress.toUpperCase() === userAddress.toUpperCase();
+        let isWalletOwner = walletAddress.toUpperCase() === userAddress.toUpperCase();
         let infoRes: FaucetInfoAdmin = {
-            isOwner: faucetOwnerAddress.toUpperCase() === userAddress.toUpperCase() === walletAddress,
+            isWalletOwner: isWalletOwner && isOwner,
+            isOwner: isOwner,
             symbol: results[0],
             faucetAllowance: Web3Helper.toSkymap(web3, results[1]),
             walletBalance: Web3Helper.toSkymap(web3, results[2]),
             tokenAddress: results[4],
             walletAddress: walletAddress,
             faucetOwnerAddress: faucetOwnerAddress,
-            soarOwnerAddress: results[5]
+            individualCap: Web3Helper.toSkymap(web3, results[5]),
+            waitingPeriod: results[6].toNumber()
         };
         return infoRes;
     });
@@ -49,6 +55,28 @@ export function setAllowance(web3: any, value: number): Promise<string> {
         tokenContract = results[0];
         userAddress = results[1];
         return tokenContract.approve(faucetAddress, Web3Helper.fromSkymap(web3, value), {from: userAddress});
+    }).then(result => {
+        return result.tx;
+    });
+}
+
+export function setIndividualCap(web3: any, value: number): Promise<string> {
+    let userAddress: string = Web3Helper.getCurrentAddress(web3);
+    let faucetPromise = Web3Helper.getFaucetContractPromise(web3);
+    return Promise.all([faucetPromise]).then(results => {
+        let faucetContract = results[0];
+        return faucetContract.setIndividualCap(Web3Helper.fromSkymap(web3, value), {from: userAddress});
+    }).then(result => {
+        return result.tx;
+    });
+}
+
+export function setWaitingPeriod(web3: any, value: number): Promise<string> {
+    let userAddress: string = Web3Helper.getCurrentAddress(web3);
+    let faucetPromise = Web3Helper.getFaucetContractPromise(web3);
+    return Promise.all([faucetPromise]).then(results => {
+        let faucetContract = results[0];
+        return faucetContract.setWaitingPeriod(value, {from: userAddress});
     }).then(result => {
         return result.tx;
     });

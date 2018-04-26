@@ -10,7 +10,7 @@ export function fetchInfo(web3: any): Promise<FaucetInfo> {
         let faucetContract = results[1];
         let symbol = tokenContract.symbol();
         let balance = tokenContract.balanceOf(userAddress);
-        let individualCap = faucetContract.INDIVIDUAL_CAP();
+        let individualCap = faucetContract.individualCap();
         return Promise.all([symbol, balance, individualCap]);
     }).then(results => {
         let res: FaucetInfo = {

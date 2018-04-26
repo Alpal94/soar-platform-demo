@@ -25,7 +25,7 @@ const should = require('chai')
   contract('Soar', function ([owner, user1, user2, wallet]) {
     
     beforeEach(async function () {
-      this.skymapToken = await SkymapToken.new();
+      this.skymapToken = await SkymapToken.new(owner);
       this.soar = await Soar.new();
       this.pricingManual = await PricingManual.new();
       await this.soar.setPricingContract(this.pricingManual.address);

@@ -5,6 +5,7 @@ export interface FaucetInfo {
 }
 
 export interface FaucetInfoAdmin {
+    isWalletOwner: boolean;
     isOwner: boolean;
     symbol: string;
     faucetAllowance: number;
@@ -12,7 +13,8 @@ export interface FaucetInfoAdmin {
     tokenAddress: string;
     walletAddress: string;
     faucetOwnerAddress: string;
-    soarOwnerAddress: string;
+    individualCap: number;
+    waitingPeriod: number;
 }
 
 export interface ListingsInfo {
