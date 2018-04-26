@@ -10,6 +10,7 @@ import { FaucetInfo, UploadListing, LatLng, Metadata } from '../../lib/model';
 import { Container, Button } from 'reactstrap';
 
 import ChooseFile from './ChooseFile/index';
+import ChooseLocation from './ChooseLocation/index';
 
 interface UploadProps extends React.Props<Upload> {
     uploadListing: (web3: any, file: File, latLng: LatLng, metadata: Metadata) => void;
@@ -17,6 +18,7 @@ interface UploadProps extends React.Props<Upload> {
 
 interface UploadState {
     file?: File;
+    latLng?: LatLng;
 }
 
 class Upload extends React.Component<UploadProps, UploadState> {
@@ -29,6 +31,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
         super(props);
         this.state = {
             file: undefined,
+            latLng: { lat: '0', lng: '0'}
         };
     }
     
@@ -41,15 +44,20 @@ class Upload extends React.Component<UploadProps, UploadState> {
     }
 
     selectFile(file: File) {
-        this.setState({
-            file: file
+
+        UploadHelper.readExifData(file).then(result => {
+            this.setState({
+                file: file,
+                latLng: UploadHelper.parseLocation(result)
+            });
         });
     }
 
     public render(): React.ReactElement<{}> {
         return (
             <Container>
-                <ChooseFile selectFile={(file => this.selectFile(file))} visible={this.state.file == undefined} />
+                <ChooseFile selectFile={(file => this.selectFile(file))} visible={this.state.file === undefined} />
+                <ChooseLocation position={this.state.latLng !!} visible={this.state.file !== undefined}/>
             </Container>
         );
     }
