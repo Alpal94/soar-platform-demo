@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Control, LocalForm, Field } from 'react-redux-form';
 import { TextField } from 'redux-form-material-ui';
 import { Container, Row, Col } from 'reactstrap';
-import Aux from '../../../hoc/Aux';
+import Aux from '../../../hoc/auxilary';
 import { Metadata } from '../../../lib/model';
 import './index.css';
 

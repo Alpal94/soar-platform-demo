@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Container, Row, Col, Button } from 'reactstrap';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { LatLng } from '../../../lib/model';
-import Aux from '../../../hoc/Aux';
+import Aux from '../../../hoc/auxilary';
 import './index.css';
 
 interface ChooseLocationProps {

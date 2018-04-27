@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Container, Row, Col, Button } from 'reactstrap';
 import Dropzone from 'react-dropzone';
-import Aux from '../../../hoc/Aux';
+import Aux from '../../../hoc/auxilary';
 import ChooseFileImagePreview from '../../../components/Upload/ChooseFile/choose-file-preview';
 import ChooseFileConfirmClearButtons from '../../../components/Upload/ChooseFile/choose-file-buttons';
 import './index.css';
