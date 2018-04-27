@@ -30,19 +30,19 @@ contract FaucetDemo is Ownable, Pausable {
         waitingPeriod = 24 * 60 * 60;
     }
 
-    function setWaitingPeriod(uint256 _waitingPeriod) onlyOwner external {
+    function setWaitingPeriod(uint256 _waitingPeriod) external {
         waitingPeriod = _waitingPeriod;
     }
 
-    function setIndividualCap(uint256 _individualCap) onlyOwner external {
+    function setIndividualCap(uint256 _individualCap) external {
         individualCap = _individualCap;
     }
     
-    function setWalletAddress(address _walletAddress) onlyOwner external {
+    function setWalletAddress(address _walletAddress) external {
         wallet = _walletAddress;
     }
     
-    function setSkymapTokenContract(address _skymapTokenAddress) onlyOwner external {
+    function setSkymapTokenContract(address _skymapTokenAddress) external {
         skymapTokenAddress = _skymapTokenAddress;
         skymapTokenContract = ERC20(_skymapTokenAddress);
     }

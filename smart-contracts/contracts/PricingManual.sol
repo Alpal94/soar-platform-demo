@@ -48,11 +48,11 @@ contract PricingManual is Ownable, IPricing {
         }
     }
 
-    function setPrice(bytes12 _geoHash, uint256 _price, uint256 _precision) onlyOwner public {
+    function setPrice(bytes12 _geoHash, uint256 _price, uint256 _precision) public {
         setPriceInternal(_geoHash, _price, _precision);
     }
 
-    function setPriceInternal(bytes12 _geoHash, uint256 _price, uint256 _precision) onlyOwner internal {
+    function setPriceInternal(bytes12 _geoHash, uint256 _price, uint256 _precision) internal {
         if(_precision == 2){
             prices2[bytes2(_geoHash)] = _price;
         } else if (_precision == 3) {
@@ -68,7 +68,7 @@ contract PricingManual is Ownable, IPricing {
         }
     }
     
-    function setPrices(bytes12[] _geoHashes, uint256 _price, uint256 _precision) onlyOwner public {
+    function setPrices(bytes12[] _geoHashes, uint256 _price, uint256 _precision) public {
         for (uint256 i = 0; i < _geoHashes.length; i++) {
             setPriceInternal(_geoHashes[i], _price, _precision);
         }

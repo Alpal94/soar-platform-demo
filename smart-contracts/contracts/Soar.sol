@@ -40,16 +40,16 @@ contract Soar is Ownable, Pausable {
         wallet = msg.sender;
     }
 
-    function setWalletAddress(address _walletAddress) onlyOwner public {
+    function setWalletAddress(address _walletAddress) public {
         wallet = _walletAddress;
     }
 
-    function setPricingContract(address _pricingAddress) onlyOwner public {
+    function setPricingContract(address _pricingAddress) public {
         pricingContract = IPricing(_pricingAddress);
         pricingAddress = _pricingAddress;
     }
 
-    function setSkymapTokenContract(address _skymapTokenAddress) onlyOwner public {
+    function setSkymapTokenContract(address _skymapTokenAddress) public {
         skymapTokenContract = ERC20(_skymapTokenAddress);
         skymapTokenAddress = _skymapTokenAddress;
         
