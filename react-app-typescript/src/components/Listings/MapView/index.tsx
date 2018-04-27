@@ -20,7 +20,7 @@ const MapView: React.SFC<MapViewProps> = (props) => {
     const zoom = 10;
     return (
         <div className="listings-map-container">
-            <Map center={position} zoom={zoom}>
+            <Map center={position} zoom={zoom} className="wizard-map">
                 <TileLayer
                     attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                     url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"

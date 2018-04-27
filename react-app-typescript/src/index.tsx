@@ -9,6 +9,11 @@ import ContextProvider from './context-provider';
 import { BrowserRouter } from 'react-router-dom';
 import { Redirect, Route, Switch } from 'react-router';
 
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { MuiThemeProvider, lightBaseTheme } from 'material-ui/styles';
+import { grey300, white, fullBlack } from 'material-ui/styles/colors';
+import { fade } from 'material-ui/utils/colorManipulator';
+
 import NavigationBar from './components/NavigationBar';
 import Notifications from './containers/Notifications';
 import Alert from './containers/Alert';
@@ -18,19 +23,40 @@ import './styles/leaflet.css';
 // Import default Bootstrap 4 CSS
 import 'bootstrap/dist/css/bootstrap.css';
 
+const lightMuiTheme = getMuiTheme(lightBaseTheme);
+
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: '#eed926',
+    secondaryTextColor: '#081b2c',
+    textColor: white,
+    alternateTextColor: white,
+    canvasColor: white,
+    borderColor: grey300,
+    disabledColor: fade(white, 0.3),
+    clockCircleColor: fade(white, 0.07),
+    shadowColor: fullBlack,
+  },
+  appBar: {
+    height: 50,
+  },
+});
+
 const Root = (
-  <ContextProvider>
-    <Provider store={store}>
-      <div>
-        <Notifications />
-        <NavigationBar />
-        <Alert/>
-        <BrowserRouter>
-            <RouteMap/>
-        </BrowserRouter>
-      </div>
-    </Provider>
-  </ContextProvider>
+  <MuiThemeProvider muiTheme={muiTheme}>
+    <ContextProvider>
+      <Provider store={store}>
+        <div>
+          <Notifications />
+          <NavigationBar />
+          <Alert/>
+          <BrowserRouter>
+              <RouteMap/>
+          </BrowserRouter>
+        </div>
+      </Provider>
+    </ContextProvider>
+  </MuiThemeProvider>
 );
 
 render(
