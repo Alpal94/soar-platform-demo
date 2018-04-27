@@ -40,3 +40,15 @@ export function fetchInfoAdmin(web3: any): Promise<AdminInfo> {
         return infoRes;
     });
 }
+
+export function setPrices(web3: any, geohashes: string[], price: number, precision: number): Promise<string> {
+    let userAddress = Web3Helper.getCurrentAddress(web3);
+    let pricingManualPromise = Web3Helper.getPricingManualContractPromise(web3);
+    let pricingManualContract;
+    return Promise.all([pricingManualPromise]).then(results => {
+        pricingManualContract = results[0];
+        return pricingManualContract.setPrices(geohashes, Web3Helper.fromSkymap(web3, price), precision, {from: userAddress});
+    }).then(result => {
+        return result.tx;
+    });
+}

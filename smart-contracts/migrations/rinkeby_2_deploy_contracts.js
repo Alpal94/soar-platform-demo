@@ -38,10 +38,11 @@ module.exports = function ganache(web3, deployer, artifacts){
       return Promise.all(promises);
     }).then(results => {
       promises = [
-        updateLocalConfigFilePromise(Soar, FaucetDemo, SkymapTokenDemo),
+        updateLocalConfigFilePromise(Soar, FaucetDemo, SkymapTokenDemo, PricingManual),
         updateContractAbi(Soar),
         updateContractAbi(FaucetDemo),
-        updateContractAbi(SkymapTokenDemo)
+        updateContractAbi(SkymapTokenDemo),
+        updateContractAbi(PricingManual)
       ]
       return Promise.all(promises);
     });
@@ -55,7 +56,7 @@ module.exports = function ganache(web3, deployer, artifacts){
     return writeObjectInFile(file, "../react-app-typescript/src/lib/contracts/" + contract.contractName + ".json");
   }
   
-  function updateLocalConfigFilePromise(soar, faucetDemo, skymapTokenDemo) {
+  function updateLocalConfigFilePromise(soar, faucetDemo, skymapTokenDemo, pricingManual) {
     let configFile = {
       "Soar": {
         "4": soar.address
@@ -65,6 +66,9 @@ module.exports = function ganache(web3, deployer, artifacts){
       },
       "SkymapToken": {
         "4": skymapTokenDemo.address
+      },
+      "PricingManual": {
+        "4": pricingManual.address
       }
     };
     return writeObjectInFile(configFile, "../react-app-typescript/src/lib/config.rinkeby.json");

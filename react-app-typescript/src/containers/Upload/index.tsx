@@ -76,7 +76,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
         });
 
         const web3 = this.context.web3.instance;
-        this.props.uploadListing(web3, this.state.file!!, this.state.latLng!!, this.state.metadata!!);
+        this.props.uploadListing(web3, this.state.file!!, this.state.latLng!!, metadata!!);
     }
 
     public render(): React.ReactElement<{}> {

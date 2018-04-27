@@ -22,7 +22,8 @@ import {
 import { uploadListingWatcher } from './containers/Upload/saga';
 import { userInfoWatcher } from './containers/Notifications/saga';
 import {
-  adminInfoWatcher
+  adminInfoWatcher,
+  adminSetPricingWatcher
 } from './containers/Admin/saga';
 
 export default function* rootSaga() {
@@ -42,6 +43,7 @@ export default function* rootSaga() {
     userInfoWatcher(),
     setIndividualCapWatcher(),
     setWaitingPeriodWatcher(),
-    adminInfoWatcher()
+    adminInfoWatcher(),
+    adminSetPricingWatcher()
   ]);
 }
