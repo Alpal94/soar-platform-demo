@@ -32,7 +32,10 @@ export interface LatLng {
     lng: string;
 }
 
+// TODO: Business rules.  Nail down what is optional and what is required.  Then do the UI for this.
 export interface Metadata {
+    title: string;
+    description: string;
     make: string;
     model: string;
     focalLength?: string;

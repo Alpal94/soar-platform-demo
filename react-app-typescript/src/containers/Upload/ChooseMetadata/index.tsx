@@ -25,6 +25,8 @@ class ChooseMetadata extends React.Component<ChooseMetadataProps, ChooseMetadata
 
     handleSubmit(values: any) {
         let metadata: Metadata = {
+            title: values.title,
+            description: values.description,
             make: values.make,
             model: values.model,
             focalLength: values.focalLength,
@@ -46,6 +48,10 @@ class ChooseMetadata extends React.Component<ChooseMetadataProps, ChooseMetadata
 
     public render(): React.ReactElement<{}> {
 
+        //tslint:disable-next-line
+        const titleControlProps = this.customTextFieldControlProps('Title', 'Give your photo a catchy title');
+        //tslint:disable-next-line
+        const descriptionControlProps = this.customTextFieldControlProps('Description', 'Give your photo a description');
         //tslint:disable-next-line
         const makeControlProps = this.customTextFieldControlProps('Drone Manufacturer', 'Enter Manufacturer for your drone');
         //tslint:disable-next-line
@@ -94,6 +100,18 @@ class ChooseMetadata extends React.Component<ChooseMetadataProps, ChooseMetadata
                                     height: (this.props.exif[gpsAltitude] || '').toString() || ''
                                 }}
                             >
+
+                                <Control
+                                    component={TextField}
+                                    model=".title"
+                                    controlProps={titleControlProps}
+                                />
+
+                                <Control
+                                    component={TextField}
+                                    model=".description"
+                                    controlProps={descriptionControlProps}
+                                />
                                 
                                 <Control                                 
                                     component={TextField}
