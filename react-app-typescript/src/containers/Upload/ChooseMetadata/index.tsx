@@ -12,11 +12,7 @@ interface ChooseMetadataProps {
     exif: any;
 }
 
-interface ChooseMetadataState {
-
-}
-
-class ChooseMetadata extends React.Component<ChooseMetadataProps, ChooseMetadataState> {
+class ChooseMetadata extends React.Component<ChooseMetadataProps, {}> {
 
     constructor(props: any) {
         super(props);
