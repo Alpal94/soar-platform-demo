@@ -89,35 +89,35 @@ export function* setWaitingPeriodSaga(web3: any, value: number) {
 
 export function* infoAdminWatcher() {
     while (true) {
-        const { web3 } = yield take(at.ADMIN_INFO_FETCH);
+        const { web3 } = yield take(at.FAUCET_ADMIN_INFO_FETCH);
         yield call(fetchAdminInfo, web3);
     }
 }
 
 export function* setTokenContractWatcher() {
     while (true) {
-        const { web3, address } = yield take(at.FAUCET_SET_TOKEN_CONTRACT);
+        const { web3, address } = yield take(at.FAUCET_ADMIN_SET_TOKEN_CONTRACT);
         yield call(setTokenContract, web3, address);
     }
 }
 
 export function* setAllowanceWatcher() {
     while (true) {
-        const { web3, value } = yield take(at.FAUCET_SET_ALLOWANCE);
+        const { web3, value } = yield take(at.FAUCET_ADMIN_SET_ALLOWANCE);
         yield call(setAllowanceSaga, web3, value);
     }
 }
 
 export function* setIndividualCapWatcher() {
     while (true) {
-        const { web3, value } = yield take(at.FAUCET_SET_INDIVIDUAL_CAP);
+        const { web3, value } = yield take(at.FAUCET_ADMIN_SET_INDIVIDUAL_CAP);
         yield call(setIndividualCapSaga, web3, value);
     }
 }
 
 export function* setWaitingPeriodWatcher() {
     while (true) {
-        const { web3, value } = yield take(at.FAUCET_SET_WAITING_PERIOD);
+        const { web3, value } = yield take(at.FAUCET_ADMIN_SET_WAITING_PERIOD);
         yield call(setWaitingPeriodSaga, web3, value);
     }
 }

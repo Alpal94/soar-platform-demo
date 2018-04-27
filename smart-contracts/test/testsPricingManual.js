@@ -28,18 +28,18 @@ contract('PricingManual', function ([owner, buyer]) {
   });
   
   it("..setPrice: only owner can change the price", async function () {
-    await this.pricingManual.setPrice(selectedGeoHash, selectedPrice, {from: buyer}).should.be.rejectedWith(Error);;
+    await this.pricingManual.setPrice(selectedGeoHash, selectedPrice, 2, {from: buyer}).should.be.rejectedWith(Error);;
     let price = await this.pricingManual.getPrice(geoHash1);
     price.should.be.bignumber.equal(defaultPrice);
 
-    await this.pricingManual.setPrice(selectedGeoHash, selectedPrice, {from: owner});
+    await this.pricingManual.setPrice(selectedGeoHash, selectedPrice, 2, {from: owner});
     let price2 = await this.pricingManual.getPrice(geoHash1);
     price2.should.be.bignumber.equal(selectedPrice);
 
   });
   
   it("..setPrice: the price was updated", async function () {
-    await this.pricingManual.setPrice(selectedGeoHash, selectedPrice);
+    await this.pricingManual.setPrice(selectedGeoHash, selectedPrice, 5);
     let price = await this.pricingManual.getPrice(geoHash1);
     price.should.be.bignumber.equal(selectedPrice);
     let price2 = await this.pricingManual.getPrice(geoHash2);
@@ -47,6 +47,69 @@ contract('PricingManual', function ([owner, buyer]) {
     let price3 = await this.pricingManual.getPrice(geoHash3);
     price3.should.be.bignumber.equal(defaultPrice);
 
+  });
+
+  it("..setPrice: the price precision 2 returns right price for whole geohash precision 2", async function () {
+    let leftTop = "u2bpbpbpbpgw";
+    let leftTopOut = "u1r4xjku9frm";
+    let rightTop = "u2zzzzzzf4dq";
+    let rightTopOut = "u9000020jkwv";
+    let leftBottom = "u2017vj041u3";
+    let leftBottomOut = "spzzvg4pfjh6";
+    let rightBottom = "u2pe044908mt";
+    let rightBottomOut = "sxbpev45z2dt";
+    await this.pricingManual.setPrice("u2", selectedPrice, 2);
+    let price = await this.pricingManual.getPrice(leftTop);
+    price.should.be.bignumber.equal(selectedPrice);
+    let priceOut = await this.pricingManual.getPrice(leftTopOut);
+    priceOut.should.be.bignumber.equal(defaultPrice);
+    
+    price = await this.pricingManual.getPrice(rightTop);
+    price.should.be.bignumber.equal(selectedPrice);
+    priceOut = await this.pricingManual.getPrice(rightTopOut);
+    priceOut.should.be.bignumber.equal(defaultPrice);
+
+    price = await this.pricingManual.getPrice(leftBottom);
+    price.should.be.bignumber.equal(selectedPrice);
+    priceOut = await this.pricingManual.getPrice(leftBottomOut);
+    priceOut.should.be.bignumber.equal(defaultPrice);
+
+    price = await this.pricingManual.getPrice(rightBottom);
+    price.should.be.bignumber.equal(selectedPrice);
+    priceOut = await this.pricingManual.getPrice(rightBottomOut);
+    priceOut.should.be.bignumber.equal(defaultPrice);
+  });
+
+  it("..setPrice: the price precision 7 returns right price only for precision 7", async function () {
+    let leftTop = "u2g1jwxpkqwp";
+    let leftTopOut = "u2g1jwz58j65";
+    let rightTop = "u2g1jwxzukqh";
+    let rightTopOut = "u2g1jyb4thnn";
+    let leftBottom = "u2g1jwx0f444";
+    let leftBottomOut = "spzzvg4pfjh6";
+    let rightBottom = "u2g1jwxbmcnj";
+    let rightBottomOut = "u2g1jy2pbknh";
+    
+    await this.pricingManual.setPrice("u2g1jwx", selectedPrice, 7);
+    let price = await this.pricingManual.getPrice(leftTop);
+    price.should.be.bignumber.equal(selectedPrice);
+    let priceOut = await this.pricingManual.getPrice(leftTopOut);
+    priceOut.should.be.bignumber.equal(defaultPrice);
+    
+    price = await this.pricingManual.getPrice(rightTop);
+    price.should.be.bignumber.equal(selectedPrice);
+    priceOut = await this.pricingManual.getPrice(rightTopOut);
+    priceOut.should.be.bignumber.equal(defaultPrice);
+
+    price = await this.pricingManual.getPrice(leftBottom);
+    price.should.be.bignumber.equal(selectedPrice);
+    priceOut = await this.pricingManual.getPrice(leftBottomOut);
+    priceOut.should.be.bignumber.equal(defaultPrice);
+
+    price = await this.pricingManual.getPrice(rightBottom);
+    price.should.be.bignumber.equal(selectedPrice);
+    priceOut = await this.pricingManual.getPrice(rightBottomOut);
+    priceOut.should.be.bignumber.equal(defaultPrice);
   });
     
   it("..setPrices: the prices were updated", async function () {
@@ -60,7 +123,7 @@ contract('PricingManual', function ([owner, buyer]) {
     let not2 = "gcdyd6cqju9h";
     let not3 = "kkxn68n04f2v";
     let not4 = "5g7f5zz0sr47";
-    let tx = await this.pricingManual.setPrices(geohashes, price);
+    let tx = await this.pricingManual.setPrices(geohashes, price, 5);
     let price1 = await this.pricingManual.getPrice(geo1);
     price1.should.be.bignumber.equal(price);
     let price2 = await this.pricingManual.getPrice(geo2);

@@ -10,10 +10,10 @@ import {
 import { selectInfo, selectIsLoading, selectIsFetched } from './selectors';
 import { FaucetInfoAdmin } from '../../lib/model';
 
-import AllowanceForm from '../../components/Admin/AllowanceForm';
-import TokenAddressForm from '../../components/Admin/TokenAddressForm';
-import IndividualCapForm from '../../components/Admin/IndividualCapForm';
-import WaitingPeriodForm from '../../components/Admin/WaitingPeriodForm';
+import AllowanceForm from '../../components/FaucetAdmin/AllowanceForm';
+import TokenAddressForm from '../../components/FaucetAdmin/TokenAddressForm';
+import IndividualCapForm from '../../components/FaucetAdmin/IndividualCapForm';
+import WaitingPeriodForm from '../../components/FaucetAdmin/WaitingPeriodForm';
 import { Row, Col, Container } from 'reactstrap';
 
 interface FaucetAdminProps extends React.Props<FaucetAdmin> {
