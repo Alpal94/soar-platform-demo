@@ -1,11 +1,14 @@
 {
     "Soar": {
-        "4": "0xedb0805ec36d3174ba9b91357520fecbe0ab556f"
+        "4": "0xc1c726552efcbe7d7a0822b4b35c6f3350b46be6"
     },
     "Faucet": {
-        "4": "0xc36a066764da821b9ac4c84f2a0a112b8bf32a38"
+        "4": "0x5f0cfcbd7b4c3379f8ea684045c248d1490dbacb"
     },
     "SkymapToken": {
-        "4": "0xed2a98510a670c653dfb7bea90bc613c75eead4b"
+        "4": "0x607025e9fbe315e4b8f3520af15752fc68657507"
+    },
+    "PricingManual": {
+        "4": "0xf7e6506e8f7c968b106bb5acc76501f4d8e4633b"
     }
 }
