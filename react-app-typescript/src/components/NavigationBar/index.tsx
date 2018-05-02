@@ -1,4 +1,9 @@
 import * as React from 'react';
+import LocalizedStrings from 'react-localization';
+import Strings from '../../locale/strings';
+import SelectLanguage from './select-language';
+
+
 import {
   Collapse,
   Navbar,
@@ -20,6 +25,7 @@ interface NavigationBarProps {
 
 interface NavigationBarState {
   isOpen: boolean;
+  currentLanguage: string;
 }
 
 class NavigationBar extends React.Component<NavigationBarProps, NavigationBarState> {
@@ -29,8 +35,11 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      currentLanguage: 'en'
     };
+
+    this.onLanguageSelected.bind(this.onLanguageSelected);
   }
 
   toggle() {
@@ -39,7 +48,18 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
     });
   }
 
+  onLanguageSelected = (event: any) => {
+    console.log(event.target.value);
+    Strings.setLanguage(event.target.value);
+    this.setState({currentLanguage: event.target.value});
+  }
+
+
   public render(): React.ReactElement<{}> {
+
+    let currentLanguage = 'en';
+    let languages = ['en', 'ch'];
+
     return (
 
         <Navbar dark color="dark" expand="md">
@@ -50,11 +70,14 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
             <NavItem>
-                <NavLink href="/upload">Upload</NavLink>
+                <NavLink href="/upload">{Strings.Upload}</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/faucet">Faucet</NavLink>
+                <NavLink href="/faucet">{Strings.Faucet}</NavLink>
               </NavItem>
+              <NavItem>
+                <SelectLanguage currentLanguage="en" languages={languages} onLanguageSelected={this.onLanguageSelected}/>
+                </NavItem>
             </Nav>
           </Collapse>
           </Container>
