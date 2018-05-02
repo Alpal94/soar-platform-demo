@@ -1,20 +1,44 @@
 import * as React from 'react';
+import Strings from '../../locale/strings';
+
+interface SelectLanguageState {
+    selectedLanguage: string;
+}
 
 interface SelectLanguageProps {
-    currentLanguage: string;
-    languages: string[];
     onLanguageSelected: (event: any) => void;
 }
 
-const SelectLanguage: React.SFC<SelectLanguageProps> = (props) => {
+class SelectLanguage extends React.Component<SelectLanguageProps, SelectLanguageState> {
 
-    return (
-        <select onChange={props.onLanguageSelected}>
-           {props.languages.map((language, index) =>
-                <option value={language} key={index}>{language}</option>
-            )}
-        </select>
-    );
-};
+    constructor(props: any) {
+        super(props);
+        
+    }
+
+    componentWillMount() {
+        this.setState({
+            selectedLanguage: Strings.getInterfaceLanguage()
+        });
+    }
+
+    handleSelectLanguage(event: any) {
+        this.setState({selectedLanguage: event.target.value});
+        this.props.onLanguageSelected(event.target.value);
+    }
+
+    public render(): React.ReactElement<{}> {
+        let currentLanguage = Strings.getInterfaceLanguage();
+        let availableLanguage = Strings.getAvailableLanguages();
+
+        return (
+            <select onChange={this.handleSelectLanguage.bind(this)} value={this.state.selectedLanguage}>
+                {availableLanguage.map((language, index) =>
+                    <option value={language} key={index}>{language}</option>
+                )}
+            </select>
+        );
+    }
+}
 
 export default SelectLanguage;

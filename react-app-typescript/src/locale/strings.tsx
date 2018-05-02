@@ -5,7 +5,7 @@ let strings = new LocalizedStrings({
         Upload: 'Upload',
         Faucet: 'Faucet'
     },
-    ch: {
+    zh: {
         Upload: '上传',
         Faucet: '龙头'
     }

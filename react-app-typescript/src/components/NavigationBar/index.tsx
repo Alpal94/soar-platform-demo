@@ -3,7 +3,6 @@ import LocalizedStrings from 'react-localization';
 import Strings from '../../locale/strings';
 import SelectLanguage from './select-language';
 
-
 import {
   Collapse,
   Navbar,
@@ -36,7 +35,7 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false,
-      currentLanguage: 'en'
+      currentLanguage: Strings.getInterfaceLanguage()
     };
 
     this.onLanguageSelected.bind(this.onLanguageSelected);
@@ -48,17 +47,13 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
     });
   }
 
-  onLanguageSelected = (event: any) => {
-    console.log(event.target.value);
-    Strings.setLanguage(event.target.value);
-    this.setState({currentLanguage: event.target.value});
+  onLanguageSelected = (language: string) => {
+    Strings.setLanguage(language);
+    this.setState({currentLanguage: language});
   }
 
 
   public render(): React.ReactElement<{}> {
-
-    let currentLanguage = 'en';
-    let languages = ['en', 'ch'];
 
     return (
 
@@ -76,7 +71,7 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
                 <NavLink href="/faucet">{Strings.Faucet}</NavLink>
               </NavItem>
               <NavItem>
-                <SelectLanguage currentLanguage="en" languages={languages} onLanguageSelected={this.onLanguageSelected}/>
+                <SelectLanguage onLanguageSelected={this.onLanguageSelected}/>
                 </NavItem>
             </Nav>
           </Collapse>
