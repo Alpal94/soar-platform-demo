@@ -3,10 +3,10 @@ import * as PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 const connect = require('react-redux').connect;
 
+import { Container, Row, Col, Button } from 'reactstrap';
 import { fetchInfo, getSKYMTokens } from './actions';
 import { selectInfo, selectIsLoading, selectIsFetched } from './selectors';
 import { FaucetInfo } from '../../lib/model';
-import { Button, Container } from 'reactstrap';
 
 interface FaucetProps extends React.Props<Faucet> {
     info: FaucetInfo;
@@ -35,11 +35,15 @@ class Faucet extends React.Component<FaucetProps, FaucetState> {
         const web3 = this.context.web3.instance;
         return (
             <Container>
-                <h1>Faucet</h1>
-                <p>Your Balance: {info.balance} {info.symbol}</p>
-                <Button onClick={() => this.props.getSKYMTokens(web3)}>
-                    Get {info.individualCap + ' ' + info.symbol}
-                </Button>
+                <Row className="wizard-card">
+                    <Col sm={12}>
+                        <h2>SKYM Faucet</h2>
+                        <p>Your Balance: {info.balance} {info.symbol}</p>
+                        <Button onClick={() => this.props.getSKYMTokens(web3)}>
+                            Get {info.individualCap + ' ' + info.symbol}
+                        </Button>
+                    </Col>
+                </Row>
             </Container>
         );
     }
