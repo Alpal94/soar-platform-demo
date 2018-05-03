@@ -14,7 +14,7 @@ import { MuiThemeProvider, lightBaseTheme } from 'material-ui/styles';
 import { grey300, white, fullBlack } from 'material-ui/styles/colors';
 import { fade } from 'material-ui/utils/colorManipulator';
 
-import NavigationBar from './components/NavigationBar';
+import NavigationBar from './containers/NavigationBar';
 import Notifications from './containers/Notifications';
 import Alert from './containers/Alert';
 

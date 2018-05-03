@@ -1,7 +1,7 @@
 import * as React from 'react';
 import LocalizedStrings from 'react-localization';
 import Strings from '../../locale/strings';
-import SelectLanguage from './select-language';
+import SelectLanguage from '../../components/NavigationBar/select-language';
 
 import {
   Collapse,

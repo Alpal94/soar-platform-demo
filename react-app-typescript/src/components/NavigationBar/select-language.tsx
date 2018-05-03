@@ -11,18 +11,13 @@ interface SelectLanguageProps {
 
 class SelectLanguage extends React.Component<SelectLanguageProps, SelectLanguageState> {
 
-    constructor(props: any) {
-        super(props);
-        
-    }
-
     componentWillMount() {
         this.setState({
             selectedLanguage: Strings.getInterfaceLanguage()
         });
     }
 
-    handleSelectLanguage(event: any) {
+    handleSelectLanguage = (event: any) => {
         this.setState({selectedLanguage: event.target.value});
         this.props.onLanguageSelected(event.target.value);
     }
@@ -32,7 +27,7 @@ class SelectLanguage extends React.Component<SelectLanguageProps, SelectLanguage
         let availableLanguage = Strings.getAvailableLanguages();
 
         return (
-            <select onChange={this.handleSelectLanguage.bind(this)} value={this.state.selectedLanguage}>
+            <select onChange={this.handleSelectLanguage} value={this.state.selectedLanguage}>
                 {availableLanguage.map((language, index) =>
                     <option value={language} key={index}>{language}</option>
                 )}
