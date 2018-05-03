@@ -3,11 +3,13 @@ import LocalizedStrings from 'react-localization';
 let strings = new LocalizedStrings({
     en: {
         Upload: 'Upload',
-        Faucet: 'Faucet'
+        Faucet: 'Faucet',
+        WizardChooseFile: 'Step 1 - Choose File'
     },
     zh: {
         Upload: '上传',
-        Faucet: '龙头'
+        Faucet: '龙头',
+        WizardChooseFile: 'Step 1 - Choose File Chinese'
     }
 }) 
 
