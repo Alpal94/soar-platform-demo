@@ -50,6 +50,10 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
     this.onLanguageSelected.bind(this.onLanguageSelected);
   }
 
+  componentWillMount() {
+    console.log('props', this.props.language);
+  }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
