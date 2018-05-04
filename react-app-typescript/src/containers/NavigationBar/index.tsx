@@ -1,7 +1,15 @@
 import * as React from 'react';
 import LocalizedStrings from 'react-localization';
 import Strings from '../../locale/strings';
+import { connect } from 'react-redux';
 import SelectLanguage from '../../components/NavigationBar/select-language';
+import { createStructuredSelector, createSelector } from 'reselect';
+
+import { languageUpdateAction } from './actions';
+import { selectLanguageName, selectLanguageCode } from './selectors';
+import { SwitchLanguageAction } from './model';
+import { Language } from '../../lib/model';
+import store from '../../store';
 
 import {
   Collapse,
@@ -19,12 +27,16 @@ import {
 } from 'reactstrap';
 import './index.css';
 
-interface NavigationBarProps {
+interface NavigationBarProps extends React.Props<NavigationBar> {
+  languageName: string;
+  languageCode: string;
+  selectLanguage: (languageName: string, languageCode: string) => void;
 }
 
 interface NavigationBarState {
   isOpen: boolean;
   currentLanguage: string;
+  
 }
 
 class NavigationBar extends React.Component<NavigationBarProps, NavigationBarState> {
@@ -35,7 +47,7 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false,
-      currentLanguage: Strings.getInterfaceLanguage()
+      currentLanguage: this.props.languageCode
     };
 
     this.onLanguageSelected.bind(this.onLanguageSelected);
@@ -50,10 +62,13 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
   onLanguageSelected = (language: string) => {
     Strings.setLanguage(language);
     this.setState({currentLanguage: language});
+    store.dispatch(languageUpdateAction('language', language));
   }
 
 
   public render(): React.ReactElement<{}> {
+
+    console.log("Language: ", this.props.languageName, this.props.languageCode);
 
     return (
 
@@ -81,4 +96,19 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
   }
 }
 
-export default NavigationBar;
+function mapStateToProps() {
+  return createStructuredSelector({
+    languageName: selectLanguageName(),
+    languageCode: selectLanguageCode(),
+  });
+}
+
+function mapDispatchToProps(dispatch: any) {
+  return {
+    selectLanguage(languageName: string, languageCode: string) {
+      dispatch(languageUpdateAction(languageName, languageCode));
+    }
+   };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavigationBar);

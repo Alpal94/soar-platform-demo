@@ -11,6 +11,6 @@ let strings = new LocalizedStrings({
         Faucet: '龙头',
         WizardChooseFile: 'Step 1 - Choose File Chinese'
     }
-}) 
+}); 
 
 export default strings;

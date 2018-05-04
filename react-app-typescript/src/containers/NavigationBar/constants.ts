@@ -1,0 +1,3 @@
+export const actionTypes = {
+    NAVIGATION_BAR_SWITCH_LANGUAGE: 'NAVIGATIONBAR/SWITCH_LANGAUGE'
+};
