@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { push } from 'react-router-redux';
 import LocalizedStrings from 'react-localization';
 import Strings from '../../locale/strings';
 import { connect } from 'react-redux';
@@ -48,10 +49,7 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
     };
 
     this.onLanguageSelected.bind(this.onLanguageSelected);
-  }
-
-  componentWillMount() {
-    console.log('props', this.props.language);
+    this.onClickUpload.bind(this.onClickUpload);
   }
 
   toggle() {
@@ -65,6 +63,17 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
     store.dispatch(languageUpdateAction(language));
   }
 
+  onClickLogo() {
+    store.dispatch(push('/'));
+  }
+
+  onClickUpload() {
+    store.dispatch(push('/upload'));
+  }
+
+  onClickFaucet() {
+    store.dispatch(push('/faucet'));
+  }
 
   public render(): React.ReactElement<{}> {
 
@@ -73,17 +82,17 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
     return (
 
         <Navbar dark color="dark" expand="md">
-      <Container>
-          
-          <NavbarBrand href="/"><img src="/assets/soar_logo.png" alt="brand logo" /></NavbarBrand>
+          <Container>
+          <NavbarBrand onClick={this.onClickLogo} href="#"><img src="/assets/soar_logo.png" alt="brand logo" /></NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
             <NavItem>
-                <NavLink href="/upload">{Strings.Upload}</NavLink>
+            
+                <NavLink onClick={this.onClickUpload} href="#">{Strings.Upload}</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/faucet">{Strings.Faucet}</NavLink>
+                <NavLink onClick={this.onClickFaucet} href="#">{Strings.Faucet}</NavLink>
               </NavItem>
               <NavItem>
                 <SelectLanguage onLanguageSelected={this.onLanguageSelected}/>
