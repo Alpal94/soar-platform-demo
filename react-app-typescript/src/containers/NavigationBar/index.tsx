@@ -6,7 +6,7 @@ import SelectLanguage from '../../components/NavigationBar/select-language';
 import { createStructuredSelector, createSelector } from 'reselect';
 
 import { languageUpdateAction } from './actions';
-import { selectLanguageName, selectLanguageCode } from './selectors';
+import { selectLanguage } from './selectors';
 import { SwitchLanguageAction } from './model';
 import { Language } from '../../lib/model';
 import store from '../../store';
@@ -28,14 +28,12 @@ import {
 import './index.css';
 
 interface NavigationBarProps extends React.Props<NavigationBar> {
-  languageName: string;
-  languageCode: string;
-  selectLanguage: (languageName: string, languageCode: string) => void;
+  language: string;
+  selectLanguage: (language: string) => void;
 }
 
 interface NavigationBarState {
   isOpen: boolean;
-  currentLanguage: string;
   
 }
 
@@ -47,7 +45,6 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false,
-      currentLanguage: this.props.languageCode
     };
 
     this.onLanguageSelected.bind(this.onLanguageSelected);
@@ -61,14 +58,13 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
 
   onLanguageSelected = (language: string) => {
     Strings.setLanguage(language);
-    this.setState({currentLanguage: language});
-    store.dispatch(languageUpdateAction('language', language));
+    store.dispatch(languageUpdateAction(language));
   }
 
 
   public render(): React.ReactElement<{}> {
 
-    console.log("Language: ", this.props.languageName, this.props.languageCode);
+    console.log("Language: ", this.props.language);
 
     return (
 
@@ -98,15 +94,14 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
 
 function mapStateToProps() {
   return createStructuredSelector({
-    languageName: selectLanguageName(),
-    languageCode: selectLanguageCode(),
+    language: selectLanguage()
   });
 }
 
 function mapDispatchToProps(dispatch: any) {
   return {
-    selectLanguage(languageName: string, languageCode: string) {
-      dispatch(languageUpdateAction(languageName, languageCode));
+    selectLanguage(language: string) {
+      dispatch(languageUpdateAction(language));
     }
    };
 }

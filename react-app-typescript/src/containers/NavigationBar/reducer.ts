@@ -4,16 +4,14 @@ import { SwitchLanguageAction } from './model';
 import { Switch } from 'react-router';
 
 const initalState = fromJS({
-    languageName: 'English',
-    languageCode: 'en'
+    language: 'en'
 });
 
 export default (state = initalState, action: SwitchLanguageAction) => {
     switch (action.type) {
         case at.NAVIGATION_BAR_SWITCH_LANGUAGE:
             return state
-                .set('languageName', action.languageName)
-                .set('languageCode', action.languageCode);
+                .set('language', action.language);
         default:
             return state;
     }

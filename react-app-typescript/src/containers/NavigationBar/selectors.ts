@@ -2,15 +2,10 @@ import { createSelector } from 'reselect';
 
 const getLanguageDomain = () => (state: any) => state.get('languageDomain');
 
-const selectLanguageName = () => createSelector(
+const selectLanguage = () => createSelector(
     getLanguageDomain(),
-    languageState => languageState.get('languageName')
+    languageState => languageState.get('language')
 );
 
-const selectLanguageCode = () => createSelector(
-    getLanguageDomain(),
-    languageState => languageState.get('languageCode')
-);
-
-export { selectLanguageName, selectLanguageCode };
+export { selectLanguage };
 export default getLanguageDomain;
