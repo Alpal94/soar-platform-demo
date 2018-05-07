@@ -31,6 +31,7 @@ class Faucet extends React.Component<FaucetProps, FaucetState> {
     }
 
     public render(): React.ReactElement<{}> {
+
         const { info, isLoading, isFetched } = this.props;
         const web3 = this.context.web3.instance;
         return (

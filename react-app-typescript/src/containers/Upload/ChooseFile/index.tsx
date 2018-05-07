@@ -4,6 +4,7 @@ import Dropzone from 'react-dropzone';
 import Aux from '../../../hoc/auxilary';
 import ChooseFileImagePreview from '../../../components/Upload/ChooseFile/choose-file-preview';
 import ChooseFileConfirmClearButtons from '../../../components/Upload/ChooseFile/choose-file-buttons';
+import Strings from '../../../locale/strings';
 import './index.css';
 
 interface ChooseFileProps extends React.Props<ChooseFile> {
@@ -52,7 +53,7 @@ class ChooseFile extends React.Component<ChooseFileProps, ChooseFileState> {
                             <Row>
                                 <Col md={{ size: 6, offset: 3 }}>
     
-                                    <h2>Step 1 - Choose File</h2>
+                                    <h2>{Strings.WizardChooseFile}</h2>
 
                                     {this.state.error !== undefined && 
                                         <p className="error-message">{this.state.error}</p>

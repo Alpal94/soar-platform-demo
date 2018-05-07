@@ -7,6 +7,8 @@ import alertReducer from './containers/Alert/reducer';
 import listingsReducer from './containers/Listings/reducer';
 import uploadReducer from './containers/Upload/reducer';
 import adminReducer from './containers/Admin/reducer';
+import languageReducer from './containers/NavigationBar/reducer';
+import { routerReducer } from 'react-router-redux';
 
 export interface State {
   faucetDomain: any;
@@ -16,6 +18,8 @@ export interface State {
   listingsDomain: any;
   uploadDomain: any;
   adminDomain: any;
+  languageDomain: any;
+  routerDomain: any;
 }
 
 export const state = combineReducers({
@@ -25,5 +29,7 @@ export const state = combineReducers({
   alertDomain: alertReducer,
   listingsDomain: listingsReducer,
   uploadDomain: uploadReducer,
-  adminDomain: adminReducer
+  adminDomain: adminReducer,
+  languageDomain: languageReducer,
+  routerDomain: routerReducer
 });

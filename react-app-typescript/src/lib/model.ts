@@ -1,3 +1,7 @@
+export interface Language {
+    code: string;
+}
+
 export interface FaucetInfo {
     symbol: string;
     balance: number;
