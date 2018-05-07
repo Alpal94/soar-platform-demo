@@ -4998,6 +4998,12 @@ react-file-download@^0.3.5:
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/react-file-download/-/react-file-download-0.3.5.tgz#7a4e75874528806bfa53ddddd98b4da427d3a897"
 
+react-flags-select@^1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/react-flags-select/-/react-flags-select-1.1.7.tgz#09425453af8baf7d85ae40bd1e1f1aed83efba7c"
+  dependencies:
+    prop-types "^15.5.8"
+
 react-leaflet@^1.9.1:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-1.9.1.tgz#0a282d8d26f66ea2d719ebb8f4a5fa156b33b8c8"

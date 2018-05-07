@@ -1,5 +1,7 @@
 import * as React from 'react';
 import Strings from '../../locale/strings';
+import ReactFlagsSelect from 'react-flags-select';
+import 'react-flags-select/css/react-flags-select.css';
 
 interface SelectLanguageState {
     selectedLanguage: string;
@@ -17,9 +19,14 @@ class SelectLanguage extends React.Component<SelectLanguageProps, SelectLanguage
         });
     }
 
-    handleSelectLanguage = (event: any) => {
-        this.setState({selectedLanguage: event.target.value});
-        this.props.onLanguageSelected(event.target.value);
+    handleSelectLanguage = (languageCode: string) => {
+        // `react-flag-select` uses country codes but `redux-localization` uses language codes
+        // You need to map between them here to support new languages
+
+        var language = 'en';
+        if (languageCode === 'CN') { language = 'zh'; }
+        this.setState({selectedLanguage: language});
+        this.props.onLanguageSelected(language);
     }
 
     public render(): React.ReactElement<{}> {
@@ -27,11 +34,16 @@ class SelectLanguage extends React.Component<SelectLanguageProps, SelectLanguage
         let availableLanguage = Strings.getAvailableLanguages();
 
         return (
-            <select onChange={this.handleSelectLanguage} value={this.state.selectedLanguage}>
-                {availableLanguage.map((language, index) =>
-                    <option value={language} key={index}>{language}</option>
-                )}
-            </select>
+            <ReactFlagsSelect 
+                countries={['US', 'CN']}
+                defaultCountry="US"
+                placeholder="Select Language" 
+                showSelectedLabel={false} 
+                showOptionLabel={false} 
+                selectedSize={14} 
+                optionsSize={14} 
+                onSelect={this.handleSelectLanguage}
+            />
         );
     }
 }

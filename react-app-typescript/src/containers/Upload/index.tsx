@@ -14,6 +14,7 @@ import ChooseLocation from './ChooseLocation/index';
 import ChooseMetadata from './ChooseMetadata';
 
 interface UploadProps extends React.Props<Upload> {
+    language: string;
     uploadListing: (web3: any, file: File, latLng: LatLng, metadata: Metadata) => void;
 }
 

@@ -77,8 +77,6 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
 
   public render(): React.ReactElement<{}> {
 
-    console.log("Language: ", this.props.language);
-
     return (
 
         <Navbar dark color="dark" expand="md">
