@@ -81,7 +81,7 @@ class NavigationBar extends React.Component<NavigationBarProps, NavigationBarSta
 
         <Navbar dark color="dark" expand="md">
           <Container>
-          <NavbarBrand onClick={this.onClickLogo} href="#"><img src="/assets/soar_logo.png" alt="brand logo" /></NavbarBrand>
+          <NavbarBrand onClick={this.onClickLogo} href="#"><img src="/assets/soar_logo.png" alt="Soar" /></NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
